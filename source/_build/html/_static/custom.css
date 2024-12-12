@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Gudea:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
+
+:root[data-mode="light"] .CodeMirror {
+    color: #000000;
+    background-color: #ffffff;
+}
+
+:root[data-mode="dark"] .CodeMirror {
+    color: #ffffff;
+    background-color: #2d2d2d;
+}
+
+:root[data-mode="dark"] .CodeMirror-cursor {
+    border-left: 1px solid #ffffff;
+}
+
+:root[data-mode="dark"] .cm-keyword { color: #ff79c6; }
+:root[data-mode="dark"] .cm-def { color: #ff79c6; }
+:root[data-mode="dark"] .cm-builtin { color: #ff79c6; }
+:root[data-mode="dark"] .cm-string { color: #f1fa8c; }
+
+:root[data-mode="dark"].thebe .jp-OutputArea-output,
+:root[data-mode="dark"].thebe .jp-RenderedText {
+    color: #ffffff !important;
+    background-color: #2d2d2d !important;
+}
+
+:root[data-mode="dark"] .jp-OutputArea-output pre,
+:root[data-mode="dark"] .jp-RenderedText pre {
+    color: #ffffff !important;
+    background-color: #2d2d2d !important;
+}
+
+:root[data-mode="dark"] .CodeMirror {
+    color: #ffffff; 
+    background-color: #2d2d2d;
+}
+
+:root[data-mode="dark"] .CodeMirror-cursor {
+    border-left: 1px solid #ffffff;
+}
+
+:root[data-mode="dark"] .cm-keyword { color: #ff79c6; }
+:root[data-mode="dark"] .cm-def { color: #ff79c6; }
+:root[data-mode="dark"] .cm-builtin { color: #ff79c6; }
+:root[data-mode="dark"] .cm-string { color: #f1fa8c; }
+
+:root[data-mode="auto"].thebe .jp-OutputArea-output,
+:root[data-mode="auto"].thebe .jp-RenderedText {
+    color: #ffffff !important;
+    background-color: #2d2d2d !important;
+}
+
+:root[data-mode="auto"] .jp-OutputArea-output pre,
+:root[data-mode="auto"] .jp-RenderedText pre {
+    color: #ffffff !important;
+    background-color: #2d2d2d !important;
+}
+
+:root[data-mode="auto"] .CodeMirror {
+    color: #ffffff; 
+    background-color: #2d2d2d;
+}
+
+:root[data-mode="auto"] .CodeMirror-cursor {
+    border-left: 1px solid #ffffff;
+}
+
+:root[data-mode="auto"] .cm-keyword { color: #ff79c6; }
+:root[data-mode="auto"] .cm-def { color: #ff79c6; }
+:root[data-mode="auto"] .cm-builtin { color: #ff79c6; }
+:root[data-mode="auto"] .cm-string { color: #f1fa8c; }
+
+:root[data-mode="auto"].thebe .jp-OutputArea-output,
+:root[data-mode="auto"].thebe .jp-RenderedText {
+    color: #ffffff !important;
+    background-color: #2d2d2d !important;
+}
+
+:root[data-mode="auto"] .jp-OutputArea-output pre,
+:root[data-mode="auto"] .jp-RenderedText pre {
+    color: #ffffff !important;
+    background-color: #2d2d2d !important;
+}
+
+:root[data-mode="dark"] {
+    --jp-rendermime-error-background: transparent !important;
+  }
+
+:root[data-mode="auto"] {
+--jp-rendermime-error-background: transparent !important;
+}
+
+/* Increase font size of normal text */
+body {
+    font-size: 1.1em; /* Adjust the size as needed */
+    /* font-family: -apple-system, BlinkMacSystemFont, 'Inter', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
+    font-family: 'Gudea', sans-serif;
+    /* font-family: 'JetBrains Mono', monospace; */
+}
+
+.thebe-launch-button .spinner {
+    display: none !important;
+}
+
+pre, code {
+    font-family: "Fira Code", monospace, !important;
+    font-size: 0.8em; /* Adjust the size as needed */
+}
+
+/* Apply JetBrains Mono to CodeMirror instances (used by sphinx-thebe) */
+.CodeMirror {
+    font-family: "Fira Code", monospace, !important;
+}
+
+/* Ensure the lines inside CodeMirror use the same font */
+.CodeMirror-lines {
+    font-family: "Fira Code", monospace, !important;
+}
+
+h1, h2, h3, h4, h6 {
+    font-family: 'Gudea', sans-serif;
+}
+
+.hide.above-input summary {
+    color: black;
+}
+
+.cell_output.docutils.container img {
+    display: block; /* Makes sure the image is treated as a block element */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Ensure no background color is applied to images */
+div.cell_output img {
+    background-color: white !important;
+}
+
+/* Ensure no brightness or contrast filter is applied to images in dark mode */
+html[data-theme="dark"] img:not(.only-dark, .dark-light) {
+    filter: none !important;
+}
+
+video {
+    width: 100%;
+    height: auto;
+}
+

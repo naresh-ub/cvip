@@ -1,0 +1,68 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+# _toc.yml
+
+# _toc.yml
+
+# format: jb-book
+# root: intro
+
+# chapters:
+#   - file: about
+  
+# parts:
+#   - caption: MTH 531 Analysis
+#     chapters:
+#       - file: mth-531/intro
+#         sections:
+#           - file: mth-531/pre-reqs/intro
+#           - file: mth-531/pre-reqs/markdown
+#           - file: mth-531/pre-reqs/start/build
+#           - file: mth-531/pre-reqs/start/new-file
+#           - file: mth-531/pre-reqs/start/publish
+#           - file: mth-531/pre-reqs/start/example-book
+#       - file: mth-531/chap-III_1/intro
+
+
+
+format: jb-book
+root: intro
+parts:
+- caption:
+  chapters:
+  - file: about
+- caption:
+  chapters:
+  - file: mth-531/intro
+    sections:
+    - file: mth-531/pre-reqs
+      # sections:
+      # - file: markdown
+      # - file: start/build
+      # - file: start/new-file
+      # - file: start/publish
+      # - file: start/example-book
+    - file: mth-531/chap-III_1/intro
+# - caption:
+#   chapters:
+#   - file: tikz/intro
+    # sections:
+    # - file: mth-531/pre-reqs/intro
+    #   sections:
+    #   - file: markdown
+    #   - file: start/build
+    #   - file: start/new-file
+    #   - file: start/publish
+    #   - file: start/example-book
+    # - file: mth-531/chap-III_1/intro
+
+
+# chapters:
+# - file: website-todo
+# parts:
+#   - file: markdown
+# # - file: markdown
+# # - file: notebooks
+# # - file: markdown-notebooks
+# # - file: plotly_test

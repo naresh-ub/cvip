@@ -1,0 +1,25 @@
+name: Build Notebook Container
+on:
+  schedule:
+    # Runs every 6 hours (at 12:00 AM, 6:00 AM, 12:00 PM, and 6:00 PM UTC)
+    # - cron: '0 */6 * * *'
+
+    # Runs every 2 days at 12:00 AM UTC
+    - cron: '0 0 */1 * *'
+  workflow_dispatch:  # Allows manual trigger via GitHub UI
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout files in repo
+      uses: actions/checkout@v2 # Ensure to use the latest version
+      
+    - name: update jupyter dependencies with repo2docker
+      uses: machine-learning-apps/repo2docker-action@master
+      with:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        BINDER_CACHE: true

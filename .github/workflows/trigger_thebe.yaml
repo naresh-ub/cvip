@@ -1,0 +1,36 @@
+name: Trigger Binder Every 6 Hours
+
+on:
+  schedule:
+    # Runs every 20 hours
+    - cron: '0 */20 * * *'
+    # Runs every 2 days at 12:00 AM UTC
+    # - cron: '0 0 */1 * *'
+  workflow_dispatch:  # Allows manual trigger via GitHub UI
+
+jobs:
+  trigger_binder:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'  # You can adjust this based on your needs
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install selenium
+
+      - name: Set up Chrome Driver
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: 'latest'
+
+      - name: Run Selenium Script
+        run: |
+          python scripts/trigger_binder.py

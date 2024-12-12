@@ -1,0 +1,191 @@
+# Book settings
+# Learn more at https://jupyterbook.org/customize/config.html
+
+title: CVIP Summer 2025
+author: Naresh Kumar Devulapally
+logo: assets/website/logo_dark.gif
+
+# Force re-execution of notebooks on each build.
+# See https://jupyterbook.org/content/execute.html
+execute:
+  execute_notebooks: 'off'
+
+# Define the name of the latex output file for PDF builds
+latex:
+  latex_documents:
+    targetname: book.tex
+
+# Add a bibtex file so that we can create citations
+bibtex_bibfiles:
+  - references.bib
+
+# Information about where the book exists on the web
+repository:
+  url: https://github.com/naresh-ub/cvip  # Online location of your book
+  path_to_book: source  # Optional path to your book, relative to the repository root
+  branch: master  # Which branch of the repository should be used when creating links (optional)
+
+html:
+  use_issues_button: False
+  use_repository_button: true
+  extra_css: ["_static/custom.css"]
+  favicon: assets/website/book-bookmark-solid.svg
+
+sphinx:
+  config:
+    html_js_files: [
+      https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js, 
+      _static/js/video_autoplay.js]
+    suppress_warnings: ["mystnb.unknown_mime_type"]
+    extra_extensions:
+      - sphinx_togglebutton
+      - sphinx_inline_tabs
+      - sphinx_sitemap
+      - sphinx.ext.mathjax
+      - sphinxcontrib.tikz
+      - myst_nb
+
+
+parse:
+  myst_enable_extensions:
+    # don't forget to list any other extensions you want enabled,
+    # including those that are enabled by default!
+    - amsmath
+    - dollarmath
+
+launch_buttons:
+  notebook_interface: "classic"
+  thebe: true
+
+# title: Grad Notes
+# author: Naresh Kumar Devulapally
+# logo: assets/website/grad-notes-dark.gif
+
+# # Repository Information
+# # repository:
+# #   url: https://github.com/executablebooks/jupyter-book
+# #   path_to_book: docs 
+# #   branch: master 
+
+# repository:
+#   url: https://github.com/interactive-dsa-book/interactive-dsa-book.github.io
+#   branch: main
+
+# # Execution settings
+# execute:
+#   execute_notebooks: 'off'
+
+# # Latex (PDF) settings
+# latex:
+#   latex_documents:
+#     targetname: book.tex
+#   config:
+#     latex_elements:
+#       preamble: |
+#         \newcommand\N{\mathbb{N}}
+#         \newcommand\floor[1]{\lfloor#1\rfloor}
+#         \newcommand{\bmat}{\left[\begin{array}}
+#         \newcommand{\emat}{\end{array}\right]}
+
+# # Sphinx configurations
+# sphinx:
+#   config:
+#     nb_custom_formats:
+#       .Rmd:
+#         - jupytext.reads
+#         - fmt: Rmd
+#     bibtex_reference_style: author_year
+#     mathjax3_config:
+#       TeX:
+#         Macros:
+#           "N": "\\mathbb{N}"
+#           "floor": ["\\lfloor#1\\rfloor", 1]
+#           "bmat": ["\\left[\\begin{array}"]
+#           "emat": ["\\end{array}\\right]"]
+#     intersphinx_mapping:
+#       ebp: ["https://executablebooks.org/en/latest/", null]
+#       myst-parser: ["https://myst-parser.readthedocs.io/en/latest/", null]
+#       myst-nb: ["https://myst-nb.readthedocs.io/en/latest/", null]
+#       sphinx: ["https://www.sphinx-doc.org/en/master", null]
+#       nbformat: ["https://nbformat.readthedocs.io/en/latest", null]
+#       sphinx-panels: ["https://sphinx-panels.readthedocs.io/en/sphinx-book-theme/", null]
+#     rediraffe_branch: 'master'
+#     rediraffe_redirects:
+#       content-types/index.md: file-types/index.md
+#       content-types/markdown.md: file-types/markdown.md
+#       content-types/notebooks.ipynb: file-types/notebooks.ipynb
+#       content-types/myst-notebooks.md: file-types/myst-notebooks.md
+#       content-types/jupytext.md: file-types/jupytext.Rmd
+#       content-types/restructuredtext.md: file-types/restructuredtext.md
+#     language: en
+#     html_baseurl: 'https://dsa-book.github.io'
+#     html_js_files:
+#       - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js
+#       - https://c6.patreon.com/becomePatronButton.bundle.js
+#     nb_render_priority:
+#       html:
+#         - "application/vnd.jupyter.widget-view+json"
+#         - "application/javascript"
+#         - "text/html"
+#         - "image/svg+xml"
+#         - "image/png"
+#         - "image/jpeg"
+#         - "text/markdown"
+#         - "text/latex"
+#         - "text/plain"
+
+# # Launch buttons configuration
+# launch_buttons:
+#   notebook_interface: "classic"
+#   colab_url: ""
+#   thebe: true
+
+# # sphinx:
+# #   config:
+# #     thebe_config:
+# #       repository_url: "https://github.com/interactive-dsa-book/interactive-dsa-book.github.io"
+# #       repository_branch: "main"
+
+# bibtex_bibfiles:
+#   - references.bib  
+
+# # HTML settings
+# html:
+#   use_issues_button: false
+#   use_repository_button: true
+#   use_edit_page_button: false
+#   extra_css: ["_static/custom.css"]
+#   scripts:
+#     - _static/custom.js
+#   extra_path:
+#     - images/badge.svg
+#     - _static/plotly_htmls/
+
+# # MyST Parser extensions
+# parse:
+#   myst_substitutions:
+#     sub3: My _global_ value!
+#   myst_enable_extensions:
+#     - amsmath
+#     - colon_fence
+#     - deflist
+#     - dollarmath
+#     - html_admonition
+#     - html_image
+#     - linkify
+#     - replacements
+#     - smartquotes
+#     - substitution
+#     - dollarmath
+#     - linkify
+#     - substitution
+
+# # Add additional Sphinx extensions
+# sphinx:
+#   config:
+#     # html_theme: furo
+#     html_baseurl: 'https://interactive-dsa-book.github.io'
+#   extra_extensions:
+#     - sphinx_inline_tabs
+#     - sphinx_sitemap
+#     - sphinx.ext.mathjax
