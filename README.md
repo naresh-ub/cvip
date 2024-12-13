@@ -1,1 +1,1 @@
-[![Build Notebook Container](https://github.com/naresh-ub/cvip/actions/workflows/binder.yaml/badge.svg)](https://github.com/naresh-ub/cvip/actions/workflows/binder.yaml)
+[![Build Notebook Container](https://github.com/naresh-ub/cvip/actions/workflows/binder.yaml/badge.svg)](https://github.com/naresh-ub/cvip/actions/workflows/binder.yaml) [![pages-build-deployment](https://github.com/naresh-ub/cvip/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/naresh-ub/cvip/actions/workflows/pages/pages-build-deployment)
