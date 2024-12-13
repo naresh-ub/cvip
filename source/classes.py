@@ -1,14 +1,19 @@
 from manim import *
 
 class Plot(Scene):
-    def __init__(self, graph_function, x_range = (-5, 5), y_range = (-5, 5), labels = True, **kwargs):
-        super().__init__(**kwargs)
-        self.graph_function = graph_function
-        self.x_range = x_range
-        self.y_range = y_range
-        self.points = np.linspace(x_range[0], x_range[1], 200)
-        self.labels = labels
-        
+    @classmethod
+    def create(cls, graph_function, x_range=(-5, 5), y_range=(-5, 5), labels=True, **kwargs):
+        """
+        Factory method to dynamically initialize the class with custom inputs.
+        """
+        scene = cls(**kwargs)
+        scene.graph_function = graph_function
+        scene.x_range = x_range
+        scene.y_range = y_range
+        scene.points = np.linspace(x_range[0], x_range[1], 200)
+        scene.labels = labels
+        return scene
+
     def construct(self):
         # Define the axes
         axes = Axes(

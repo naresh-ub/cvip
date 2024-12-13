@@ -148,3 +148,14 @@ video {
     height: auto;
 }
 
+html[data-theme="dark"] .bd-content div.cell_output .text_html:not(:has(table.dataframe)),
+html[data-theme="dark"] .bd-content div.cell_output,
+html[data-theme="dark"] .bd-content div.cell_output img {
+    background-color: transparent !important; /* Removes background color */
+    border-radius: 0 !important; /* Removes rounded corners */
+    padding: 0 !important; /* Removes padding */
+    border: none !important; /* Removes any borders */
+    color: inherit !important; /* Ensures text color is consistent */
+}
+
+
