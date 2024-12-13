@@ -126,13 +126,13 @@ def start():
 q_dict = {'low': (480, 854, 15), 'medium': (720, 1280, 30), 'high': (1080, 1920, 60), '4k': (2160, 3840, 60)}
 
 # Rendering utility
-def render_manim(scene_class, quality="medium", **kwargs):
+def render_manim(scene_class, q="low", **kwargs):
     """
     Handles rendering for Scene classes with dynamic initialization.
     """
     log_capture_string, ch, logger = start()
     config.flush_cache = True
-    config.pixel_height, config.pixel_width, config.frame_rate = q_dict[quality]  # Default to medium quality
+    config.pixel_height, config.pixel_width, config.frame_rate = q_dict[q]  # Default to medium quality
 
     # Dynamically initialize the class using the `create` method
     if hasattr(scene_class, "create"):
