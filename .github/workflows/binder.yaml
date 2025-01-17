@@ -1,12 +1,9 @@
 name: Build Notebook Container
 on:
-  schedule:
-    # Runs every 6 hours (at 12:00 AM, 6:00 AM, 12:00 PM, and 6:00 PM UTC)
-    # - cron: '0 */6 * * *'
-
-    # Runs every 2 days at 12:00 AM UTC
-    - cron: '0 0 */1 * *'
-  workflow_dispatch:  # Allows manual trigger via GitHub UI
+  # schedule:
+  #   # Runs every 2 days at 12:00 AM UTC
+  #   - cron: '0 0 */1 * *'
+  workflow_dispatch:  # Runs only when triggered manually
 permissions:
   contents: write
 

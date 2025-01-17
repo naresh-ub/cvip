@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Gudea:ital,wght@0,400;0,700;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
 
 :root[data-mode="light"] .CodeMirror {
     color: #000000;
@@ -96,7 +97,8 @@
 body {
     font-size: 1.1em; /* Adjust the size as needed */
     /* font-family: -apple-system, BlinkMacSystemFont, 'Inter', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
-    font-family: 'Gudea', sans-serif;
+    /* font-family: 'Gudea', sans-serif; */
+    font-family: "Bricolage Grotesque", serif;
     /* font-family: 'JetBrains Mono', monospace; */
 }
 
@@ -120,7 +122,8 @@ pre, code {
 }
 
 h1, h2, h3, h4, h6 {
-    font-family: 'Gudea', sans-serif;
+    /* font-family: 'Gudea', sans-serif; */
+    font-family: "Bricolage Grotesque", serif;
 }
 
 .hide.above-input summary {
