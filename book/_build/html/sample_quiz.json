@@ -1,20 +1,18 @@
-{
-    "questions": [
-      {
+[
+    {
         "question": "Does image convolution always require the kernel size to be the same as the image size?",
-        "type": "bool",
+        "type": "multiple_choice",
         "answers": [
-          {
-            "text": "True",
-            "correct": false,
-            "feedback": "Incorrect. Convolution typically uses smaller kernels (e.g., 3x3, 5x5) rather than the full image size to capture local features."
-          },
-          {
-            "text": "False",
-            "correct": true,
-            "feedback": "Correct! Convolution kernels are usually much smaller than the image, allowing for feature extraction like edges, textures, and patterns."
-          }
+            {
+                "answer": "True",
+                "correct": false,
+                "feedback": "Incorrect. Convolution typically uses smaller kernels (e.g., 3x3, 5x5) rather than the full image size to capture local features."
+            },
+            {
+                "answer": "False",
+                "correct": false,
+                "feedback": "Correct! Convolution kernels are usually much smaller than the image, allowing for feature extraction like edges, textures, and patterns."
+            }
         ]
-      }
-    ]
-  }
+    }
+]
