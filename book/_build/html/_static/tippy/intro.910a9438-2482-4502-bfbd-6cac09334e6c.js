@@ -1,4 +1,4 @@
-selector_to_html = {"a[href=\"#cse-4-573-intro-to-computer-vision-and-image-processing\"]": "<h1 class=\"tippy-header\" style=\"margin-top: 0;\">CSE 4/573: Intro to Computer Vision and Image Processing<a class=\"headerlink\" href=\"#cse-4-573-intro-to-computer-vision-and-image-processing\" title=\"Link to this heading\">#</a></h1>"}
+selector_to_html = {"a[href=\"#cse-4-573-intro-to-computer-vision-and-image-processing\"]": "<h1 class=\"tippy-header\" style=\"margin-top: 0;\">CSE 4/573: Intro to Computer Vision and Image Processing<a class=\"headerlink\" href=\"#cse-4-573-intro-to-computer-vision-and-image-processing\" title=\"Link to this heading\">#</a></h1><p><strong>Welcome, Welcome, Welcome</strong> to the interactive side of the world.</p><p>The Summer 2025 version of this course has been completely revamped on two key fundamentals:</p>"}
 skip_classes = ["headerlink", "sd-stretched-link"]
 
 window.onload = function () {
