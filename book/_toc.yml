@@ -10,6 +10,11 @@ parts:
       - url: https://naresh-ub.github.io  # External link
         title: "Naresh Kumar Devulapally"
 
+  - caption: "Course Contents"
+    chapters:
+      - file: syllabus.ipynb
+  
+
 #   - caption: Courses I taught at UB
 #     chapters:
 #       - url: https://naresh-ub.github.io/teachbooks_template  # External link
