@@ -1,0 +1,281 @@
+.CodeMirror {
+  border: var(--mystnb-source-border-width) var(--mystnb-source-border-color)
+    solid;
+  border-right-width: 0;
+  border-left-width: 0;
+  background: var(--pst-color-surface) !important;
+  color: var(--pst-color-text-base) !important;
+}
+
+.CodeMirror-gutters {
+  background: var(--pst-color-surface) !important;
+}
+
+.thebe-button,
+.thebe-launch-button {
+  margin: 3px 3px 3px 3px;
+  border: var(--mystnb-source-border-width) var(--mystnb-source-border-color)
+    solid;
+  border-radius: calc(var(--mystnb-source-border-radius) + 1px);
+  background-color: var(--pst-color-surface);
+  color: var(--pst-color-text-base);
+}
+
+.thebe-launch-button {
+  height: 80% !important;
+}
+
+.cell_output .jp-OutputArea-output pre {
+  border: var(--mystnb-source-border-width) var(--mystnb-source-border-color)
+    solid;
+}
+
+.thebe-controls {
+  margin-left: 3px;
+}
+
+.jp-RenderedText {
+  padding-right: var(--jp-code-padding);
+}
+
+.jp-RenderedText pre {
+  color: var(--pst-color-text-base);
+  padding: 5px;
+}
+
+.jp-RenderedText[data-mime-type="application/vnd.jupyter.stderr"] pre {
+  border: calc(var(--mystnb-source-border-width) * 2)
+    var(--jp-rendermime-error-background) solid;
+}
+
+.jp-RenderedText[data-mime-type="application/vnd.jupyter.stderr"] {
+  background: inherit !important;
+}
+
+.thebe-button:active {
+  background-color: #f2f2f2;
+}
+
+.thebelab-busy-spinner,
+.thebe-busy-spinner {
+  width: 20px;
+  height: 20px;
+}
+
+html[data-theme="dark"] .tag_hide-input summary {
+  background: var(--pst-color-surface) !important;
+}
+
+.cell_output {
+  margin-top: 0.2em !important;
+}
+
+.cell_output .output.stream {
+  margin-top: 0.2em !important;
+  border: var(--mystnb-source-border-width) var(--mystnb-source-border-color)
+    solid !important;
+}
+
+div.container.cell_output {
+  padding-left: 0;
+  margin-bottom: 1em;
+}
+
+/* These rules are used for the dark mode code styling */
+/* Values taken from: https://codemirror.net/5/demo/theme.html#abcdef, with some minor tweaks to comments and gutter */
+html[data-theme="dark"] div.CodeMirror-selected {
+  background: #515151;
+}
+html[data-theme="dark"] .CodeMirror-line::selection,
+.cm-s-abcdef .CodeMirror-line > span::selection,
+.cm-s-abcdef .CodeMirror-line > span > span::selection {
+  background: rgba(56, 56, 56, 0.99);
+}
+html[data-theme="dark"] .CodeMirror-line::-moz-selection,
+.cm-s-abcdef .CodeMirror-line > span::-moz-selection,
+.cm-s-abcdef .CodeMirror-line > span > span::-moz-selection {
+  background: rgba(56, 56, 56, 0.99);
+}
+html[data-theme="dark"] .CodeMirror-guttermarker {
+  color: #222;
+}
+html[data-theme="dark"] .CodeMirror-guttermarker-subtle {
+  color: azure;
+}
+html[data-theme="dark"] .CodeMirror-cursor {
+  border-left: 1px solid #00ff00;
+}
+html[data-theme="dark"] span.cm-keyword {
+  color: darkgoldenrod;
+  font-weight: bold;
+}
+html[data-theme="dark"] span.cm-atom {
+  color: #77f;
+}
+html[data-theme="dark"] span.cm-number {
+  color: violet;
+}
+html[data-theme="dark"] span.cm-def {
+  color: #fffabc;
+}
+html[data-theme="dark"] span.cm-variable-2 {
+  color: #cacbcc;
+}
+html[data-theme="dark"] span.cm-variable-3,
+.cm-s-abcdef span.cm-type {
+  color: #def;
+}
+html[data-theme="dark"] span.cm-property {
+  color: #fedcba;
+}
+html[data-theme="dark"] span.cm-operator {
+  color: #ff0;
+}
+html[data-theme="dark"] span.cm-comment {
+  color: #c78748;
+}
+span.cm-comment {
+  font-style: italic;
+}
+html[data-theme="dark"] span.cm-string {
+  color: #2b4;
+}
+html[data-theme="dark"] span.cm-meta {
+  color: #c9f;
+}
+html[data-theme="dark"] span.cm-qualifier {
+  color: #fff700;
+}
+html[data-theme="dark"] span.cm-builtin {
+  color: #30aabc;
+}
+html[data-theme="dark"] span.cm-bracket {
+  color: #8a8a8a;
+}
+html[data-theme="dark"] span.cm-tag {
+  color: #ffdd44;
+}
+html[data-theme="dark"] span.cm-attribute {
+  color: #ddff00;
+}
+html[data-theme="dark"] span.cm-error {
+  color: #ff0000;
+}
+html[data-theme="dark"] span.cm-header {
+  color: aquamarine !important;
+  font-weight: bold !important;
+}
+html[data-theme="dark"] span.cm-link {
+  color: blueviolet !important;
+}
+html[data-theme="dark"] .CodeMirror-activeline-background {
+  background: #314151 !important;
+}
+html[data-theme="dark"] .widget-label,
+.widget-readout {
+  color: var(--pst-color-text-base) !important;
+}
+
+html[data-theme="dark"] .jp-RenderedText pre .ansi-yellow-bg {
+  background-color: #9e8220 !important;
+}
+
+html[data-theme="light"] .tag_hide-input summary {
+  background: var(--pst-color-surface) !important;
+}
+
+/* These rules are used for the dark mode code styling */
+/* Values taken from: https://codemirror.net/5/demo/theme.html#abcdef, with some minor tweaks to comments and gutter */
+html[data-theme="light"] div.CodeMirror-selected {
+  background: #adaeae !important;
+}
+html[data-theme="light"] .CodeMirror-line::selection,
+.cm-s-abcdef .CodeMirror-line > span::selection,
+.cm-s-abcdef .CodeMirror-line > span > span::selection {
+  background: rgba(198, 198, 198, 0.99) !important;
+}
+html[data-theme="light"] .CodeMirror-line::-moz-selection,
+.cm-s-abcdef .CodeMirror-line > span::-moz-selection,
+.cm-s-abcdef .CodeMirror-line > span > span::-moz-selection {
+  background: rgba(198, 198, 198, 0.99) !important;
+}
+html[data-theme="light"] .CodeMirror-guttermarker {
+  color: #dedfde !important;
+}
+html[data-theme="light"] .CodeMirror-guttermarker-subtle {
+  color: #003030 !important;
+}
+html[data-theme="light"] .CodeMirror-cursor {
+  border-left: 1px solid #009100 !important;
+}
+html[data-theme="light"] span.cm-keyword {
+  color: #a57400 !important;
+  font-weight: bold !important;
+}
+html[data-theme="light"] span.cm-atom {
+  color: #7474fc !important;
+}
+html[data-theme="light"] span.cm-number {
+  color: #ab3fab !important;
+}
+html[data-theme="light"] span.cm-def {
+  color: #100b00 !important;
+}
+html[data-theme="light"] span.cm-variable-2 {
+  color: #333435 !important;
+}
+html[data-theme="light"] span.cm-variable-3,
+.cm-s-abcdef span.cm-type {
+  color: #051425 !important;
+}
+html[data-theme="light"] span.cm-property {
+  color: #3b1900 !important;
+}
+html[data-theme="light"] span.cm-operator {
+  color: #242400 !important;
+}
+html[data-theme="light"] span.cm-comment {
+  color: #a56526 !important;
+}
+html[data-theme="light"] span.cm-string {
+  color: #00961f !important;
+}
+html[data-theme="light"] span.cm-meta {
+  color: #7441a7 !important;
+}
+html[data-theme="light"] span.cm-qualifier {
+  color: #302800 !important;
+}
+html[data-theme="light"] span.cm-builtin {
+  color: #0c8698 !important;
+}
+html[data-theme="light"] span.cm-bracket {
+  color: #747574 !important;
+}
+html[data-theme="light"] span.cm-tag {
+  color: #4b2900 !important;
+}
+html[data-theme="light"] span.cm-attribute {
+  color: #113300 !important;
+}
+html[data-theme="light"] span.cm-error {
+  color: #ff9292 !important;
+}
+html[data-theme="light"] span.cm-header {
+  color: #003c11 !important;
+  font-weight: bold !important;
+}
+html[data-theme="light"] span.cm-link {
+  color: #f091ff !important;
+}
+html[data-theme="light"] .CodeMirror-activeline-background {
+  background: #b2c2d2 !important;
+}
+html[data-theme="light"] .widget-label,
+.widget-readout {
+  color: var(--pst-color-text-base) !important;
+}
+
+html[data-theme="light"] .jp-RenderedText pre .ansi-yellow-bg {
+  background-color: #9b7f1d !important;
+}

@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Gudea:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+:root[data-mode="light"] .CodeMirror {
+    color: #000000;
+    background-color: #ffffff;
+    height: auto;
+}
+
+.button {
+    display: inline-block;
+    background-color: #2F73C0; /* Blue background */
+    color: white; /* White text */
+    padding: 3px 10px; /* Compact padding */
+    font-size: 0.9em; /* Match paragraph font size */
+    text-decoration: none; /* Remove underline */
+    border-radius: 6px; /* Rounded corners */
+    font-family: inherit; /* Use the same font as surrounding text */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.button-green {
+    display: inline-block;
+    background-color: green; /* Blue background */
+    color: white; /* White text */
+    padding: 3px 10px; /* Compact padding */
+    font-size: 0.9em; /* Match paragraph font size */
+    text-decoration: none; /* Remove underline */
+    border-radius: 6px; /* Rounded corners */
+    font-family: inherit; /* Use the same font as surrounding text */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+:root[data-mode="dark"] .CodeMirror {
+    color: #ffffff;
+    background-color: #2d2d2d;
+    height: auto;
+}
+
+:root[data-mode="auto"] .CodeMirror {
+    color: #ffffff;
+    background-color: #2d2d2d;
+    height: auto;
+}
+
+:root[data-mode="dark"] .CodeMirror-cursor {
+    border-left: 1px solid #ffffff;
+}
+
+:root[data-mode="dark"] .cm-keyword { color: #ff79c6; }
+:root[data-mode="dark"] .cm-def { color: #ff79c6; }
+:root[data-mode="dark"] .cm-builtin { color: #ff79c6; }
+:root[data-mode="dark"] .cm-string { color: #f1fa8c; }
+
+:root[data-mode="dark"] .jp-OutputArea-output,
+:root[data-mode="dark"] .jp-RenderedText {
+    color: #ffffff !important;
+    background-color: #2d2d2d !important;
+    padding-top: 0.1em !important; /* Added padding */
+}
+
+:root[data-mode="dark"] .jp-OutputArea-output pre,
+:root[data-mode="dark"] .jp-RenderedText pre {
+    color: #ffffff !important;
+    background-color: #2d2d2d !important;
+}
+
+:root[data-mode="dark"] .CodeMirror {
+    color: #ffffff; 
+    background-color: #2d2d2d;
+}
+
+:root[data-mode="dark"] .CodeMirror-cursor {
+    border-left: 1px solid #ffffff;
+}
+
+:root[data-mode="dark"] .cm-keyword { color: #ff79c6; }
+:root[data-mode="dark"] .cm-def { color: #ff79c6; }
+:root[data-mode="dark"] .cm-builtin { color: #ff79c6; }
+:root[data-mode="dark"] .cm-string { color: #f1fa8c; }
+
+:root[data-mode="auto"].thebe .jp-OutputArea-output,
+:root[data-mode="auto"].thebe .jp-RenderedText {
+    color: #ffffff !important;
+    background-color: #2d2d2d !important;
+}
+
+:root[data-mode="auto"] .jp-OutputArea-output pre,
+:root[data-mode="auto"] .jp-RenderedText pre {
+    color: #ffffff !important;
+    background-color: #2d2d2d !important;
+}
+
+:root[data-mode="auto"] .CodeMirror {
+    color: #ffffff; 
+    background-color: #2d2d2d;
+}
+
+:root[data-mode="auto"] .CodeMirror-cursor {
+    border-left: 1px solid #ffffff;
+}
+
+:root[data-mode="auto"] .cm-keyword { color: #ff79c6; }
+:root[data-mode="auto"] .cm-def { color: #ff79c6; }
+:root[data-mode="auto"] .cm-builtin { color: #ff79c6; }
+:root[data-mode="auto"] .cm-string { color: #f1fa8c; }
+
+:root[data-mode="dark"] {
+    --jp-rendermime-error-background: transparent !important;
+}
+
+:root[data-mode="auto"] {
+    --jp-rendermime-error-background: transparent !important;
+}
+
+/* Increase font size of normal text */
+body {
+    font-size: 1.1em; /* Adjust the size as needed */
+    /* font-family: 'Gudea', sans-serif; */
+    font-family: "Source Sans 3", serif;;
+}
+
+/* Thebe launch button */
+.thebe-launch-button .spinner {
+    display: none !important;
+}
+
+/* Apply Fira Code to both static and interactive code blocks */
+pre, code, .highlight pre, .highlight code, .CodeMirror {
+    font-family: "Fira Code", monospace !important;
+    font-size: 0.9em !important; /* Adjust size as needed */
+}
+
+/* Ensure proper font and sizing in CodeMirror */
+.CodeMirror-lines {
+    font-family: "Fira Code", monospace !important;
+    font-size: 1.2em !important;
+}
+
+/* Override Jupyter-Book styles */
+div.highlight pre, div.highlight code, div.highlight-ipython3 pre {
+    font-family: "Fira Code", monospace !important;
+    font-size: 0.9em !important;
+}
+
+/* Fix Thebe editor issue */
+.CodeMirror pre, .CodeMirror-code {
+    font-family: "Fira Code", monospace !important;
+    font-size: 0.9em !important;
+}
+
+h1, h2, h3, h4, h6 {
+    /* font-family: "Bricolage Grotesque", serif; */
+    font-family: "Source Sans 3", serif;
+}
+
+.hide.above-input summary {
+    color: black;
+}
+
+.cell_output.docutils.container img {
+    display: block; 
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Ensure no background color is applied to images */
+div.cell_output img {
+    background-color: transparent !important;
+}
+
+div.cell_output.text_html {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+}
+
+div.cell_output.text_html iframe {
+    display: block !important;
+    margin: auto !important;
+    width: 800px !important;
+    height: 600px !important;
+}
+
+/* Manually set image styling to remove inversion and filters */
+html[data-theme="dark"] img:not(.only-dark, .dark-light),
+html[data-theme="dark"] figure img:not(.only-dark, .dark-light),
+html[data-theme="dark"] iframe:not([src*="youtube.com"]):not([src*="vimeo.com"]):not(.only-dark) {
+    background-color: #fff !important;
+    border-radius: 0.25rem !important;
+}
+
+/* Ensure no filter effects apply */
+html[data-theme="dark"] img,
+html[data-theme="dark"] figure img,
+html[data-theme="dark"] .cell_output img,
+html[data-theme="dark"] div.cell_output img,
+html[data-theme="dark"] .jp-OutputArea-output img {
+    filter: none !important;
+    -webkit-filter: none !important;
+    -moz-filter: none !important;
+    -o-filter: none !important;
+    -ms-filter: none !important;
+}
+
+/* Ensure iframe contents are not affected */
+html[data-theme="dark"] iframe {
+    filter: none !important;
+}
+
+html[data-theme="dark"] .logo img:not(.only-dark), html[data-theme="dark"] img:not(.sd-tab-set.docutils img):not(.only-dark), html[data-theme="dark"] figure:not(.sd-tab-set.docutils figure) img:not(.only-dark), html[data-theme="dark"] iframe:not([src*="youtube.com"]):not([src*="vimeo.com"]):not(.only-dark):not(.sphinx) {
+    filter: none !important;
+    mix-blend-mode: normal !important;
+}  
+/* Prevent inversion specifically for figures */
+html[data-theme="dark"] figure img,
+html[data-theme="dark"] .figure img {
+    filter: none !important;
+}
+
+/* Ensure specific class-based rules do not override filter settings */
+img.dark-light, img.only-dark, img.only-light {
+    filter: none !important;
+}
+
+/* Remove inversion effect from markdown and HTML embedded images */
+html[data-theme="dark"] img:not(.only-dark, .dark-light),
+html[data-theme="dark"] figure img {
+    filter: none !important;
+}
+
+/* Reset blending mode for all images */
+img {
+    mix-blend-mode: normal !important;
+}
+
+video {
+    width: 100%;
+    height: auto;
+}
+
+html[data-theme="dark"] .bd-content div.cell_output .text_html:not(:has(table.dataframe)),
+html[data-theme="dark"] .bd-content div.cell_output,
+html[data-theme="dark"] .bd-content div.cell_output img {
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    padding-bottom: 0 !important;
+    border: none !important;
+    color: inherit !important;
+}

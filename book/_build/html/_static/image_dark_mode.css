@@ -1,0 +1,31 @@
+html[data-theme="dark"] .logo img:not(.only-dark),
+html[data-theme="dark"] img:not(.sd-tab-set.docutils img):not(.only-dark),
+html[data-theme="dark"] figure:not(.sd-tab-set.docutils figure) img:not(.only-dark),
+html[data-theme="dark"] iframe:not([src*="youtube.com"]):not([src*="vimeo.com"]):not(.only-dark):not(.sphinx) {
+  background-color: #fff !important;
+  mix-blend-mode: difference !important;
+  border-radius: .25rem !important;
+}
+
+html[data-theme="dark"] .logo img:not(.dark-light):not(.only-dark),
+html[data-theme="dark"] img:not(.dark-light):not(.only-dark):not(.sd-tab-set.docutils img),
+html[data-theme="dark"] figure:not(.sd-tab-set.docutils figure) img:not(.dark-light):not(.only-dark),
+html[data-theme="dark"] iframe:not([src*="youtube.com"]):not([src*="vimeo.com"]):not(.dark-light):not(.sphinx) {
+  filter: invert(1) hue-rotate(180deg) saturate(1.5);
+}
+
+/* Fix alert dark mode */
+html[data-theme="dark"] .alert {
+  --bs-alert-bg: #132119;
+  --bs-alert-color: #d1e7dd;
+}
+
+/* Dark mode: Apply inversion specifically for tab-set figures */
+html[data-theme="dark"] .sd-tab-set.docutils figure img:not(.dark-light):not(.only-dark) ,
+html[data-theme="dark"] .sd-tab-set.docutils img:not(.dark-light):not(.only-dark) {
+  filter: brightness(0.8) contrast(1.2) invert(1);
+  mix-blend-mode: lighten; 
+  display: block;
+  position: relative;
+  opacity: 0.9; 
+}
