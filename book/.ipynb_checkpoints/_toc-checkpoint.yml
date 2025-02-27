@@ -1,15 +1,13 @@
 format: jb-book
-root: intro
+root: intro.md
 
 
-# TOC from main website
+## TOC from main website
 
 parts:
-  - chapters:
-      - file: intro
-#   - caption: 
-#     chapters:
-#       - file: intro.ipynb
+  - caption:
+    chapters:
+      - file: something.ipynb
 
 #   - caption: Courses I taught at UB
 #     chapters:

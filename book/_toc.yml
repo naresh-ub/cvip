@@ -7,7 +7,7 @@ root: intro.md
 parts:
   - caption:
     chapters:
-      - file: test.ipynb
+      - file: something.ipynb
 
 #   - caption: Courses I taught at UB
 #     chapters:
