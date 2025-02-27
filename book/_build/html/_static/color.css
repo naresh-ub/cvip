@@ -35,6 +35,20 @@
     cursor: pointer; /* Pointer cursor on hover */
 }
 
+:root[data-mode="dark"] .collapsed, 
+:root[data-mode="dark"] .expanded,
+:root[data-mode="auto"][data-theme="dark"] .collapsed, 
+:root[data-mode="auto"][data-theme="dark"] .expanded {
+    color: white !important;
+}
+
+:root[data-mode="light"] .collapsed, 
+:root[data-mode="light"] .expanded,
+:root[data-mode="auto"][data-theme="light"] .collapsed, 
+:root[data-mode="auto"][data-theme="light"] .expanded {
+    color: black !important;
+}
+
 :root[data-mode="dark"] .CodeMirror {
     color: #ffffff;
     background-color: #2d2d2d;
