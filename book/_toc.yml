@@ -4,10 +4,11 @@ root: intro.ipynb
 
 ## TOC from main website
 
-# parts:
-#   - caption:
-#     chapters:
-#       - file: something.ipynb
+parts:
+  - caption: "About the instructor"
+    chapters:
+      - url: https://naresh-ub.github.io  # External link
+        title: "Naresh Kumar Devulapally"
 
 #   - caption: Courses I taught at UB
 #     chapters:

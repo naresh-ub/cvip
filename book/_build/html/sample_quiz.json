@@ -10,7 +10,7 @@
             },
             {
                 "answer": "False",
-                "correct": false,
+                "correct": true,
                 "feedback": "Correct! Convolution kernels are usually much smaller than the image, allowing for feature extraction like edges, textures, and patterns."
             }
         ]
