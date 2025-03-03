@@ -17,6 +17,7 @@ This syllabus is subject to **minor** updates. Find last updated date on the bot
 * **Course Code:** CSE 573
 * **Credits:** 3  
 * **Mode:** Hybrid - Both remote and in-person (all submissions including exams can be completed online)
+* **Lecture Hall:** NSC 215, Tue, Thu: 10:30 AM to 11:50 AM
 
 ## Instructor Information
 | **Instructor** | **Email** | **Office Location** | **Office Hours** |
