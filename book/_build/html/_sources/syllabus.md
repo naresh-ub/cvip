@@ -7,6 +7,7 @@ This syllabus is subject to **minor** updates. The latest version will always be
 
 ## Summary of the syllabus
 
+- Hybrid course (Can be taken from anywhere! All submissions and exams will be online and proctured).
 - 2 Assignments (15% each)
 - 2 Exams (1 Midterm 20%, 1 Final Exam 25%) (Exam dates will be released soon, midterm towards end of June and Final exam towards mid August).
 - All submissions can be made online. Classes can be attended online (in-person attendance recommended)
@@ -96,8 +97,8 @@ Upon successful completion of this course, students will be able to:
 |---------------------|------------|-------------|
 | **Assignments**    | 30%        | 2 Assignments (15% each) |
 | **Weekly Quizzes** | 20%        | Best 4 out of 6 quizzes |
-| **Midterm Exam**   | 20%        | MCQ |
-| **Final Exam**     | 25%        | Cumulative MCQ Exam |
+| **Midterm Exam**   | 20%        | MCQ Exam |
+| **Final Exam**     | 25%        | MCQ Exam |
 | **Class Participation** | 5%    | Attendance (Zoom or In-Person) |
 | **Bonuses**        | Additional | Extra Credit Activities |
 
