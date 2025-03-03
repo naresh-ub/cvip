@@ -12,7 +12,7 @@ parts:
 
   - caption: "Course Contents"
     chapters:
-      - file: syllabus.ipynb
+      - file: syllabus.md
   
 
 #   - caption: Courses I taught at UB
