@@ -74,7 +74,7 @@ Upon successful completion of this course, students will be able to:
 
 ## Course Schedule
 
-*(Note: Schedule is subject to changes in the schdule. Minor changes to content)*
+*(Note: Schedule is subject to changes. Minor changes to content)*
 
 | **Week** | **Topics** | **Assignments/Exercises** |
 |---------|------------|----------------------|
