@@ -2,12 +2,12 @@
 
 ```{admonition} Minor changes to the syllabus are expected
 :class: warning
-This syllabus is subject to **minor** updates. The latest version will always be available on the **course website**.
+This syllabus is subject to **minor** updates. Find last updated date on the bottom of this page.
 ```
 
 ## Summary of the syllabus
 
-- Hybrid course (Can be taken from anywhere! All submissions and exams will be online and proctured).
+- Hybrid course (Can be taken from anywhere! All submissions and exams will be online and proctored).
 - 2 Assignments (15% each)
 - 2 Exams (1 Midterm 20%, 1 Final Exam 25%) (Exam dates will be released soon, midterm towards end of June and Final exam towards mid August).
 - All submissions can be made online. Classes can be attended online (in-person attendance recommended)
