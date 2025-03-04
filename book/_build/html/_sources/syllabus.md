@@ -74,7 +74,7 @@ Upon successful completion of this course, students will be able to:
 
 ## Course Schedule
 
-*(Note: Schedule is subject to changes in the schdule. Minor changes to content)*
+*(Note: Schedule is subject to changes. Minor changes to content)*
 
 | **Week** | **Topics** | **Assignments/Exercises** |
 |---------|------------|----------------------|
@@ -84,7 +84,7 @@ Upon successful completion of this course, students will be able to:
 | Week 4  | Edge Detection, Segmentation Techniques  | Assignment 1: Image Formation and Camera Calibration |
 | Week 5  | Feature Extraction: Color, Texture, Shape | Quiz 2 |
 | Week 6  | Object Detection (YOLO, SSD) | Midterm Exam |
-| Week 7  | CNN Architectures (AlexNet, ResNet) | Assignment 3: CNN Implementation |
+| Week 7  | CNN Architectures (AlexNet, ResNet) | TBD |
 | Week 8  | Generative Models: VAEs | Quiz 3 |
 | Week 9  | Diffusion Models, Denoising Autoencoders | Hands-on Coding Exercise |
 | Week 10 | Diffusion Models, Denoising Autoencoders | Assignment 2: DDPM from scratch on 2-D data |
