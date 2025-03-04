@@ -6,7 +6,7 @@ FOLDER_TO_WATCH="book"
 # Python script to run when a change is detected
 PYTHON_FILE="build.py"
 
-# File or folder to ignore (you can add more if needed)
+# File or folder to ignore (you can add more if needed) (commit check)
 IGNORE_PATTERN="book/_build"
 
 # Continuously monitor the folder, running the Python script once per detected change
