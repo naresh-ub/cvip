@@ -21,8 +21,8 @@ sphinx:
     html_theme_options:
       logo:
         text: CSE 4/573 - CVIP
-        image_light:  # Put your logo for the light mode here (can be the same as image_dark)
-        image_dark:  # Put your logo for the dark mode here (can be the same as image_light)
+        image_light: figures/logo.png # Put your logo for the light mode here (can be the same as image_dark)
+        image_dark: figures/logo_dark.png # Put your logo for the dark mode here (can be the same as image_light)
       repository_url: "https://github.com/naresh-ub/cvip" #add your own repo URL here
       path_to_docs: "book"
       repository_branch: "main"

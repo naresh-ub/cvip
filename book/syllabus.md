@@ -1,14 +1,23 @@
 # Course Logistics and Syllabus
 
-```{admonition} Minor changes to the syllabus are expected
-:class: warning
-This syllabus is subject to **minor** updates. Find last updated date on the bottom of this page.
+```{admonition} FAQs from students regarding this course
+:class: tip
+
+- **Does this course satisfy CSE AI/ML capstone project requirement?**
+    - Ans: YES
+
+- **Can I take this course completely remote (anywhere from earth)?**
+    - Ans: YES, the course is HYBRID and can be taken fully remote (including final exams).
+
+- **What is the attendance policy?**
+    - Ans: Students taking the course online are RECOMMENDED to attend LIVE zoom classes. Recordings will also be available.
+
 ```
 
 ## Summary of the syllabus
 
 - Hybrid course (Can be taken from anywhere! All submissions and exams will be online and proctored).
-- 2 Assignments (15% each)
+- 1 Assignment, 1 Project (15% each)
 - 2 Exams (1 Midterm 20%, 1 Final Exam 25%) (Exam dates will be released soon, midterm towards end of June and Final exam towards mid August).
 - All submissions can be made online. Classes can be attended online (in-person attendance recommended)
 - Interactive course material for enhanced experience.
@@ -86,8 +95,8 @@ Upon successful completion of this course, students will be able to:
 | Week 6  | Object Detection (YOLO, SSD) | Midterm Exam |
 | Week 7  | CNN Architectures (AlexNet, ResNet) | TBD |
 | Week 8  | Generative Models: VAEs | Quiz 3 |
-| Week 9  | Diffusion Models, Denoising Autoencoders | Hands-on Coding Exercise |
-| Week 10 | Diffusion Models, Denoising Autoencoders | Assignment 2: DDPM from scratch on 2-D data |
+| Week 9  | Diffusion Models, Denoising Autoencoders | Hands-on Coding Exercise: DDPM from scratch on 2-D data |
+| Week 10 | Diffusion Models, Denoising Autoencoders | Project 1 submission  |
 | Week 11 | Computer Vision Applications | Quiz 4 |
 | Week 12 | Final Exam | No exercises |
 
@@ -96,11 +105,11 @@ Upon successful completion of this course, students will be able to:
 
 | **Category**        | **Weight %** | **Details** |
 |---------------------|------------|-------------|
-| **Assignments**    | 30%        | 2 Assignments (15% each) |
+| **Assignments**    | 30%        | 1 Assignment, 1 Project (15% each) |
 | **Weekly Quizzes** | 20%        | Best 4 out of 6 quizzes |
 | **Midterm Exam**   | 20%        | MCQ Exam |
 | **Final Exam**     | 25%        | MCQ Exam |
-| **Class Participation** | 5%    | Attendance (Zoom or In-Person) |
+| **Class Participation** | 5%    | Attendance (Zoom (Live) or In-Person) |
 | **Bonuses**        | Additional | Extra Credit Activities |
 
 **Grading Scale:**
@@ -117,7 +126,7 @@ Upon successful completion of this course, students will be able to:
 
 ### **Attendance Policy**
 - Attending lectures is **STRONGLY RECOMMENDED** for in-person students. You will enjoy the course material and in-person learning experience in the course.
-- Zoom recordings will be available for remote students.
+- Students choosing the remote option are **REQUIRED** to attend live zoom lectures.
 - Extended absences due to health or personal reasons must be communicated to the instructor.
 
 ### **Late Submission Policy**
@@ -137,11 +146,11 @@ More details on UB’s **Academic Integrity Policy**:
 [https://www.buffalo.edu/studentlife/who-we-are/departments/accessibility.html](https://www.buffalo.edu/studentlife/who-we-are/departments/accessibility.html)
 
 
-## Student Resources
+<!-- ## Student Resources -->
 
-### **Accessibility & Accommodations**
+<!-- ### **Accessibility & Accommodations**
 Students requiring accommodations should contact the **Office of Accessibility Resources** in **60 Capen Hall**.  
-Phone: **(716) 645-2608** | Website: [Accessibility Office](http://www.buffalo.edu/studentlife/who-we-are/departments/accessibility.html)
+Phone: **(716) 645-2608** | Website: [Accessibility Office](http://www.buffalo.edu/studentlife/who-we-are/departments/accessibility.html) -->
 
 ### **Mental Health & Well-being**
 UB provides counseling and mental health services for students dealing with stress, anxiety, or other challenges.  
@@ -149,14 +158,14 @@ UB provides counseling and mental health services for students dealing with stre
 - **120 Richmond Quad (North Campus)** – **(716) 645-2720**
 - **202 Michael Hall (South Campus)** – **(716) 829-5800**
 
-### **Diversity & Inclusion**
+<!-- ### **Diversity & Inclusion**
 We are committed to fostering an **inclusive learning environment** and welcome students from all backgrounds.  
-For concerns related to **discrimination, harassment, or bias**, please reach out to [UB’s Diversity Office](https://www.buffalo.edu/diversity.html).
+For concerns related to **discrimination, harassment, or bias**, please reach out to [UB’s Diversity Office](https://www.buffalo.edu/diversity.html). -->
 
 
 ## Contact & Communication
 - **Course Website:** [https://naresh-ub.github.io/cvip]
-- **Discussion Forum:** [Piazza/Slack/Other]
+- **Discussion Forum:** [Piazza (link will be provided)]
 
 
 ## Final Notes

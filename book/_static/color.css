@@ -133,7 +133,7 @@
 
 /* Increase font size of normal text */
 body {
-    font-size: 1.1em; /* Adjust the size as needed */
+    font-size: 1.2em; /* Adjust the size as needed */
     /* font-family: 'Gudea', sans-serif; */
     font-family: "Source Sans 3", serif;;
 }
@@ -268,3 +268,12 @@ html[data-theme="dark"] .bd-content div.cell_output img {
     border: none !important;
     color: inherit !important;
 }
+
+:root[data-theme="dark"] .next {
+    color: white !important;
+}
+
+:root[data-theme="light"] .next {
+    color: black !important;
+}
+
