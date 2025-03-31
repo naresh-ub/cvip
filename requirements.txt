@@ -1,5 +1,5 @@
 # first list the packages you wish to download from PyPI
-teachbooks # depends on jupyter-book
+teachbooks # depends on jupyter-book test
 jupyterbook-patches
 sphinx-image-inverter
 download_link_replacer
