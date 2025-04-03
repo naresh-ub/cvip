@@ -4,7 +4,7 @@
 :class: tip
 
 - **Does this course satisfy CSE AI/ML capstone project requirement?**
-    - Ans: YES
+    - Ans: YES, `If Fall 2025 is your final semester`
 
 - **Can I take this course completely remote (anywhere from earth)?**
     - Ans: YES, the course is HYBRID and can be taken fully remote (including final exams).
