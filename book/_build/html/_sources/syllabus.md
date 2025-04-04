@@ -3,22 +3,22 @@
 ```{admonition} FAQs from students regarding this course
 :class: tip
 
-- **Does this course satisfy CSE AI/ML capstone project requirement?**
-    - Ans: YES, `If Fall 2025 is your final semester`
+- **Does this course satisfy CSE AI/ML CAPSTONE COURSE requirement?**
+    - YES, `if Fall 2025 is your final semester`
 
 - **Can I take this course completely remote (anywhere from earth)?**
-    - Ans: YES, the course is HYBRID and can be taken fully remote (including final exams).
+    - YES, the course is HYBRID and can be taken fully remote (including final exams).
 
 - **What is the attendance policy?**
-    - Ans: Students taking the course online are RECOMMENDED to attend LIVE zoom classes. Recordings will also be available.
+    - Students taking the course online are RECOMMENDED to attend LIVE zoom classes. Recordings will also be available.
 
 ```
 
 ## Summary of the syllabus
 
 - Hybrid course (Can be taken from anywhere! All submissions and exams will be online and proctored).
-- 1 Assignment, 1 Project (15% each)
-- 2 Exams (1 Midterm 20%, 1 Final Exam 25%) (Exam dates will be released soon, midterm towards end of June and Final exam towards mid August).
+- 2 Assignments (15% each)
+- 2 Exams (1 Midterm 20%, 1 Final Exam 25%) (Exam dates will be released soon, midterm towards end of June and Final exam to wards mid August).
 - All submissions can be made online. Classes can be attended online (in-person attendance recommended)
 - Interactive course material for enhanced experience.
 
@@ -96,7 +96,7 @@ Upon successful completion of this course, students will be able to:
 | Week 7  | CNN Architectures (AlexNet, ResNet) | TBD |
 | Week 8  | Generative Models: VAEs | Quiz 3 |
 | Week 9  | Diffusion Models, Denoising Autoencoders | Hands-on Coding Exercise: DDPM from scratch on 2-D data |
-| Week 10 | Diffusion Models, Denoising Autoencoders | Project 1 submission  |
+| Week 10 | Diffusion Models, Denoising Autoencoders | Assignment 2 submission  |
 | Week 11 | Computer Vision Applications | Quiz 4 |
 | Week 12 | Final Exam | No exercises |
 
@@ -105,7 +105,7 @@ Upon successful completion of this course, students will be able to:
 
 | **Category**        | **Weight %** | **Details** |
 |---------------------|------------|-------------|
-| **Assignments**    | 30%        | 1 Assignment, 1 Project (15% each) |
+| **Assignments**    | 30%        | 2 Assignments (15% each) |
 | **Weekly Quizzes** | 20%        | Best 4 out of 6 quizzes |
 | **Midterm Exam**   | 20%        | MCQ Exam |
 | **Final Exam**     | 25%        | MCQ Exam |
