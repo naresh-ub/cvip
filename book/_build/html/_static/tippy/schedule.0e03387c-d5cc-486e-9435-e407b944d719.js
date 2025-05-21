@@ -1,4 +1,4 @@
-selector_to_html = {"a[href=\"#what-s-happening-this-week\"]": "<h1 class=\"tippy-header\" style=\"margin-top: 0;\">What\u2019s happening this week?<a class=\"headerlink\" href=\"#what-s-happening-this-week\" title=\"Link to this heading\">#</a></h1>", "a[href=\"lectures/lecture0.html\"]": "<h1 class=\"tippy-header\" style=\"margin-top: 0;\">Lec 0: Welcome to the course<a class=\"headerlink\" href=\"#lec-0-welcome-to-the-course\" title=\"Link to this heading\">#</a></h1>"}
+selector_to_html = {"a[href=\"#what-s-happening-this-week\"]": "<h1 class=\"tippy-header\" style=\"margin-top: 0;\">What\u2019s happening this week?<a class=\"headerlink\" href=\"#what-s-happening-this-week\" title=\"Link to this heading\">#</a></h1>", "a[href=\"syllabus.html\"]": "<h1 class=\"tippy-header\" style=\"margin-top: 0;\">Course Logistics and Syllabus<a class=\"headerlink\" href=\"#course-logistics-and-syllabus\" title=\"Link to this heading\">#</a></h1><h2>Summary of the syllabus<a class=\"headerlink\" href=\"#summary-of-the-syllabus\" title=\"Link to this heading\">#</a></h2>"}
 skip_classes = ["headerlink", "sd-stretched-link"]
 
 window.onload = function () {

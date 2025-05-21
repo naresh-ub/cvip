@@ -11,8 +11,8 @@ parts:
       #   title: "Naresh Kumar Devulapally"
       - file: schedule.md
         title: "⏰ What's happening this week? ⏰"
-      - file: website-features.ipynb
       - file: syllabus.md
+      - file: website-features.ipynb
   - caption: "Course Content"
     chapters:
       - file: lectures/lecture1.ipynb
