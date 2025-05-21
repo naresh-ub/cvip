@@ -1,0 +1,5 @@
+html[data-theme="dark"] .jupyter-widgets.jupyter-matplotlib-canvas-div,
+html[data-theme="dark"] .jupyter-matplotlib-button.jupyter-widgets.jupyter-button {
+  filter: invert(1) hue-rotate(180deg) saturate(1.5) ;
+  mix-blend-mode: difference !important;
+}

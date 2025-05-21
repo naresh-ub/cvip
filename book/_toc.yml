@@ -5,15 +5,16 @@ root: intro.ipynb
 ## TOC from main website
 
 parts:
-  - caption: "About the instructor"
+  - caption: "Logistics and Weekly Schedule"
     chapters:
-      - url: https://naresh-ub.github.io  # External link
-        title: "Naresh Kumar Devulapally"
-      - file: website-details.ipynb
-
-  - caption: "Course Contents"
-    chapters:
+      # - url: https://naresh-ub.github.io  # External link
+      #   title: "Naresh Kumar Devulapally"
+      - file: schedule.md
+        title: "⏰ What's happening this week? ⏰"
+      - file: website-features.ipynb
       - file: syllabus.md
+  - caption: "Course Content"
+    chapters:
       - file: lectures/lecture1.ipynb
       - file: lectures/lecture2.ipynb
       - file: lectures/lecture3.ipynb

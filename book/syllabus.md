@@ -1,23 +1,28 @@
 # Course Logistics and Syllabus
 
+<div>
+<iframe src="https://slides.com/naresh-ub/lec-0/embed" width="100%" height="500" title="Test Title" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div>
+
 ```{admonition} FAQs from students regarding this course
 :class: tip
 
 - **Does this course satisfy CSE AI/ML CAPSTONE COURSE requirement?**
-    - YES, `if Fall 2025 is your final semester`
+    - YES, if Fall 2025 is your final semester.
 
 - **Can I take this course completely remote (anywhere from earth)?**
     - YES, the course is HYBRID and can be taken fully remote (including final exams).
 
 - **What is the attendance policy?**
     - Students taking the course online are RECOMMENDED to attend LIVE zoom classes. Recordings will also be available.
+    - Class Participation has 5% Grade.
 
 ```
 
 ## Summary of the syllabus
 
 - Hybrid course (Can be taken from anywhere! All submissions and exams will be online and proctored).
-- 2 Assignments (15% each)
+- 1 Assignment (10%), 1 Capstone Project (20%)
 - 2 Exams (1 Midterm 20%, 1 Final Exam 25%) (Exam dates will be released soon, midterm towards end of June and Final exam to wards mid August).
 - All submissions can be made online. Classes can be attended online (in-person attendance recommended)
 - Interactive course material for enhanced experience.
@@ -32,7 +37,7 @@
 | **Instructor** | **Email** | **Office Location** | **Office Hours** |
 |--------------|-----------|------------------|----------------|
 | [Naresh Devulapally](https://naresh-ub.github.io) | devulapa@buffalo.edu | 301C Davis Hall | [TBD] |
-<!-- | [TA Name (if applicable)] | [TA Email] | [TA Office Address] | [TA Office Hours] | -->
+| [TA: Nancy Ipole] | [nancyipo@buffalo.edu] | [TA Office Address] | [TA Office Hours] |
 
 ## Course Description
 This course provides an introduction to the fundamental techniques in **Computer Vision and Image Processing (CVIP)** with an emphasis on physical, mathematical, and information-processing aspects of vision.  
@@ -41,7 +46,7 @@ Topics covered include:
 - **Image Formation**
 - **Edge Detection and Segmentation**
 - **Convolution and Image Enhancement Techniques**
-- **Feature Extraction (Color, Texture, Shape)**
+- **Feature Extraction (Texture, Shape)**
 - **Object Detection and Recognition**
 - **3D Vision and Scene Understanding**
 - **Computer Vision Architectures and Applications**
@@ -93,26 +98,27 @@ Upon successful completion of this course, students will be able to:
 | Week 4  | Edge Detection, Segmentation Techniques  | Assignment 1: Image Formation and Camera Calibration |
 | Week 5  | Feature Extraction: Color, Texture, Shape | Quiz 2 |
 | Week 6  | Object Detection (YOLO, SSD) | Midterm Exam |
-| Week 7  | CNN Architectures (AlexNet, ResNet) | TBD |
+| Week 7  | CNN Architectures (AlexNet, ResNet) | Project Checkpoint Submission |
 | Week 8  | Generative Models: VAEs | Quiz 3 |
 | Week 9  | Diffusion Models, Denoising Autoencoders | Hands-on Coding Exercise: DDPM from scratch on 2-D data |
-| Week 10 | Diffusion Models, Denoising Autoencoders | Assignment 2 submission  |
+| Week 10 | Diffusion Models, Denoising Autoencoders | Final Project Submission opens |
 | Week 11 | Computer Vision Applications | Quiz 4 |
-| Week 12 | Final Exam | No exercises |
+| Week 12 | Final Exam | Final Project Submission closes |
 
 
 ## Grading Policy
 
 | **Category**        | **Weight %** | **Details** |
 |---------------------|------------|-------------|
-| **Assignments**    | 30%        | 2 Assignments (15% each) |
+| **Assignment**    | 10%        | 1 Assignment |
+| **Course Project**    | 20%        | Groups of 3 Students |
 | **Weekly Quizzes** | 20%        | Best 4 out of 6 quizzes |
 | **Midterm Exam**   | 20%        | MCQ Exam |
 | **Final Exam**     | 25%        | MCQ Exam |
 | **Class Participation** | 5%    | Attendance (Zoom (Live) or In-Person) |
-| **Bonuses**        | Additional | Extra Credit Activities |
 
 **Grading Scale:**
+_Will be curved._
 | **Percentage** | Grade | **Percentage** | Grade |  
 |------------|-------|------------|-------|  
 | 92-100 %    | A     | 65-69  %    | C+    |  
@@ -165,7 +171,7 @@ For concerns related to **discrimination, harassment, or bias**, please reach ou
 
 ## Contact & Communication
 - **Course Website:** [https://naresh-ub.github.io/cvip]
-- **Discussion Forum:** [Piazza (link will be provided)]
+- **Discussion Forum:** [Piazza](https://piazza.com/buffalo/summer2025/cse4573)
 
 
 ## Final Notes
