@@ -1,4 +1,4 @@
-selector_to_html = {"a[href=\"#slides-rebuilt-with-animations\"]": "<h2 class=\"tippy-header\" style=\"margin-top: 0;\">Slides rebuilt with animations<a class=\"headerlink\" href=\"#slides-rebuilt-with-animations\" title=\"Link to this heading\">#</a></h2>", "a[href=\"#website-features\"]": "<h1 class=\"tippy-header\" style=\"margin-top: 0;\">Website Features<a class=\"headerlink\" href=\"#website-features\" title=\"Link to this heading\">#</a></h1><p><em>Will be updated before Lec:0 on May 27, 2025</em></p>"}
+selector_to_html = {"a[href=\"#website-features\"]": "<h1 class=\"tippy-header\" style=\"margin-top: 0;\">Website Features<a class=\"headerlink\" href=\"#website-features\" title=\"Link to this heading\">#</a></h1><p><em>Will be updated before Lec:0 on May 27, 2025</em></p>", "a[href=\"#slides-rebuilt-with-animations\"]": "<h2 class=\"tippy-header\" style=\"margin-top: 0;\">Slides rebuilt with animations<a class=\"headerlink\" href=\"#slides-rebuilt-with-animations\" title=\"Link to this heading\">#</a></h2>"}
 skip_classes = ["headerlink", "sd-stretched-link"]
 
 window.onload = function () {

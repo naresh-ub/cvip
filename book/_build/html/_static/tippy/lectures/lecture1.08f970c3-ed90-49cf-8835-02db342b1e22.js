@@ -1,4 +1,4 @@
-selector_to_html = {"a[href=\"#lec-0-welcome-to-the-course\"]": "<h1 class=\"tippy-header\" style=\"margin-top: 0;\">Lec 0: Welcome to the course<a class=\"headerlink\" href=\"#lec-0-welcome-to-the-course\" title=\"Link to this heading\">#</a></h1>"}
+selector_to_html = {"a[href=\"#what-is-a-pixel-and-what-is-an-image\"]": "<h1 class=\"tippy-header\" style=\"margin-top: 0;\">What is a Pixel and what is an Image?<a class=\"headerlink\" href=\"#what-is-a-pixel-and-what-is-an-image\" title=\"Link to this heading\">#</a></h1><p>Images are everywhere. Have you ever wondered how exactly are images stored/read by a computer?</p>"}
 skip_classes = ["headerlink", "sd-stretched-link"]
 
 window.onload = function () {
