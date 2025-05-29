@@ -1,10 +1,6 @@
 # What's happening this week?
 
-| **Week**   | **What's happening?**      | **Link?** | **Any submissions?**                          |
-|------------|----------------------------|-----------|------------------------------------------------|
-| Week 1 (May 27, 2025)    | First Lecture   |    [Lec:0](syllabus.md)       | No Submissions 😁|
-<!-- | Week 2–12  | **Course Project**          | 20%       | Groups of 3 Students                           |
-| Week 2–7   | **Weekly Quizzes**          | 20%       | Best 4 out of 6 quizzes                        |
-| Week 6     | **Midterm Exam**            | 20%       | MCQ Exam                                       |
-| Week 13    | **Final Exam**              | 25%       | MCQ Exam                                       |
-| Ongoing    | **Class Participation**     | 5%        | Attendance (Zoom (Live) or In-Person)          | -->
+| **Lecture**   | **What's happening?**      | **Slides** | **Webpage?**                          | **Any Submissions?**                |
+|------------|----------------------------|-----------|------------------------------------------------|--------------------------|
+| Lec 1 (May 27)   | Course Introduction and What is an Image? | [Slides](https://slides.com/naresh-ub/lec-1)| [Syllabus](syllabus.md), [What's an Image](lectures/lecture1.ipynb)| No Submissions 😁|
+| Lec 2 (May 29)   | Image Formation | [Slides](https://slides.com/naresh-ub/lec-2)| [Image Formation](lectures/lecture2.ipynb)| No Submissions 😁|

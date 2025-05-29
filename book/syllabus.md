@@ -1,14 +1,14 @@
 # Course Logistics and Syllabus
 
 <div>
-<iframe src="https://slides.com/naresh-ub/lec-0/embed" width="100%" height="500" title="Test Title" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<iframe src="https://slides.com/naresh-ub/lec-1/embed" width="100%" height="500" title="Test Title" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 </div>
 
 ```{admonition} FAQs from students regarding this course
 :class: tip
 
 - **Does this course satisfy CSE AI/ML CAPSTONE COURSE requirement?**
-    - YES, if Fall 2025 is your final semester.
+    - YES, if Summer 2025 or Fall 2025 is your final semester.
 
 - **Can I take this course completely remote (anywhere from earth)?**
     - YES, the course is HYBRID and can be taken fully remote (including final exams).
@@ -36,24 +36,27 @@
 ## Instructor Information
 | **Instructor** | **Email** | **Office Location** | **Office Hours** |
 |--------------|-----------|------------------|----------------|
-| [Naresh Devulapally](https://naresh-ub.github.io) | devulapa@buffalo.edu | 301C Davis Hall | [TBD] |
+| [Naresh Devulapally](https://naresh-ub.github.io) | devulapa@buffalo.edu | 301C Davis Hall | [Tue, Thu: 3:00 PM to 4:00 PM] |
 | [TA: Nancy Ipole] | [nancyipo@buffalo.edu] | [TA Office Address] | [TA Office Hours] |
 
 ## Course Description
-This course provides an introduction to the fundamental techniques in **Computer Vision and Image Processing (CVIP)** with an emphasis on physical, mathematical, and information-processing aspects of vision.  
+This course provides an introduction to the fundamental techniques in **Computer Vision and Image Processing (CVIP)** with an emphasis on physical, mathematical, and information-processing aspects of vision.
 
 Topics covered include:
-- **Image Formation**
-- **Edge Detection and Segmentation**
-- **Convolution and Image Enhancement Techniques**
-- **Feature Extraction (Texture, Shape)**
-- **Object Detection and Recognition**
-- **3D Vision and Scene Understanding**
-- **Computer Vision Architectures and Applications**
-
-Additionally, the Summer 2025 version of the course extends these topics to include cutting-edge advancements in modern Computer Vision models:
-- **Variational Autoencoders (VAEs)**
-- **Diffusion Models (Hands-on Coding Exercise Included)**
+- Basics of Computer Vision:
+    - Image Formation, Camera Calibration
+    - Image Processing, Feature Detection
+- Intermediate Computer Vision:
+    - Stereo Vision, Depth Estimation
+    - Object Detection (I), ... _other applications_
+- Learning-based Computer Vision:
+    - Convolutional Neural Networks
+    - Segmentation, Object Detection (II)
+- Intro to Generative AI:
+    - Variational AutoEncoders
+    - Diffusion Models
+- Recent Advances in Computer Vision:
+    - Scene Understanding, CV Architectures and Applications
 
 
 ## Course Learning Outcomes
