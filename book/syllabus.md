@@ -1,8 +1,14 @@
 # Course Logistics and Syllabus
 
 <div>
-<iframe src="https://slides.com/naresh-ub/lec-1/embed" width="100%" height="500" title="Test Title" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<iframe src="https://slides.com/naresh-ub/lec-1-course-logistics-and-syllabus/embed" width="100%" height="500" title="Test Title" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 </div>
+
+## Course Information
+* **Course Code:** CSE 573
+* **Credits:** 3  
+* **Mode:** Hybrid - Both remote and in-person (all submissions including exams can be completed online)
+* **Lecture Hall:** NSC 215, Tue, Thu: 10:30 AM to 11:50 AM
 
 ```{admonition} FAQs from students regarding this course
 :class: tip
@@ -27,12 +33,6 @@
 - All submissions can be made online. Classes can be attended online (in-person attendance recommended)
 - Interactive course material for enhanced experience.
 
-## Course Information
-* **Course Code:** CSE 573
-* **Credits:** 3  
-* **Mode:** Hybrid - Both remote and in-person (all submissions including exams can be completed online)
-* **Lecture Hall:** NSC 215, Tue, Thu: 10:30 AM to 11:50 AM
-
 ## Instructor Information
 | **Instructor** | **Email** | **Office Location** | **Office Hours** |
 |--------------|-----------|------------------|----------------|
@@ -40,9 +40,10 @@
 | [TA: Nancy Ipole] | [nancyipo@buffalo.edu] | [TA Office Address] | [TA Office Hours] |
 
 ## Course Description
-This course provides an introduction to the fundamental techniques in **Computer Vision and Image Processing (CVIP)** with an emphasis on physical, mathematical, and information-processing aspects of vision.
 
-Topics covered include:
+This course offers a comprehensive introduction to the field of Computer Vision and Image Processing, focusing on both classical foundations and cutting-edge advancements. Students will explore the physical and mathematical principles underlying **image formation and filtering**, followed by core topics in intermediate vision such as **stereo vision** and **epipolar geometry**. Building on this foundation, the course delves into learning-based approaches including Convolutional Neural Networks (CNNs), Semantic segmentation, and Object Classification. A dedicated module on generative computer vision introduces students to state-of-the-art techniques like **Variational Autoencoders** (VAEs) and **Diffusion Models**. The course concludes with an exploration of recent trends, including Vision-Language models and Multimodal architectures that integrate vision with language and other sensory inputs. By the end, students will have gained both theoretical understanding and practical skills to develop intelligent vision systems for real-world applications.
+
+#### Topics covered include:
 - Basics of Computer Vision:
     - Image Formation, Camera Calibration
     - Image Processing, Feature Detection
@@ -76,12 +77,12 @@ Upon successful completion of this course, students will be able to:
 
 ## Course Materials
 
-### **Recommended Textbooks**
+### Recommended Textbooks
 1. **Computer Vision: Algorithms and Applications** by Richard Szeliski  
 2. **Deep Learning for Computer Vision** by Adrian Rosebrock  
 3. Additional lecture notes and research papers will be provided.
 
-### **Software and Tools**
+### Software and Tools
 - **Interactive lecture webpages** (entire course website is aimed at providing interactive learning experience)
 - **Python** (Jupyter Notebooks)
 - **OpenCV, NumPy, Matplotlib**
@@ -133,20 +134,20 @@ _Will be curved._
 
 ## Academic Policies
 
-### **Attendance Policy**
+### Attendance Policy
 - Attending lectures is **STRONGLY RECOMMENDED** for in-person students. You will enjoy the course material and in-person learning experience in the course.
 - Students choosing the remote option are **REQUIRED** to attend live zoom lectures.
 - Extended absences due to health or personal reasons must be communicated to the instructor.
 
-### **Late Submission Policy**
+### Late Submission Policy
 - Assignments submitted **within 24 hours** of the deadline will incur a **10% penalty**.
 - Assignments submitted **after 24 hours** will not be accepted.
 
-### **Regrading Policy**
+### Regrading Policy
 - Requests for regrading must be submitted within **72 hours** of receiving graded work.
 - Regrading requests should be made via [email/Piazza] with a clear explanation.
 
-### **Collaboration & Academic Integrity**
+### Collaboration & Academic Integrity
 - **Plagiarism or unauthorized collaboration is strictly prohibited.**
 - Discussions are encouraged, but **all code and reports must be written individually**.
 - Any violation of academic integrity will result in an **automatic F** and reporting to the university.
@@ -161,7 +162,7 @@ More details on UB’s **Academic Integrity Policy**:
 Students requiring accommodations should contact the **Office of Accessibility Resources** in **60 Capen Hall**.  
 Phone: **(716) 645-2608** | Website: [Accessibility Office](http://www.buffalo.edu/studentlife/who-we-are/departments/accessibility.html) -->
 
-### **Mental Health & Well-being**
+### Mental Health & Well-being
 UB provides counseling and mental health services for students dealing with stress, anxiety, or other challenges.  
 **Counseling Services:**  
 - **120 Richmond Quad (North Campus)** – **(716) 645-2720**
