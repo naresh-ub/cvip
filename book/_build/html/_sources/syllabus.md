@@ -44,20 +44,47 @@
 This course offers a comprehensive introduction to the field of Computer Vision and Image Processing, focusing on both classical foundations and cutting-edge advancements. Students will explore the physical and mathematical principles underlying **image formation and filtering**, followed by core topics in intermediate vision such as **stereo vision** and **epipolar geometry**. Building on this foundation, the course delves into learning-based approaches including Convolutional Neural Networks (CNNs), Semantic segmentation, and Object Classification. A dedicated module on generative computer vision introduces students to state-of-the-art techniques like **Variational Autoencoders** (VAEs) and **Diffusion Models**. The course concludes with an exploration of recent trends, including Vision-Language models and Multimodal architectures that integrate vision with language and other sensory inputs. By the end, students will have gained both theoretical understanding and practical skills to develop intelligent vision systems for real-world applications.
 
 #### Topics covered include:
-- Basics of Computer Vision:
-    - Image Formation, Camera Calibration
-    - Image Processing, Feature Detection
-- Intermediate Computer Vision:
-    - Stereo Vision, Depth Estimation
-    - Object Detection (I), ... _other applications_
-- Learning-based Computer Vision:
-    - Convolutional Neural Networks
-    - Segmentation, Object Detection (II)
-- Intro to Generative AI:
-    - Variational AutoEncoders
-    - Diffusion Models
-- Recent Advances in Computer Vision:
-    - Scene Understanding, CV Architectures and Applications
+
+**1. Foundations of Computer Vision (Weeks 1-3)**
+- Image formation and camera models
+  - Pinhole camera geometry
+  - Camera calibration techniques
+- Core image processing
+  - Pixel-space operations
+  - Fourier domain analysis
+  - Basic filtering and transformations
+
+**2. Geometric Computer Vision (Weeks 3-5)**
+- Stereo vision systems
+  - Depth estimation methods
+  - Epipolar geometry
+- Feature detection and matching
+  - Keypoint detectors
+  - Descriptor matching techniques
+
+**3. Learning-Based Approaches (Weeks 5-7)**
+- Convolutional Neural Networks
+  - Architecture fundamentals
+  - Modern CNN variants
+- Traditional vision applications
+  - Segmentation techniques
+  - Object detection pipelines
+
+**4. Generative AI in Vision (Weeks 8-10)**
+- Variational Autoencoders
+  - Theory and implementation
+  - Computer vision applications
+- Diffusion Models
+  - Core principles
+  - Image generation techniques
+  - Practical implementations
+
+**5. Advanced Topics (Weeks 11-12)**
+- Emerging architectures
+- Cutting-edge applications
+  - Scene understanding
+  - Video analysis
+- Industry trends and research frontiers
 
 
 ## Course Learning Outcomes
@@ -92,22 +119,7 @@ Upon successful completion of this course, students will be able to:
 
 ## Course Schedule
 
-*(Note: Schedule is subject to changes. Minor changes to content)*
-
-| **Week** | **Topics** | **Assignments/Exercises** |
-|---------|------------|----------------------|
-| Week 1  | Introduction to Computer Vision, Image Formation | |
-| Week 2  | Image Formation and Camera Calibration | |
-| Week 3  | Image Processing: Convolutions, Filters | Quiz 1 |
-| Week 4  | Edge Detection, Segmentation Techniques  | Assignment 1: Image Formation and Camera Calibration |
-| Week 5  | Feature Extraction: Color, Texture, Shape | Quiz 2 |
-| Week 6  | Object Detection (YOLO, SSD) | Midterm Exam |
-| Week 7  | CNN Architectures (AlexNet, ResNet) | Project Checkpoint Submission |
-| Week 8  | Generative Models: VAEs | Quiz 3 |
-| Week 9  | Diffusion Models, Denoising Autoencoders | Hands-on Coding Exercise: DDPM from scratch on 2-D data |
-| Week 10 | Diffusion Models, Denoising Autoencoders | Final Project Submission opens |
-| Week 11 | Computer Vision Applications | Quiz 4 |
-| Week 12 | Final Exam | Final Project Submission closes |
+Check the complete course schedule (with dates and deadlines) [here](dates-deadlines.md)
 
 
 ## Grading Policy
