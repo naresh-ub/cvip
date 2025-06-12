@@ -18,6 +18,7 @@ parts:
       - file: lectures/lecture1.ipynb
       - file: lectures/lecture2.ipynb
       - file: lectures/lecture3.ipynb
+      - file: lectures/lecture4.ipynb
   
 
 #   - caption: Courses I taught at UB

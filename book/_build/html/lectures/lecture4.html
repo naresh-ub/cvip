@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>What is a Pixel and what is an Image? &#8212; CSE 4/573 - Computer Vision and Image Processing</title>
+    <title>Image Processing (Part 2) Fourier Domain &#8212; CSE 4/573 - Computer Vision and Image Processing</title>
   
   
   
@@ -78,7 +78,7 @@ const thebe_selector_output = ".output, .cell_output"
 </script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
-    <script defer="defer" src="../_static/tippy/lectures/lecture4.3eb7889d-ca4c-4b66-958f-3ea8360108c0.js"></script>
+    <script defer="defer" src="../_static/tippy/lectures/lecture4.1617e853-b642-459a-aafd-d6e20b3684ae.js"></script>
     <script>window.MathJax = {"chtml": {"mtextInheritFont": true}, "tex": {"macros": {"black": ["\\class{black}{#1}", 1], "silver": ["\\class{silver}{#1}", 1], "gray": ["\\class{gray}{#1}", 1], "white": ["\\class{white}{#1}", 1], "maroon": ["\\class{maroon}{#1}", 1], "red": ["\\class{red}{#1}", 1], "purple": ["\\class{purple}{#1}", 1], "fuchsia": ["\\class{fuchsia}{#1}", 1], "green": ["\\class{green}{#1}", 1], "lime": ["\\class{lime}{#1}", 1], "olive": ["\\class{olive}{#1}", 1], "yellow": ["\\class{yellow}{#1}", 1], "navy": ["\\class{navy}{#1}", 1], "blue": ["\\class{blue}{#1}", 1], "teal": ["\\class{teal}{#1}", 1], "aqua": ["\\class{aqua}{#1}", 1], "aliceblue": ["\\class{aliceblue}{#1}", 1], "antiquewhite": ["\\class{antiquewhite}{#1}", 1], "aquamarine": ["\\class{aquamarine}{#1}", 1], "azure": ["\\class{azure}{#1}", 1], "beige": ["\\class{beige}{#1}", 1], "bisque": ["\\class{bisque}{#1}", 1], "blanchedalmond": ["\\class{blanchedalmond}{#1}", 1], "blueviolet": ["\\class{blueviolet}{#1}", 1], "brown": ["\\class{brown}{#1}", 1], "burlywood": ["\\class{burlywood}{#1}", 1], "cadetblue": ["\\class{cadetblue}{#1}", 1], "chartreuse": ["\\class{chartreuse}{#1}", 1], "chocolate": ["\\class{chocolate}{#1}", 1], "coral": ["\\class{coral}{#1}", 1], "cornflowerblue": ["\\class{cornflowerblue}{#1}", 1], "cornsilk": ["\\class{cornsilk}{#1}", 1], "crimson": ["\\class{crimson}{#1}", 1], "cyan": ["\\class{cyan}{#1}", 1], "darkblue": ["\\class{darkblue}{#1}", 1], "darkcyan": ["\\class{darkcyan}{#1}", 1], "darkgoldenrod": ["\\class{darkgoldenrod}{#1}", 1], "darkgray": ["\\class{darkgray}{#1}", 1], "darkgreen": ["\\class{darkgreen}{#1}", 1], "darkgrey": ["\\class{darkgrey}{#1}", 1], "darkkhaki": ["\\class{darkkhaki}{#1}", 1], "darkmagenta": ["\\class{darkmagenta}{#1}", 1], "darkolivegreen": ["\\class{darkolivegreen}{#1}", 1], "darkorange": ["\\class{darkorange}{#1}", 1], "darkorchid": ["\\class{darkorchid}{#1}", 1], "darkred": ["\\class{darkred}{#1}", 1], "darksalmon": ["\\class{darksalmon}{#1}", 1], "darkseagreen": ["\\class{darkseagreen}{#1}", 1], "darkslateblue": ["\\class{darkslateblue}{#1}", 1], "darkslategray": ["\\class{darkslategray}{#1}", 1], "darkslategrey": ["\\class{darkslategrey}{#1}", 1], "darkturquoise": ["\\class{darkturquoise}{#1}", 1], "darkviolet": ["\\class{darkviolet}{#1}", 1], "deeppink": ["\\class{deeppink}{#1}", 1], "deepskyblue": ["\\class{deepskyblue}{#1}", 1], "dimgray": ["\\class{dimgray}{#1}", 1], "dimgrey": ["\\class{dimgrey}{#1}", 1], "dodgerblue": ["\\class{dodgerblue}{#1}", 1], "firebrick": ["\\class{firebrick}{#1}", 1], "floralwhite": ["\\class{floralwhite}{#1}", 1], "forestgreen": ["\\class{forestgreen}{#1}", 1], "gainsboro": ["\\class{gainsboro}{#1}", 1], "ghostwhite": ["\\class{ghostwhite}{#1}", 1], "gold": ["\\class{gold}{#1}", 1], "goldenrod": ["\\class{goldenrod}{#1}", 1], "greenyellow": ["\\class{greenyellow}{#1}", 1], "grey": ["\\class{grey}{#1}", 1], "honeydew": ["\\class{honeydew}{#1}", 1], "hotpink": ["\\class{hotpink}{#1}", 1], "indianred": ["\\class{indianred}{#1}", 1], "indigo": ["\\class{indigo}{#1}", 1], "ivory": ["\\class{ivory}{#1}", 1], "khaki": ["\\class{khaki}{#1}", 1], "lavender": ["\\class{lavender}{#1}", 1], "lavenderblush": ["\\class{lavenderblush}{#1}", 1], "lawngreen": ["\\class{lawngreen}{#1}", 1], "lemonchiffon": ["\\class{lemonchiffon}{#1}", 1], "lightblue": ["\\class{lightblue}{#1}", 1], "lightcoral": ["\\class{lightcoral}{#1}", 1], "lightcyan": ["\\class{lightcyan}{#1}", 1], "lightgoldenrodyellow": ["\\class{lightgoldenrodyellow}{#1}", 1], "lightgray": ["\\class{lightgray}{#1}", 1], "lightgreen": ["\\class{lightgreen}{#1}", 1], "lightgrey": ["\\class{lightgrey}{#1}", 1], "lightpink": ["\\class{lightpink}{#1}", 1], "lightsalmon": ["\\class{lightsalmon}{#1}", 1], "lightseagreen": ["\\class{lightseagreen}{#1}", 1], "lightskyblue": ["\\class{lightskyblue}{#1}", 1], "lightslategray": ["\\class{lightslategray}{#1}", 1], "lightslategrey": ["\\class{lightslategrey}{#1}", 1], "lightsteelblue": ["\\class{lightsteelblue}{#1}", 1], "lightyellow": ["\\class{lightyellow}{#1}", 1], "limegreen": ["\\class{limegreen}{#1}", 1], "linen": ["\\class{linen}{#1}", 1], "magenta": ["\\class{magenta}{#1}", 1], "mediumaquamarine": ["\\class{mediumaquamarine}{#1}", 1], "mediumblue": ["\\class{mediumblue}{#1}", 1], "mediumorchid": ["\\class{mediumorchid}{#1}", 1], "mediumpurple": ["\\class{mediumpurple}{#1}", 1], "mediumseagreen": ["\\class{mediumseagreen}{#1}", 1], "mediumslateblue": ["\\class{mediumslateblue}{#1}", 1], "mediumspringgreen": ["\\class{mediumspringgreen}{#1}", 1], "mediumturquoise": ["\\class{mediumturquoise}{#1}", 1], "mediumvioletred": ["\\class{mediumvioletred}{#1}", 1], "midnightblue": ["\\class{midnightblue}{#1}", 1], "mintcream": ["\\class{mintcream}{#1}", 1], "mistyrose": ["\\class{mistyrose}{#1}", 1], "moccasin": ["\\class{moccasin}{#1}", 1], "navajowhite": ["\\class{navajowhite}{#1}", 1], "oldlace": ["\\class{oldlace}{#1}", 1], "olivedrab": ["\\class{olivedrab}{#1}", 1], "orange": ["\\class{orange}{#1}", 1], "orangered": ["\\class{orangered}{#1}", 1], "orchid": ["\\class{orchid}{#1}", 1], "palegoldenrod": ["\\class{palegoldenrod}{#1}", 1], "palegreen": ["\\class{palegreen}{#1}", 1], "paleturquoise": ["\\class{paleturquoise}{#1}", 1], "palevioletred": ["\\class{palevioletred}{#1}", 1], "papayawhip": ["\\class{papayawhip}{#1}", 1], "peachpuff": ["\\class{peachpuff}{#1}", 1], "peru": ["\\class{peru}{#1}", 1], "pink": ["\\class{pink}{#1}", 1], "plum": ["\\class{plum}{#1}", 1], "powderblue": ["\\class{powderblue}{#1}", 1], "rebeccapurple": ["\\class{rebeccapurple}{#1}", 1], "rosybrown": ["\\class{rosybrown}{#1}", 1], "royalblue": ["\\class{royalblue}{#1}", 1], "saddlebrown": ["\\class{saddlebrown}{#1}", 1], "salmon": ["\\class{salmon}{#1}", 1], "sandybrown": ["\\class{sandybrown}{#1}", 1], "seagreen": ["\\class{seagreen}{#1}", 1], "seashell": ["\\class{seashell}{#1}", 1], "sienna": ["\\class{sienna}{#1}", 1], "skyblue": ["\\class{skyblue}{#1}", 1], "slateblue": ["\\class{slateblue}{#1}", 1], "slategray": ["\\class{slategray}{#1}", 1], "slategrey": ["\\class{slategrey}{#1}", 1], "snow": ["\\class{snow}{#1}", 1], "springgreen": ["\\class{springgreen}{#1}", 1], "steelblue": ["\\class{steelblue}{#1}", 1], "tan": ["\\class{tan}{#1}", 1], "thistle": ["\\class{thistle}{#1}", 1], "tomato": ["\\class{tomato}{#1}", 1], "turquoise": ["\\class{turquoise}{#1}", 1], "violet": ["\\class{violet}{#1}", 1], "wheat": ["\\class{wheat}{#1}", 1], "whitesmoke": ["\\class{whitesmoke}{#1}", 1], "yellowgreen": ["\\class{yellowgreen}{#1}", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/lecture4';</script>
@@ -87,9 +87,10 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="icon" href="../_static/TB_favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Image Processing (Part 1) Image Transformations and the Convolution Operation" href="lecture3.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="June 10, 2025"/>
+    <meta name="docbuild:last-update" content="June 12, 2025"/>
   </head>
   
   
@@ -150,8 +151,6 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -208,10 +207,11 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../website-features.html">Website Features</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Content</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="lecture1.html">What is a Pixel and what is an Image?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lecture2.html">How is an image formed?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lecture3.html">Image Processing (Part 1) Image Transformations and the Convolution Operation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Image Processing (Part 2) Fourier Domain</a></li>
 </ul>
 
     </div>
@@ -401,7 +401,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -412,11 +414,33 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>What is a Pixel and what is an Image?</h1>
+    <h1>Image Processing (Part 2) Fourier Domain</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-function-in-the-time-domain">What is a Function in the Time Domain?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-frequency-fourier-domain">What is the Frequency (Fourier) Domain?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-good-is-the-reconstruction">How good is the reconstruction?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moving-between-domains">Moving Between Domains</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-images-as-functions">Interpreting Images as Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fourier-transform-of-images">Fourier Transform of Images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-the-performance-improvements">What are the performance improvements?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-complexity-matrix-multiplication-vs-fft">Time Complexity: Matrix Multiplication vs FFT</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#time-domain-convolution-matrix-multiply">Time-Domain Convolution (Matrix Multiply)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#frequency-domain-convolution-fft">Frequency-Domain Convolution (FFT)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-summary">Comparison Summary</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -426,30 +450,633 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="what-is-a-pixel-and-what-is-an-image">
-<h1>What is a Pixel and what is an Image?<a class="headerlink" href="#what-is-a-pixel-and-what-is-an-image" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="image-processing-part-2-fourier-domain">
+<h1>Image Processing (Part 2) Fourier Domain<a class="headerlink" href="#image-processing-part-2-fourier-domain" title="Link to this heading">#</a></h1>
+<section id="what-is-a-function-in-the-time-domain">
+<h2>What is a Function in the Time Domain?<a class="headerlink" href="#what-is-a-function-in-the-time-domain" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>A time-domain function describes how a quantity changes with time or space.</p></li>
+<li><p>Examples we see daily:</p>
+<ul>
+<li><p>Audio waveforms: <span class="math notranslate nohighlight">\( f(t) \)</span> = amplitude of sound at time <span class="math notranslate nohighlight">\( t \)</span>.</p></li>
+<li><p>Temperature readings: <span class="math notranslate nohighlight">\( T(x) \)</span> = temperature at position <span class="math notranslate nohighlight">\( x \)</span>.</p></li>
+<li><p>ECG signals: <span class="math notranslate nohighlight">\( V(t) \)</span> = voltage across time.</p></li>
+</ul>
+</li>
+<li><p>These functions are plotted with respect to time/space.</p></li>
+</ul>
+<p><strong>Mathematically:</strong><br />
+<span class="math notranslate nohighlight">\( f(t): \mathbb{R} \to \mathbb{R} \)</span> — maps time to amplitude.</p>
+</section>
+<hr class="docutils" />
+<section id="what-is-the-frequency-fourier-domain">
+<h2>What is the Frequency (Fourier) Domain?<a class="headerlink" href="#what-is-the-frequency-fourier-domain" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The frequency domain expresses a signal as a sum of sinusoids.</p></li>
+<li><p>Instead of analyzing <em>when</em> things happen, we analyze <em>what frequencies</em> are present.</p></li>
+</ul>
+<p><strong>Example:</strong><br />
+<span class="math notranslate nohighlight">\( f(t) = \sin(2\pi \cdot 5t) \)</span><br />
+→ A 5 Hz sine wave has <strong>one spike at 5 Hz</strong> in frequency domain.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">widgets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">clear_output</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">plot_side_by_side</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">transformed</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">):</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
-    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Original Image&quot;</span><span class="p">)</span>
-    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
-    
-    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">transformed</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
-    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Transformed Image&quot;</span><span class="p">)</span>
-    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
-    
+<span class="c1"># === Signal + FFT plotting function ===</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_signal</span><span class="p">(</span><span class="n">freq1</span><span class="p">,</span> <span class="n">add_second</span><span class="p">,</span> <span class="n">freq2</span><span class="p">):</span>
+    <span class="n">fs</span> <span class="o">=</span> <span class="mi">1000</span>          <span class="c1"># Sampling rate</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="mf">1.0</span>            <span class="c1"># Duration</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">fs</span><span class="o">*</span><span class="n">T</span><span class="p">),</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># --- Construct signal ---</span>
+    <span class="n">signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">freq1</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">add_second</span><span class="p">:</span>
+        <span class="n">signal</span> <span class="o">+=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">freq2</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+
+    <span class="c1"># --- Compute FFT ---</span>
+    <span class="n">fft_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+    <span class="n">fft_freqs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="mi">1</span><span class="o">/</span><span class="n">fs</span><span class="p">)</span>
+    <span class="n">half</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">fft_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fft_vals</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">fft_freqs</span> <span class="o">=</span> <span class="n">fft_freqs</span><span class="p">[:</span><span class="n">half</span><span class="p">]</span>
+    <span class="n">fft_mag</span> <span class="o">=</span> <span class="n">fft_mag</span><span class="p">[:</span><span class="n">half</span><span class="p">]</span>
+
+    <span class="c1"># --- Plot ---</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+    <span class="c1"># Time domain</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">signal</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;royalblue&#39;</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Time Domain: </span><span class="si">{</span><span class="n">freq1</span><span class="si">}</span><span class="s2"> Hz&quot;</span>
+    <span class="k">if</span> <span class="n">add_second</span><span class="p">:</span>
+        <span class="n">title</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; + </span><span class="si">{</span><span class="n">freq2</span><span class="si">}</span><span class="s2"> Hz&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time [s]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Amplitude&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Frequency domain</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">fft_freqs</span><span class="p">,</span> <span class="n">fft_mag</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Frequency Domain: FFT Magnitude Spectrum&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Frequency [Hz]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Magnitude&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
     <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># === Interactive Widgets ===</span>
+<span class="n">freq1_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Freq 1 (Hz)&quot;</span><span class="p">)</span>
+<span class="n">add_second_wave</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Checkbox</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Add Second Wave&quot;</span><span class="p">)</span>
+<span class="n">freq2_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Freq 2 (Hz)&quot;</span><span class="p">)</span>
+
+<span class="n">ui</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">VBox</span><span class="p">([</span><span class="n">freq1_slider</span><span class="p">,</span> <span class="n">add_second_wave</span><span class="p">,</span> <span class="n">freq2_slider</span><span class="p">])</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">interactive_output</span><span class="p">(</span>
+    <span class="n">plot_signal</span><span class="p">,</span>
+    <span class="p">{</span><span class="s1">&#39;freq1&#39;</span><span class="p">:</span> <span class="n">freq1_slider</span><span class="p">,</span> <span class="s1">&#39;add_second&#39;</span><span class="p">:</span> <span class="n">add_second_wave</span><span class="p">,</span> <span class="s1">&#39;freq2&#39;</span><span class="p">:</span> <span class="n">freq2_slider</span><span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "71211a89b33746d6b788033d4a21256d", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "ad7c3dbfe6ab4326b8393fc9be46de43", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+</section>
+<section id="how-good-is-the-reconstruction">
+<h2>How good is the reconstruction?<a class="headerlink" href="#how-good-is-the-reconstruction" title="Link to this heading">#</a></h2>
+<p>When shifting from time domain to frequency domain and shifting back to time domain from freq domain, do we loose any information?</p>
+<p>No, <strong>if the Fourier Transform and its inverse are applied correctly</strong>, we do <strong>not lose any information</strong> during the shift between time and frequency domains.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Define any function: Gaussian pulse</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>  <span class="c1"># Smooth but nontrivial</span>
+
+<span class="c1"># Compute FFT and inverse FFT</span>
+<span class="n">F</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">freq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">d</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">f_reconstructed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">F</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>  <span class="c1"># Imaginary part should be ~0</span>
+
+<span class="c1"># Plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Original Function&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">f_reconstructed</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Reconstructed via IFFT&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Time Domain: Original vs Reconstructed&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Amplitude&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">freq</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">F</span><span class="p">)),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;|FFT|&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Frequency Domain&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Magnitude&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0eccd47645310aa64ad79ea21e067add2a5977fc003a0c8a0041227070117119.png" src="../_images/0eccd47645310aa64ad79ea21e067add2a5977fc003a0c8a0041227070117119.png" />
+</div>
+</div>
+<p><strong>Fourier Transform:</strong></p>
+<div class="math notranslate nohighlight">
+\[
+F(\omega) = \int_{-\infty}^{\infty} f(t) e^{-i \omega t} \, dt
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( F(\omega) \)</span> tells us how much of frequency <span class="math notranslate nohighlight">\( \omega \)</span> exists in <span class="math notranslate nohighlight">\( f(t) \)</span>.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="moving-between-domains">
+<h2>Moving Between Domains<a class="headerlink" href="#moving-between-domains" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>We can go from time to frequency using the <strong>Fourier Transform</strong>.</p></li>
+<li><p>The inverse gets us back to time domain.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+F(\omega) = \int_{-\infty}^{\infty} f(t) e^{-i \omega t} \, dt \quad \text{(Forward)}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+f(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(\omega) e^{i \omega t} \, d\omega \quad \text{(Inverse)}
+\]</div>
+<p><strong>Why do this?</strong><br />
+Some operations (like filtering, compression, pattern detection) are <strong>easier in the frequency domain</strong> because they become algebraic (e.g., multiplication instead of convolution), enabling more efficient computation and intuitive manipulation of signal characteristics.</p>
+</section>
+<hr class="docutils" />
+<section id="interpreting-images-as-functions">
+<h2>Interpreting Images as Functions<a class="headerlink" href="#interpreting-images-as-functions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>An image can be modeled as a 2D function:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+I(x, y): \mathbb{R}^2 \to \mathbb{R}
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( x \)</span> and <span class="math notranslate nohighlight">\( y \)</span> are spatial coordinates.</p></li>
+<li><p><span class="math notranslate nohighlight">\( I(x, y) \)</span> gives pixel intensity at location <span class="math notranslate nohighlight">\( (x, y) \)</span>.</p></li>
+</ul>
+<p><strong>Examples:</strong></p>
+<ul class="simple">
+<li><p>Grayscale image: <span class="math notranslate nohighlight">\( I(x, y) \)</span> is scalar.</p></li>
+<li><p>Color image: <span class="math notranslate nohighlight">\( I(x, y) \)</span> is a vector (R, G, B).</p></li>
+</ul>
+<p>Thus, <strong>images are time-domain 2D signals</strong>.</p>
+</section>
+<hr class="docutils" />
+<section id="fourier-transform-of-images">
+<h2>Fourier Transform of Images<a class="headerlink" href="#fourier-transform-of-images" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The <strong>2D Fourier Transform</strong> of an image:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+F(u, v) = \iint I(x, y) \cdot e^{-2\pi i (ux + vy)} \, dx \, dy
+\]</div>
+<ul class="simple">
+<li><p>Transforms image from spatial domain to frequency domain.</p></li>
+</ul>
+<p><strong>Features extracted:</strong></p>
+<ul class="simple">
+<li><p>Low frequencies: global structures (smooth regions).</p></li>
+<li><p>High frequencies: edges, textures, details.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.signal</span><span class="w"> </span><span class="kn">import</span> <span class="n">convolve2d</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.ndimage</span><span class="w"> </span><span class="kn">import</span> <span class="n">gaussian_filter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.fft</span><span class="w"> </span><span class="kn">import</span> <span class="n">fft2</span><span class="p">,</span> <span class="n">ifft2</span><span class="p">,</span> <span class="n">fftshift</span><span class="p">,</span> <span class="n">ifftshift</span>
+
+<span class="c1"># Step 1: Create base image</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+<span class="n">image</span><span class="p">[</span><span class="mi">32</span><span class="p">:</span><span class="mi">96</span><span class="p">,</span> <span class="mi">32</span><span class="p">:</span><span class="mi">96</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># white square</span>
+
+<span class="c1"># Step 2: Create Gaussian kernel centered</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+<span class="n">kernel</span><span class="p">[</span><span class="n">N</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span> <span class="n">N</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">kernel</span> <span class="o">=</span> <span class="n">gaussian_filter</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
+
+<span class="c1"># Step 3: Convolve in spatial domain</span>
+<span class="n">spatial_output</span> <span class="o">=</span> <span class="n">convolve2d</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+
+<span class="c1"># Step 4: Proper FFT convolution</span>
+<span class="c1"># Step 4.1: FFT of image and kernel</span>
+<span class="n">F_image</span> <span class="o">=</span> <span class="n">fft2</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+<span class="n">F_kernel</span> <span class="o">=</span> <span class="n">fft2</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">kernel</span><span class="p">))</span>  <span class="c1"># Center the kernel</span>
+
+<span class="c1"># Step 4.2: Multiply in frequency domain</span>
+<span class="n">F_output</span> <span class="o">=</span> <span class="n">F_image</span> <span class="o">*</span> <span class="n">F_kernel</span>
+<span class="n">freq_output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifft2</span><span class="p">(</span><span class="n">F_output</span><span class="p">))</span>
+
+<span class="c1"># Step 5: Show all</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Input Image&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">spatial_output</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Convolution (Spatial)&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">freq_output</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Multiplication (FFT)&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Compare outputs</span>
+<span class="n">is_close</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">spatial_output</span><span class="p">,</span> <span class="n">freq_output</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
+<span class="n">max_diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">spatial_output</span> <span class="o">-</span> <span class="n">freq_output</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/6c0095c0e27ef232de98dc5d0be32f443cfc78a755f2bc10f13e2dfc8e630ce9.png" src="../_images/6c0095c0e27ef232de98dc5d0be32f443cfc78a755f2bc10f13e2dfc8e630ce9.png" />
+</div>
+</div>
+</section>
+<section id="what-are-the-performance-improvements">
+<h2>What are the performance improvements?<a class="headerlink" href="#what-are-the-performance-improvements" title="Link to this heading">#</a></h2>
+<section id="time-complexity-matrix-multiplication-vs-fft">
+<h3>Time Complexity: Matrix Multiplication vs FFT<a class="headerlink" href="#time-complexity-matrix-multiplication-vs-fft" title="Link to this heading">#</a></h3>
+<p>In image processing, when we apply a filter (or kernel) of size <span class="math notranslate nohighlight">\( m \times m \)</span> to an image of size <span class="math notranslate nohighlight">\( n \times n \)</span>, we are essentially performing a 2D convolution. This can be implemented directly in the spatial (time) domain or efficiently in the frequency (Fourier) domain.</p>
+<hr class="docutils" />
+<section id="time-domain-convolution-matrix-multiply">
+<h4>Time-Domain Convolution (Matrix Multiply)<a class="headerlink" href="#time-domain-convolution-matrix-multiply" title="Link to this heading">#</a></h4>
+<p>In the time domain, for each of the <span class="math notranslate nohighlight">\( n^2 \)</span> pixels in the image, the filter slides over and computes a weighted sum using all <span class="math notranslate nohighlight">\( m^2 \)</span> filter elements.</p>
+<p>Thus, the total number of operations is:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{O}(n^2 \cdot m^2)
+\]</div>
+<p>This becomes expensive when either <span class="math notranslate nohighlight">\( n \)</span> or <span class="math notranslate nohighlight">\( m \)</span> is large — especially if the kernel is not tiny (e.g., Gaussian blur with <span class="math notranslate nohighlight">\( m = 51 \)</span>).</p>
+</section>
+<hr class="docutils" />
+<section id="frequency-domain-convolution-fft">
+<h4>Frequency-Domain Convolution (FFT)<a class="headerlink" href="#frequency-domain-convolution-fft" title="Link to this heading">#</a></h4>
+<p>Using the <strong>Fast Fourier Transform (FFT)</strong>, we convert both the image and kernel to the frequency domain, multiply them point-wise, and then apply the inverse FFT. The steps are:</p>
+<ol class="arabic">
+<li><p><strong>Zero-pad</strong> both inputs to avoid wrap-around: typically pad to <span class="math notranslate nohighlight">\( (n + m - 1) \times (n + m - 1) \)</span></p></li>
+<li><p><strong>Forward FFT</strong> of both image and kernel:</p>
+<div class="math notranslate nohighlight">
+\[
+   \mathcal{O}(N^2 \log N) \quad \text{where } N = n + m - 1
+   \]</div>
+</li>
+<li><p><strong>Pointwise multiplication</strong>: <span class="math notranslate nohighlight">\( \mathcal{O}(N^2) \)</span></p></li>
+<li><p><strong>Inverse FFT</strong>: <span class="math notranslate nohighlight">\( \mathcal{O}(N^2 \log N) \)</span></p></li>
+</ol>
+<p>Total complexity:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{O}(N^2 \log N) \approx \mathcal{O}(n^2 \log n)
+\]</div>
+</section>
+<hr class="docutils" />
+<section id="comparison-summary">
+<h4>Comparison Summary<a class="headerlink" href="#comparison-summary" title="Link to this heading">#</a></h4>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Method</p></th>
+<th class="head"><p>Time Complexity</p></th>
+<th class="head"><p>Better When</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Time-domain (naive)</p></td>
+<td><p><span class="math notranslate nohighlight">\( \mathcal{O}(n^2 m^2) \)</span></p></td>
+<td><p>Small kernels</p></td>
+</tr>
+<tr class="row-odd"><td><p>Frequency-domain</p></td>
+<td><p><span class="math notranslate nohighlight">\( \mathcal{O}(n^2 \log n) \)</span></p></td>
+<td><p>Large kernels / images</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Thus, <strong>FFT-based convolution is asymptotically faster</strong> for large images and kernels. In practice, libraries like NumPy and SciPy switch to FFT automatically when the kernel is large.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">widgets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.linalg</span><span class="w"> </span><span class="kn">import</span> <span class="n">toeplitz</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">run_direct_vs_fft_benchmark</span><span class="p">(</span><span class="n">max_n</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+    <span class="n">ns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">max_n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
+    <span class="n">times_direct</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">times_fft</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">ns</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">output_len</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="n">kernel_size</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="c1"># === Direct Time-Domain using Toeplitz matrix multiplication ===</span>
+        <span class="n">start_td</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="n">first_col</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">h</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)])</span>
+        <span class="n">first_row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">toeplitz_matrix</span> <span class="o">=</span> <span class="n">toeplitz</span><span class="p">(</span><span class="n">first_col</span><span class="p">,</span> <span class="n">first_row</span><span class="p">)</span>
+        <span class="n">y_direct</span> <span class="o">=</span> <span class="n">toeplitz_matrix</span> <span class="o">@</span> <span class="n">x</span>
+
+        <span class="n">end_td</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">times_direct</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">end_td</span> <span class="o">-</span> <span class="n">start_td</span><span class="p">)</span>
+
+        <span class="c1"># === FFT-based Convolution ===</span>
+        <span class="n">start_fd</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">output_len</span><span class="p">)</span>
+        <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">output_len</span><span class="p">)</span>
+        <span class="n">y_fft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">X</span> <span class="o">*</span> <span class="n">H</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+
+        <span class="n">end_fd</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">times_fft</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">end_fd</span> <span class="o">-</span> <span class="n">start_fd</span><span class="p">)</span>
+
+    <span class="c1"># === Plot ===</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">times_direct</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Matrix Multiply (Toeplitz)&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">times_fft</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Fourier Domain (FFT)&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Signal Size (n)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Execution Time (seconds)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Linear Filtering: Direct Matrix Multiply vs Fourier (FFT)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># === Interactive Sliders ===</span>
+<span class="n">max_n_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Max n&#39;</span><span class="p">)</span>
+<span class="n">step_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Step Size&#39;</span><span class="p">)</span>
+
+<span class="n">ui</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">VBox</span><span class="p">([</span><span class="n">max_n_slider</span><span class="p">,</span> <span class="n">step_slider</span><span class="p">])</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">interactive_output</span><span class="p">(</span><span class="n">run_direct_vs_fft_benchmark</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;max_n&#39;</span><span class="p">:</span> <span class="n">max_n_slider</span><span class="p">,</span>
+    <span class="s1">&#39;step&#39;</span><span class="p">:</span> <span class="n">step_slider</span>
+<span class="p">})</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "d3b723fbb7934d17b0468aa622606bca", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "a4d741c47a3641e3a699d298a6f38f3c", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">widgets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.signal</span><span class="w"> </span><span class="kn">import</span> <span class="n">fftconvolve</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">run_convolution_benchmark_large_kernel</span><span class="p">(</span><span class="n">max_n</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+    <span class="n">ns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">max_n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
+    <span class="n">times_td</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">times_fd</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># Large kernel to show FFT advantage</span>
+
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">ns</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">)</span>
+
+        <span class="c1"># --- Time Domain ---</span>
+        <span class="n">start_td</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">)</span>
+        <span class="n">end_td</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">times_td</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">end_td</span> <span class="o">-</span> <span class="n">start_td</span><span class="p">)</span>
+
+        <span class="c1"># --- Fourier Domain ---</span>
+        <span class="n">start_fd</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">fftconvolve</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">)</span>
+        <span class="n">end_fd</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">times_fd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">end_fd</span> <span class="o">-</span> <span class="n">start_fd</span><span class="p">)</span>
+
+    <span class="c1"># --- Plot ---</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">times_td</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Time Domain (np.convolve)&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">times_fd</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Fourier Domain (fftconvolve)&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Signal Size (n)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Execution Time (seconds)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Convolution Time with Large Kernel (size = 1000)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># === Interactive Widgets ===</span>
+<span class="n">max_n_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">30000</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Max n&#39;</span><span class="p">)</span>
+<span class="n">step_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Step Size&#39;</span><span class="p">)</span>
+
+<span class="n">ui</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">VBox</span><span class="p">([</span><span class="n">max_n_slider</span><span class="p">,</span> <span class="n">step_slider</span><span class="p">])</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">interactive_output</span><span class="p">(</span><span class="n">run_convolution_benchmark_large_kernel</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;max_n&#39;</span><span class="p">:</span> <span class="n">max_n_slider</span><span class="p">,</span>
+    <span class="s1">&#39;step&#39;</span><span class="p">:</span> <span class="n">step_slider</span>
+<span class="p">})</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "9e97c7a241ca4949ab11cba0dbf1b6bf", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "98b74e392e3d4c5f93636dc2970d4ece", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="cell tag_hide-input tag_thebe-init docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ---- FUNCTIONS CELL ----</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.fft</span><span class="w"> </span><span class="kn">import</span> <span class="n">fft2</span><span class="p">,</span> <span class="n">ifft2</span><span class="p">,</span> <span class="n">fftshift</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.lib.stride_tricks</span><span class="w"> </span><span class="kn">import</span> <span class="n">as_strided</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">pad_kernel</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Zero-pad the kernel to match the image size and center it.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">kh</span><span class="p">,</span> <span class="n">kw</span> <span class="o">=</span> <span class="n">kernel</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">H</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">shape</span>
+    <span class="n">padded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">padded</span><span class="p">[:</span><span class="n">kh</span><span class="p">,</span> <span class="p">:</span><span class="n">kw</span><span class="p">]</span> <span class="o">=</span> <span class="n">kernel</span>
+    <span class="n">padded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">padded</span><span class="p">,</span> <span class="o">-</span><span class="n">kh</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">padded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">padded</span><span class="p">,</span> <span class="o">-</span><span class="n">kw</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">padded</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">convolve2d_spatial</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Slow spatial domain convolution using explicit loops.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">k</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">kernel</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">pad</span> <span class="o">=</span> <span class="n">k</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">padded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">pad_width</span><span class="o">=</span><span class="n">pad</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;edge&#39;</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">h</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+            <span class="n">region</span> <span class="o">=</span> <span class="n">padded</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="n">k</span><span class="p">]</span>
+            <span class="n">output</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">region</span> <span class="o">*</span> <span class="n">kernel</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_images_grid</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">titles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">images_per_row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">cmap</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="n">num_images</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+    <span class="n">num_rows</span> <span class="o">=</span> <span class="p">(</span><span class="n">num_images</span> <span class="o">+</span> <span class="n">images_per_row</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="n">images_per_row</span>
+ 
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
     
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">images</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">num_rows</span><span class="p">,</span> <span class="n">images_per_row</span><span class="p">,</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">titles</span> <span class="ow">and</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">titles</span><span class="p">):</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">titles</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+        <span class="n">img_shape</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">x</span><span class="si">{</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape: </span><span class="si">{</span><span class="n">img_shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+ 
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ---- EXECUTION CELL ----</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">skimage.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">camera</span>
+
+<span class="c1"># Load grayscale image</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">camera</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="c1"># Define a kernel (Laplacian for edge detection)</span>
+<span class="n">kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="c1"># Step 1: Fourier Transform of Image</span>
+<span class="n">F_img</span> <span class="o">=</span> <span class="n">fft2</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">magnitude_spectrum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fftshift</span><span class="p">(</span><span class="n">F_img</span><span class="p">)))</span>  <span class="c1"># Log for better visibility</span>
+
+<span class="c1"># Step 2: Spatial Domain Convolution</span>
+<span class="n">out_spatial</span> <span class="o">=</span> <span class="n">convolve2d_spatial</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)</span>
+<span class="n">out_spatial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">out_spatial</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+
+<span class="c1"># Step 3: Fourier Domain Convolution</span>
+<span class="n">kernel_padded</span> <span class="o">=</span> <span class="n">pad_kernel</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">F_kernel</span> <span class="o">=</span> <span class="n">fft2</span><span class="p">(</span><span class="n">kernel_padded</span><span class="p">)</span>
+<span class="n">F_out</span> <span class="o">=</span> <span class="n">F_img</span> <span class="o">*</span> <span class="n">F_kernel</span>
+<span class="n">out_fourier</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifft2</span><span class="p">(</span><span class="n">F_out</span><span class="p">))</span>
+<span class="n">out_fourier</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">out_fourier</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+
+<span class="c1"># Step 4: Plot all four images</span>
+<span class="n">plot_images_grid</span><span class="p">(</span>
+    <span class="n">images</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">img</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span>
+        <span class="n">magnitude_spectrum</span><span class="p">,</span>
+        <span class="n">out_spatial</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span>
+        <span class="n">out_fourier</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="p">],</span>
+    <span class="n">titles</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">&quot;Original Image&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Fourier Magnitude&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Spatial Domain Convolution&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Fourier Domain Convolution&quot;</span>
+    <span class="p">],</span>
+    <span class="n">images_per_row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a18305a8fd031a3c2116dd54598e1bc5a31ffa27ce7c55cbadeaf4932892651d.png" src="../_images/a18305a8fd031a3c2116dd54598e1bc5a31ffa27ce7c55cbadeaf4932892651d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.signal</span><span class="w"> </span><span class="kn">import</span> <span class="n">convolve2d</span><span class="p">,</span> <span class="n">fftconvolve</span>
+
+<span class="c1"># Create a sample image and kernel</span>
+<span class="n">image_size</span> <span class="o">=</span> <span class="mi">1024</span>     <span class="c1"># Image: 1024 x 1024</span>
+<span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">51</span>      <span class="c1"># Kernel: 51 x 51</span>
+
+<span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">image_size</span><span class="p">)</span>
+<span class="n">kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">)</span>
+
+<span class="c1"># Time convolve2d</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">output_convolve2d</span> <span class="o">=</span> <span class="n">convolve2d</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+<span class="n">time_convolve2d</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+
+<span class="c1"># Time fftconvolve</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">output_fftconvolve</span> <span class="o">=</span> <span class="n">fftconvolve</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+<span class="n">time_fftconvolve</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+
+<span class="c1"># Time gain</span>
+<span class="n">time_gain</span> <span class="o">=</span> <span class="n">time_convolve2d</span> <span class="o">/</span> <span class="n">time_fftconvolve</span>
+
+<span class="c1"># Output</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;convolve2d time:   </span><span class="si">{</span><span class="n">time_convolve2d</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;fftconvolve time:  </span><span class="si">{</span><span class="n">time_fftconvolve</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time gain (conv2d / fft): </span><span class="si">{</span><span class="n">time_gain</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">x&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Outputs match? </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">output_convolve2d</span><span class="p">,</span><span class="w"> </span><span class="n">output_fftconvolve</span><span class="p">,</span><span class="w"> </span><span class="n">atol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>convolve2d time:   4.23625 seconds
+fftconvolve time:  0.02170 seconds
+Time gain (conv2d / fft): 195.21x
+Outputs match? True
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+</section>
+</section>
 </section>
 
         <script type="text/x-thebe-config">
@@ -481,12 +1108,50 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="lecture3.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Image Processing (Part 1) Image Transformations and the Convolution Operation</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-function-in-the-time-domain">What is a Function in the Time Domain?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-frequency-fourier-domain">What is the Frequency (Fourier) Domain?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-good-is-the-reconstruction">How good is the reconstruction?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moving-between-domains">Moving Between Domains</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-images-as-functions">Interpreting Images as Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fourier-transform-of-images">Fourier Transform of Images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-the-performance-improvements">What are the performance improvements?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-complexity-matrix-multiplication-vs-fft">Time Complexity: Matrix Multiplication vs FFT</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#time-domain-convolution-matrix-multiply">Time-Domain Convolution (Matrix Multiply)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#frequency-domain-convolution-fft">Frequency-Domain Convolution (FFT)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-summary">Comparison Summary</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
@@ -509,7 +1174,7 @@ By Naresh Devulapally, Summer 2025, UB. Built with Teachbooks.
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on June 10, 2025.
+  Last updated on June 12, 2025.
   <br/>
 </p>
   </div>
