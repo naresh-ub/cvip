@@ -13,6 +13,7 @@ parts:
         title: "Dates and Deliverables ⏰"
       - file: syllabus.md
       - file: website-features.ipynb
+      - file: capstone-project.ipynb
   - caption: "Course Content"
     chapters:
       - file: lectures/lecture1.ipynb
