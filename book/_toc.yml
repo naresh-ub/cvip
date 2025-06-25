@@ -5,10 +5,12 @@ root: intro.ipynb
 ## TOC from main website
 
 parts:
+  - caption: "About the Instructor"
+    chapters:
+      - url: https://naresh-ub.github.io  
+        title: "Naresh Kumar Devulapally"
   - caption: "Logistics and Weekly Schedule"
     chapters:
-      # - url: https://naresh-ub.github.io  # External link
-      #   title: "Naresh Kumar Devulapally"
       - file: dates-deadlines.md
         title: "Dates and Deliverables ⏰"
       - file: syllabus.md
@@ -16,10 +18,11 @@ parts:
       - file: capstone-project.ipynb
   - caption: "Course Content"
     chapters:
-      - file: lectures/lecture1.ipynb
-      - file: lectures/lecture2.ipynb
-      - file: lectures/lecture3.ipynb
-      - file: lectures/lecture4.ipynb
+      - file: lectures/lecture-1.ipynb
+      - file: lectures/lecture-2-3.ipynb
+      - file: lectures/lecture-4.ipynb
+      - file: lectures/lecture-5.ipynb
+      - file: lectures/lecture-6-7-8.ipynb
   
 
 #   - caption: Courses I taught at UB

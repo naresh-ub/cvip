@@ -10,32 +10,34 @@ The schedule balances theory with hands-on learning, including coding exercises 
 
 ### Lecture Dates and Details
 
-| **Date**       | **Day**   | **Topics** | **Assignments/Exercises** |
-|----------------|-----------|------------|---------------------------|
-| May 27, 2025   | Tue   | [Course Details, Logistics. What is an Image?](https://slides.com/naresh-ub/lec-1-course-logistics-and-syllabus) | |
-| May 29, 2025   | Thu  | [Image Formation and the Pinhole Camera (Part 1)](https://slides.com/naresh-ub/image-formation-pinhole) | |
-| June 3, 2025   | Tue  | [Image Formation and the Pinhole Camera (Part 2)](https://slides.com/naresh-ub/image-formation-pinhole) | |
-| June 5, 2025   | Thu  | [Image Processing in the Pixel Space](https://slides.com/naresh-ub/lecture-4-image-processing-part-1) | |
-| June 10, 2025  | Tue  | [Image Processing in the Fourier Space](https://slides.com/naresh-ub/lecture-5-image-processing-fourier-domain) | Quiz 1, Assignment 1 Release |
-| June 12, 2025  | Thu  | Stereo Vision, Depth Estimation (Part 1) | |
-| June 17, 2025  | Tue   | Stereo Vision, Depth Estimation (Part 2) | Capstone Project Release |
-| June 19, 2025  | Thu  | Stereo Vision, Depth Estimation (Part 3)| Quiz 2 |
-| June 24, 2025  | Tue   | Feature Detection (Part 1) | |
-| June 26, 2025  | Thu  | Feature Detection (Part 2) | |
-| July 1, 2025   | Tue   | Learning-based Computer Vision methods (Part 1) | Quiz 3, Assignment 1 Due Date |
-| July 3, 2025   | Thu  | Learning-based Computer Vision methods (Part 2) and Midterm Review | |
-| July 8, 2025   | Tue   | Midterm Exam | |
-| July 10, 2025  | Thu  | Introduction to Generative AI (Computer Vision Applications) | |
-| July 15, 2025  | Tue   | Variational AutoEncoders (Part 1) | |
-| July 17, 2025  | Thu  | Variational AutoEncoders (Part 2) | Quiz 4, Capstone Project Milestone 1 Due Date |
-| July 22, 2025  | Tue   | Diffusion Models (Part 1) | |
-| July 24, 2025  | Thu  | Diffusion Models (Part 2) | |
-| July 29, 2025  | Tue   | Diffusion Models (Part 3) | |
-| July 31, 2025  | Thu  | Open slot for Guest Lecture | Quiz 5, Capstone Project Milestone 2 Due Date |
-| August 5, 2025 | Tue   | Recent Trends, Models, Applications in GenAI | |
-| August 7, 2025 | Thu  | Final Exam | |
-| August 12, 2025| Tue   | Capstone Project Presentations - Batch 1 | Quiz 6 |
-| August 14, 2025| Thu  | Capstone Project Presentations - Batch 2 | Final Project Due Date |
+| | **Date**   | **Day**   | **Topics** | **Webpage/Slides** |**Assignments/Exercises** |
+|-|-|-|-|-|-|
+| | May 27, 2025   | Tue   | Course Details, Logistics | [Lecture 0](syllabus.md) / [Slides](https://slides.com/naresh-ub/cvip-lec-0)| 
+| CVIP 1.0 | May 27, 2025   | Tue   | What is an Image?| [Lecture 1](lectures/lecture-1.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-1)| 
+| CVIP 1.0 | May 29, 2025   | Thu  | Image Formation and the Pinhole Camera (Part 1) | [Lecture 2](lectures/lecture-2-3.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-2-3) |
+| CVIP 1.0 | June 3, 2025   | Tue  | Image Formation and the Pinhole Camera (Part 2) | [Lecture 3](lectures/lecture-2-3.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-2-3) |
+| CVIP 1.0 | June 5, 2025   | Thu  | Image Processing (Pixel Domain) | [Lecture 4](lectures/lecture-4.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-4) |
+| CVIP 1.0 | June 10, 2025  | Tue  | Image Processing (Fourier Domain) | [Lecture 5](lectures/lecture-5.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-5) | Quiz 1, Assignment 1 Release |
+| CVIP 1.0 | June 12, 2025  | Thu  | Stereo Vision, Depth Estimation (Part 1) | [Lecture 6](lectures/lecture-6-7-8.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-6-7-8) |
+| CVIP 1.0 | June 17, 2025  | Tue   | Stereo Vision, Depth Estimation (Part 2) | [Lecture 7](lectures/lecture-6-7-8.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-6-7-8) | Capstone Project Release |
+| CVIP 1.0 | June 19, 2025  | Thu  | Juneteenth Holiday | No Lecture | |
+| CVIP 1.0 | June 24, 2025  | Tue  | Stereo Vision, Depth Estimation (Part 3) | [Lecture 8](lectures/lecture-6-7-8.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-6-7-8) | Quiz 2 |
+| CVIP 1.0 | June 26, 2025  | Thu  | Feature Detection | |
+| CVIP 1.0 | July 1, 2025   | Tue   | Learning-based Computer Vision methods (Part 1) | | Quiz 3, Assignment 1 Due Date |
+| CVIP 1.0 | July 3, 2025   | Thu  | Learning-based Computer Vision methods (Part 2) and Midterm Review | | |
+|  | July 8, 2025   | Tue   | Midterm Exam | | |
+| CVIP 2.0 | July 10, 2025  | Thu  | Introduction to Generative AI (Computer Vision Applications) | | |
+| CVIP 2.0 | July 15, 2025  | Tue   | Variational AutoEncoders (Part 1) | | |
+| CVIP 2.0 | July 17, 2025  | Thu  | Variational AutoEncoders (Part 2) | | Quiz 4, Capstone Project Milestone 1 Due Date |
+| CVIP 2.0 | July 22, 2025  | Tue   | Diffusion Models (Part 1) | | |
+| CVIP 2.0 | July 24, 2025  | Thu  | Diffusion Models (Part 2) | | |
+| CVIP 2.0 | July 29, 2025  | Tue   | Diffusion Models (Part 3) | | |
+| CVIP 2.0 | July 31, 2025  | Thu  | Open slot for Guest Lecture | | Quiz 5, Capstone Project Milestone 2 Due Date |
+| CVIP 2.0 | August 5, 2025 | Tue   | Recent Trends, Models, Applications in GenAI | | |
+|  | August 7, 2025 | Thu  | Final Exam | | |
+| CVIP 2.0 | August 12, 2025| Tue   | Capstone Project Presentations - Batch 1 | | Quiz 6 |
+| CVIP 2.0 | August 14, 2025| Thu  | Capstone Project Presentations - Batch 2 | | Final Project Due Date |
+
 
 ## Course Deliverables Breakdown
 

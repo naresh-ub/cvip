@@ -1,0 +1,597 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>How is an image formed? &#8212; CSE 4/573 - Computer Vision and Image Processing</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe.css?v=9bca0c2f" />
+    <link rel="stylesheet" type="text/css" href="../_static/code.css?v=1719a5f1" />
+    <link rel="stylesheet" type="text/css" href="../_static/image_dark_mode.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_iframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tippy.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tb_cc.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/fix_admonition_style.css?v=8627ce31" />
+    <link rel="stylesheet" type="text/css" href="../_static/fix_dropdown_style.css?v=f3461767" />
+    <link rel="stylesheet" type="text/css" href="../_static/fix_code_header_style.css?v=7d542921" />
+    <link rel="stylesheet" type="text/css" href="../_static/color.css?v=fb14535a" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/h5p-resizer.js"></script>
+    <script defer="defer" src="../_static/refresh.js?v=9bea9b76"></script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script defer="defer" src="../_static/sphinx-thebe-lite.js?v=94e8009d"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script defer="defer" src="../_static/tippy/lectures/lecture-2-3.da4afe15-c7b4-4a75-abbd-3147d90aeaf9.js"></script>
+    <script>window.MathJax = {"chtml": {"mtextInheritFont": true}, "tex": {"macros": {"black": ["\\class{black}{#1}", 1], "silver": ["\\class{silver}{#1}", 1], "gray": ["\\class{gray}{#1}", 1], "white": ["\\class{white}{#1}", 1], "maroon": ["\\class{maroon}{#1}", 1], "red": ["\\class{red}{#1}", 1], "purple": ["\\class{purple}{#1}", 1], "fuchsia": ["\\class{fuchsia}{#1}", 1], "green": ["\\class{green}{#1}", 1], "lime": ["\\class{lime}{#1}", 1], "olive": ["\\class{olive}{#1}", 1], "yellow": ["\\class{yellow}{#1}", 1], "navy": ["\\class{navy}{#1}", 1], "blue": ["\\class{blue}{#1}", 1], "teal": ["\\class{teal}{#1}", 1], "aqua": ["\\class{aqua}{#1}", 1], "aliceblue": ["\\class{aliceblue}{#1}", 1], "antiquewhite": ["\\class{antiquewhite}{#1}", 1], "aquamarine": ["\\class{aquamarine}{#1}", 1], "azure": ["\\class{azure}{#1}", 1], "beige": ["\\class{beige}{#1}", 1], "bisque": ["\\class{bisque}{#1}", 1], "blanchedalmond": ["\\class{blanchedalmond}{#1}", 1], "blueviolet": ["\\class{blueviolet}{#1}", 1], "brown": ["\\class{brown}{#1}", 1], "burlywood": ["\\class{burlywood}{#1}", 1], "cadetblue": ["\\class{cadetblue}{#1}", 1], "chartreuse": ["\\class{chartreuse}{#1}", 1], "chocolate": ["\\class{chocolate}{#1}", 1], "coral": ["\\class{coral}{#1}", 1], "cornflowerblue": ["\\class{cornflowerblue}{#1}", 1], "cornsilk": ["\\class{cornsilk}{#1}", 1], "crimson": ["\\class{crimson}{#1}", 1], "cyan": ["\\class{cyan}{#1}", 1], "darkblue": ["\\class{darkblue}{#1}", 1], "darkcyan": ["\\class{darkcyan}{#1}", 1], "darkgoldenrod": ["\\class{darkgoldenrod}{#1}", 1], "darkgray": ["\\class{darkgray}{#1}", 1], "darkgreen": ["\\class{darkgreen}{#1}", 1], "darkgrey": ["\\class{darkgrey}{#1}", 1], "darkkhaki": ["\\class{darkkhaki}{#1}", 1], "darkmagenta": ["\\class{darkmagenta}{#1}", 1], "darkolivegreen": ["\\class{darkolivegreen}{#1}", 1], "darkorange": ["\\class{darkorange}{#1}", 1], "darkorchid": ["\\class{darkorchid}{#1}", 1], "darkred": ["\\class{darkred}{#1}", 1], "darksalmon": ["\\class{darksalmon}{#1}", 1], "darkseagreen": ["\\class{darkseagreen}{#1}", 1], "darkslateblue": ["\\class{darkslateblue}{#1}", 1], "darkslategray": ["\\class{darkslategray}{#1}", 1], "darkslategrey": ["\\class{darkslategrey}{#1}", 1], "darkturquoise": ["\\class{darkturquoise}{#1}", 1], "darkviolet": ["\\class{darkviolet}{#1}", 1], "deeppink": ["\\class{deeppink}{#1}", 1], "deepskyblue": ["\\class{deepskyblue}{#1}", 1], "dimgray": ["\\class{dimgray}{#1}", 1], "dimgrey": ["\\class{dimgrey}{#1}", 1], "dodgerblue": ["\\class{dodgerblue}{#1}", 1], "firebrick": ["\\class{firebrick}{#1}", 1], "floralwhite": ["\\class{floralwhite}{#1}", 1], "forestgreen": ["\\class{forestgreen}{#1}", 1], "gainsboro": ["\\class{gainsboro}{#1}", 1], "ghostwhite": ["\\class{ghostwhite}{#1}", 1], "gold": ["\\class{gold}{#1}", 1], "goldenrod": ["\\class{goldenrod}{#1}", 1], "greenyellow": ["\\class{greenyellow}{#1}", 1], "grey": ["\\class{grey}{#1}", 1], "honeydew": ["\\class{honeydew}{#1}", 1], "hotpink": ["\\class{hotpink}{#1}", 1], "indianred": ["\\class{indianred}{#1}", 1], "indigo": ["\\class{indigo}{#1}", 1], "ivory": ["\\class{ivory}{#1}", 1], "khaki": ["\\class{khaki}{#1}", 1], "lavender": ["\\class{lavender}{#1}", 1], "lavenderblush": ["\\class{lavenderblush}{#1}", 1], "lawngreen": ["\\class{lawngreen}{#1}", 1], "lemonchiffon": ["\\class{lemonchiffon}{#1}", 1], "lightblue": ["\\class{lightblue}{#1}", 1], "lightcoral": ["\\class{lightcoral}{#1}", 1], "lightcyan": ["\\class{lightcyan}{#1}", 1], "lightgoldenrodyellow": ["\\class{lightgoldenrodyellow}{#1}", 1], "lightgray": ["\\class{lightgray}{#1}", 1], "lightgreen": ["\\class{lightgreen}{#1}", 1], "lightgrey": ["\\class{lightgrey}{#1}", 1], "lightpink": ["\\class{lightpink}{#1}", 1], "lightsalmon": ["\\class{lightsalmon}{#1}", 1], "lightseagreen": ["\\class{lightseagreen}{#1}", 1], "lightskyblue": ["\\class{lightskyblue}{#1}", 1], "lightslategray": ["\\class{lightslategray}{#1}", 1], "lightslategrey": ["\\class{lightslategrey}{#1}", 1], "lightsteelblue": ["\\class{lightsteelblue}{#1}", 1], "lightyellow": ["\\class{lightyellow}{#1}", 1], "limegreen": ["\\class{limegreen}{#1}", 1], "linen": ["\\class{linen}{#1}", 1], "magenta": ["\\class{magenta}{#1}", 1], "mediumaquamarine": ["\\class{mediumaquamarine}{#1}", 1], "mediumblue": ["\\class{mediumblue}{#1}", 1], "mediumorchid": ["\\class{mediumorchid}{#1}", 1], "mediumpurple": ["\\class{mediumpurple}{#1}", 1], "mediumseagreen": ["\\class{mediumseagreen}{#1}", 1], "mediumslateblue": ["\\class{mediumslateblue}{#1}", 1], "mediumspringgreen": ["\\class{mediumspringgreen}{#1}", 1], "mediumturquoise": ["\\class{mediumturquoise}{#1}", 1], "mediumvioletred": ["\\class{mediumvioletred}{#1}", 1], "midnightblue": ["\\class{midnightblue}{#1}", 1], "mintcream": ["\\class{mintcream}{#1}", 1], "mistyrose": ["\\class{mistyrose}{#1}", 1], "moccasin": ["\\class{moccasin}{#1}", 1], "navajowhite": ["\\class{navajowhite}{#1}", 1], "oldlace": ["\\class{oldlace}{#1}", 1], "olivedrab": ["\\class{olivedrab}{#1}", 1], "orange": ["\\class{orange}{#1}", 1], "orangered": ["\\class{orangered}{#1}", 1], "orchid": ["\\class{orchid}{#1}", 1], "palegoldenrod": ["\\class{palegoldenrod}{#1}", 1], "palegreen": ["\\class{palegreen}{#1}", 1], "paleturquoise": ["\\class{paleturquoise}{#1}", 1], "palevioletred": ["\\class{palevioletred}{#1}", 1], "papayawhip": ["\\class{papayawhip}{#1}", 1], "peachpuff": ["\\class{peachpuff}{#1}", 1], "peru": ["\\class{peru}{#1}", 1], "pink": ["\\class{pink}{#1}", 1], "plum": ["\\class{plum}{#1}", 1], "powderblue": ["\\class{powderblue}{#1}", 1], "rebeccapurple": ["\\class{rebeccapurple}{#1}", 1], "rosybrown": ["\\class{rosybrown}{#1}", 1], "royalblue": ["\\class{royalblue}{#1}", 1], "saddlebrown": ["\\class{saddlebrown}{#1}", 1], "salmon": ["\\class{salmon}{#1}", 1], "sandybrown": ["\\class{sandybrown}{#1}", 1], "seagreen": ["\\class{seagreen}{#1}", 1], "seashell": ["\\class{seashell}{#1}", 1], "sienna": ["\\class{sienna}{#1}", 1], "skyblue": ["\\class{skyblue}{#1}", 1], "slateblue": ["\\class{slateblue}{#1}", 1], "slategray": ["\\class{slategray}{#1}", 1], "slategrey": ["\\class{slategrey}{#1}", 1], "snow": ["\\class{snow}{#1}", 1], "springgreen": ["\\class{springgreen}{#1}", 1], "steelblue": ["\\class{steelblue}{#1}", 1], "tan": ["\\class{tan}{#1}", 1], "thistle": ["\\class{thistle}{#1}", 1], "tomato": ["\\class{tomato}{#1}", 1], "turquoise": ["\\class{turquoise}{#1}", 1], "violet": ["\\class{violet}{#1}", 1], "wheat": ["\\class{wheat}{#1}", 1], "whitesmoke": ["\\class{whitesmoke}{#1}", 1], "yellowgreen": ["\\class{yellowgreen}{#1}", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/lecture-2-3';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Image Processing (Part 1) Spatial Domain" href="lecture-4.html" />
+    <link rel="prev" title="What is a Pixel and what is an Image?" href="lecture-1.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="June 25, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../_static/logo_dark.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">CSE 4/573 - CVIP</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">About the Instructor</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://naresh-ub.github.io">Naresh Kumar Devulapally</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Logistics and Weekly Schedule</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../dates-deadlines.html">Dates and Deliverables ⏰</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">Course Logistics and Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../website-features.html">Website Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../capstone-project.html">Capstone Project Details and Deliverables</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Content</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lecture-1.html">What is a Pixel and what is an Image?</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">How is an image formed?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-4.html">Image Processing (Part 1) Spatial Domain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-5.html">Image Processing (Part 2) Fourier Domain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-6-7-8.html">Depth Estimation using Stereo Vision</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/naresh-ub/cvip/blob/main/book/lectures/lecture-2-3.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/naresh-ub/cvip" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/lecture-2-3.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>How is an image formed?</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="how-is-an-image-formed">
+<h1>How is an image formed?<a class="headerlink" href="#how-is-an-image-formed" title="Link to this heading">#</a></h1>
+<div>
+<iframe src="https://slides.com/naresh-ub/cvip-lec-2-3/embed" width="100%" height="500" title="Test Title" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div>
+<p>In this lecture, we shall understand the Math and Geometry behind Image Formation. In the <a class="reference internal" href="#lecture1.ipynb"><span class="xref myst">previous lecture</span></a>, we learned that images are stored/read as <code class="docutils literal notranslate"><span class="pre">numpy</span> <span class="pre">arrays</span></code>. In this lecture we understand the way in which a 3D object is captured on a 2D image plane. In fact, we will see that a <code class="docutils literal notranslate"><span class="pre">camera</span> <span class="pre">is</span> <span class="pre">nothing</span> <span class="pre">but</span> <span class="pre">a</span> <span class="pre">function</span> <span class="pre">that</span> <span class="pre">maps</span> <span class="pre">a</span> <span class="pre">3D</span> <span class="pre">point</span> <span class="pre">in</span> <span class="pre">real-world</span> <span class="pre">onto</span> <span class="pre">a</span> <span class="pre">2D</span> <span class="pre">point</span> <span class="pre">on</span> <span class="pre">the</span> <span class="pre">image</span> <span class="pre">plane</span></code>.</p>
+<p>Let’s get started with an object that we want to capture. For this lecture, let’s choose an object with regular shape.</p>
+<div class="cell tag_remove-input tag_disable-execution-cell docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html">
+        <iframe
+            width="100%"
+            height="400"
+            src="iframe_figures/cube_with_axes.html"
+            frameborder="0"
+            allowfullscreen
+            
+        ></iframe>
+        </div></div>
+</div>
+<p>In the above 3D Plot (using Plotly), we are able to visualize a 3D Cube. Let’s say we want to study how a 3D object (like the cube above) is captured onto a 2D image plane. We study this using <em>Perspective Projection and the Pinhole Camera model</em>.</p>
+<div class="cell tag_remove-input tag_disable-execution-cell docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html">
+        <iframe
+            width="100%"
+            height="500"
+            src="iframe_figures/cube_projection.html"
+            frameborder="0"
+            allowfullscreen
+            
+        ></iframe>
+        </div></div>
+</div>
+<div class="cell tag_remove-input tag_disable-execution-cell docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html">
+        <iframe
+            width="100%"
+            height="500"
+            src="iframe_figures/sphere_projection.html"
+            frameborder="0"
+            allowfullscreen
+            
+        ></iframe>
+        </div></div>
+</div>
+<div class="cell tag_remove-input tag_disable-execution-cell docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html">
+        <iframe
+            width="100%"
+            height="550"
+            src="iframe_figures/triangle_prism_slider.html"
+            frameborder="0"
+            allowfullscreen
+            
+        ></iframe>
+        </div></div>
+</div>
+<div class="cell tag_remove-input tag_disable-execution-cell docutils container">
+</div>
+</section>
+
+        <script type="text/x-thebe-config">
+        {
+            "rootPath": "..",
+            "requestKernel": true,
+            "useJupyterLite": true,
+            "useBinder": false,
+            "kernelOptions": {
+                "path": "/"
+            },
+            "codeMirrorConfig": {
+                "theme": "default",
+                "mode": "python"
+            },
+            "mountRestartButton": false,
+            "mountRestartallButton": false
+        }
+        </script>
+        <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lecture-1.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">What is a Pixel and what is an Image?</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="lecture-4.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Image Processing (Part 1) Spatial Domain</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Naresh Devulapally, Summer 2025, UB. Built with Teachbooks.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on June 25, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

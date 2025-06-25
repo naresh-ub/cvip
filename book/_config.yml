@@ -10,6 +10,10 @@ html:
   baseurl :  "https://naresh-ub.github.io/cvip" #Replace this with your own URL
   extra_css: ["_static/color.css"]
 
+html:
+  analytics:
+    google_analytics_id: G-YTF2311PDM
+
 sphinx:
   config:
     html_js_files:

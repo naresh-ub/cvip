@@ -1,0 +1,1619 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Image Processing (Part 1) Spatial Domain &#8212; CSE 4/573 - Computer Vision and Image Processing</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe.css?v=9bca0c2f" />
+    <link rel="stylesheet" type="text/css" href="../_static/code.css?v=1719a5f1" />
+    <link rel="stylesheet" type="text/css" href="../_static/image_dark_mode.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_iframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tippy.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tb_cc.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/fix_admonition_style.css?v=8627ce31" />
+    <link rel="stylesheet" type="text/css" href="../_static/fix_dropdown_style.css?v=f3461767" />
+    <link rel="stylesheet" type="text/css" href="../_static/fix_code_header_style.css?v=7d542921" />
+    <link rel="stylesheet" type="text/css" href="../_static/color.css?v=fb14535a" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/h5p-resizer.js"></script>
+    <script defer="defer" src="../_static/refresh.js?v=9bea9b76"></script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script defer="defer" src="../_static/sphinx-thebe-lite.js?v=94e8009d"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script defer="defer" src="../_static/tippy/lectures/lecture-4.8f4f9078-e4bc-4ceb-95e9-942c4303b5a8.js"></script>
+    <script>window.MathJax = {"chtml": {"mtextInheritFont": true}, "tex": {"macros": {"black": ["\\class{black}{#1}", 1], "silver": ["\\class{silver}{#1}", 1], "gray": ["\\class{gray}{#1}", 1], "white": ["\\class{white}{#1}", 1], "maroon": ["\\class{maroon}{#1}", 1], "red": ["\\class{red}{#1}", 1], "purple": ["\\class{purple}{#1}", 1], "fuchsia": ["\\class{fuchsia}{#1}", 1], "green": ["\\class{green}{#1}", 1], "lime": ["\\class{lime}{#1}", 1], "olive": ["\\class{olive}{#1}", 1], "yellow": ["\\class{yellow}{#1}", 1], "navy": ["\\class{navy}{#1}", 1], "blue": ["\\class{blue}{#1}", 1], "teal": ["\\class{teal}{#1}", 1], "aqua": ["\\class{aqua}{#1}", 1], "aliceblue": ["\\class{aliceblue}{#1}", 1], "antiquewhite": ["\\class{antiquewhite}{#1}", 1], "aquamarine": ["\\class{aquamarine}{#1}", 1], "azure": ["\\class{azure}{#1}", 1], "beige": ["\\class{beige}{#1}", 1], "bisque": ["\\class{bisque}{#1}", 1], "blanchedalmond": ["\\class{blanchedalmond}{#1}", 1], "blueviolet": ["\\class{blueviolet}{#1}", 1], "brown": ["\\class{brown}{#1}", 1], "burlywood": ["\\class{burlywood}{#1}", 1], "cadetblue": ["\\class{cadetblue}{#1}", 1], "chartreuse": ["\\class{chartreuse}{#1}", 1], "chocolate": ["\\class{chocolate}{#1}", 1], "coral": ["\\class{coral}{#1}", 1], "cornflowerblue": ["\\class{cornflowerblue}{#1}", 1], "cornsilk": ["\\class{cornsilk}{#1}", 1], "crimson": ["\\class{crimson}{#1}", 1], "cyan": ["\\class{cyan}{#1}", 1], "darkblue": ["\\class{darkblue}{#1}", 1], "darkcyan": ["\\class{darkcyan}{#1}", 1], "darkgoldenrod": ["\\class{darkgoldenrod}{#1}", 1], "darkgray": ["\\class{darkgray}{#1}", 1], "darkgreen": ["\\class{darkgreen}{#1}", 1], "darkgrey": ["\\class{darkgrey}{#1}", 1], "darkkhaki": ["\\class{darkkhaki}{#1}", 1], "darkmagenta": ["\\class{darkmagenta}{#1}", 1], "darkolivegreen": ["\\class{darkolivegreen}{#1}", 1], "darkorange": ["\\class{darkorange}{#1}", 1], "darkorchid": ["\\class{darkorchid}{#1}", 1], "darkred": ["\\class{darkred}{#1}", 1], "darksalmon": ["\\class{darksalmon}{#1}", 1], "darkseagreen": ["\\class{darkseagreen}{#1}", 1], "darkslateblue": ["\\class{darkslateblue}{#1}", 1], "darkslategray": ["\\class{darkslategray}{#1}", 1], "darkslategrey": ["\\class{darkslategrey}{#1}", 1], "darkturquoise": ["\\class{darkturquoise}{#1}", 1], "darkviolet": ["\\class{darkviolet}{#1}", 1], "deeppink": ["\\class{deeppink}{#1}", 1], "deepskyblue": ["\\class{deepskyblue}{#1}", 1], "dimgray": ["\\class{dimgray}{#1}", 1], "dimgrey": ["\\class{dimgrey}{#1}", 1], "dodgerblue": ["\\class{dodgerblue}{#1}", 1], "firebrick": ["\\class{firebrick}{#1}", 1], "floralwhite": ["\\class{floralwhite}{#1}", 1], "forestgreen": ["\\class{forestgreen}{#1}", 1], "gainsboro": ["\\class{gainsboro}{#1}", 1], "ghostwhite": ["\\class{ghostwhite}{#1}", 1], "gold": ["\\class{gold}{#1}", 1], "goldenrod": ["\\class{goldenrod}{#1}", 1], "greenyellow": ["\\class{greenyellow}{#1}", 1], "grey": ["\\class{grey}{#1}", 1], "honeydew": ["\\class{honeydew}{#1}", 1], "hotpink": ["\\class{hotpink}{#1}", 1], "indianred": ["\\class{indianred}{#1}", 1], "indigo": ["\\class{indigo}{#1}", 1], "ivory": ["\\class{ivory}{#1}", 1], "khaki": ["\\class{khaki}{#1}", 1], "lavender": ["\\class{lavender}{#1}", 1], "lavenderblush": ["\\class{lavenderblush}{#1}", 1], "lawngreen": ["\\class{lawngreen}{#1}", 1], "lemonchiffon": ["\\class{lemonchiffon}{#1}", 1], "lightblue": ["\\class{lightblue}{#1}", 1], "lightcoral": ["\\class{lightcoral}{#1}", 1], "lightcyan": ["\\class{lightcyan}{#1}", 1], "lightgoldenrodyellow": ["\\class{lightgoldenrodyellow}{#1}", 1], "lightgray": ["\\class{lightgray}{#1}", 1], "lightgreen": ["\\class{lightgreen}{#1}", 1], "lightgrey": ["\\class{lightgrey}{#1}", 1], "lightpink": ["\\class{lightpink}{#1}", 1], "lightsalmon": ["\\class{lightsalmon}{#1}", 1], "lightseagreen": ["\\class{lightseagreen}{#1}", 1], "lightskyblue": ["\\class{lightskyblue}{#1}", 1], "lightslategray": ["\\class{lightslategray}{#1}", 1], "lightslategrey": ["\\class{lightslategrey}{#1}", 1], "lightsteelblue": ["\\class{lightsteelblue}{#1}", 1], "lightyellow": ["\\class{lightyellow}{#1}", 1], "limegreen": ["\\class{limegreen}{#1}", 1], "linen": ["\\class{linen}{#1}", 1], "magenta": ["\\class{magenta}{#1}", 1], "mediumaquamarine": ["\\class{mediumaquamarine}{#1}", 1], "mediumblue": ["\\class{mediumblue}{#1}", 1], "mediumorchid": ["\\class{mediumorchid}{#1}", 1], "mediumpurple": ["\\class{mediumpurple}{#1}", 1], "mediumseagreen": ["\\class{mediumseagreen}{#1}", 1], "mediumslateblue": ["\\class{mediumslateblue}{#1}", 1], "mediumspringgreen": ["\\class{mediumspringgreen}{#1}", 1], "mediumturquoise": ["\\class{mediumturquoise}{#1}", 1], "mediumvioletred": ["\\class{mediumvioletred}{#1}", 1], "midnightblue": ["\\class{midnightblue}{#1}", 1], "mintcream": ["\\class{mintcream}{#1}", 1], "mistyrose": ["\\class{mistyrose}{#1}", 1], "moccasin": ["\\class{moccasin}{#1}", 1], "navajowhite": ["\\class{navajowhite}{#1}", 1], "oldlace": ["\\class{oldlace}{#1}", 1], "olivedrab": ["\\class{olivedrab}{#1}", 1], "orange": ["\\class{orange}{#1}", 1], "orangered": ["\\class{orangered}{#1}", 1], "orchid": ["\\class{orchid}{#1}", 1], "palegoldenrod": ["\\class{palegoldenrod}{#1}", 1], "palegreen": ["\\class{palegreen}{#1}", 1], "paleturquoise": ["\\class{paleturquoise}{#1}", 1], "palevioletred": ["\\class{palevioletred}{#1}", 1], "papayawhip": ["\\class{papayawhip}{#1}", 1], "peachpuff": ["\\class{peachpuff}{#1}", 1], "peru": ["\\class{peru}{#1}", 1], "pink": ["\\class{pink}{#1}", 1], "plum": ["\\class{plum}{#1}", 1], "powderblue": ["\\class{powderblue}{#1}", 1], "rebeccapurple": ["\\class{rebeccapurple}{#1}", 1], "rosybrown": ["\\class{rosybrown}{#1}", 1], "royalblue": ["\\class{royalblue}{#1}", 1], "saddlebrown": ["\\class{saddlebrown}{#1}", 1], "salmon": ["\\class{salmon}{#1}", 1], "sandybrown": ["\\class{sandybrown}{#1}", 1], "seagreen": ["\\class{seagreen}{#1}", 1], "seashell": ["\\class{seashell}{#1}", 1], "sienna": ["\\class{sienna}{#1}", 1], "skyblue": ["\\class{skyblue}{#1}", 1], "slateblue": ["\\class{slateblue}{#1}", 1], "slategray": ["\\class{slategray}{#1}", 1], "slategrey": ["\\class{slategrey}{#1}", 1], "snow": ["\\class{snow}{#1}", 1], "springgreen": ["\\class{springgreen}{#1}", 1], "steelblue": ["\\class{steelblue}{#1}", 1], "tan": ["\\class{tan}{#1}", 1], "thistle": ["\\class{thistle}{#1}", 1], "tomato": ["\\class{tomato}{#1}", 1], "turquoise": ["\\class{turquoise}{#1}", 1], "violet": ["\\class{violet}{#1}", 1], "wheat": ["\\class{wheat}{#1}", 1], "whitesmoke": ["\\class{whitesmoke}{#1}", 1], "yellowgreen": ["\\class{yellowgreen}{#1}", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/lecture-4';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Image Processing (Part 2) Fourier Domain" href="lecture-5.html" />
+    <link rel="prev" title="How is an image formed?" href="lecture-2-3.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="June 25, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../_static/logo_dark.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">CSE 4/573 - CVIP</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">About the Instructor</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://naresh-ub.github.io">Naresh Kumar Devulapally</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Logistics and Weekly Schedule</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../dates-deadlines.html">Dates and Deliverables ⏰</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">Course Logistics and Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../website-features.html">Website Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../capstone-project.html">Capstone Project Details and Deliverables</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Content</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lecture-1.html">What is a Pixel and what is an Image?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-2-3.html">How is an image formed?</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Image Processing (Part 1) Spatial Domain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-5.html">Image Processing (Part 2) Fourier Domain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-6-7-8.html">Depth Estimation using Stereo Vision</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/naresh-ub/cvip/blob/main/book/lectures/lecture-4.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/naresh-ub/cvip" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/lecture-4.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Image Processing (Part 1) Spatial Domain</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-affine-transformations">Simple Affine Transformations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#affine-transformations-on-grayscale-images">Affine transformations on Grayscale images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bilinear-interpolation">BiLinear Interpolation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#can-interpolation-restore-missing-pixels-from-an-image-and-perform-inpainting-task">Can Interpolation restore missing pixels from an image and perform inpainting task?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convolution-operation-in-signal-processing">Convolution Operation in Signal Processing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finally-convolutions-on-images">Finally convolutions on images</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-formula">Discrete Formula</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convolution-on-2d-images-code">Convolution on 2D images Code</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="image-processing-part-1-spatial-domain">
+<h1>Image Processing (Part 1) Spatial Domain<a class="headerlink" href="#image-processing-part-1-spatial-domain" title="Link to this heading">#</a></h1>
+<div>
+<iframe src="https://slides.com/naresh-ub/cvip-lec-4/embed" width="100%" height="500" title="Test Title" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div>
+<p>As we established multiple times in this course that images are nothing but <code class="docutils literal notranslate"><span class="pre">numpy</span> <span class="pre">arrays</span></code> where each value in the grid represents a pixel. In the case of a grayscale image, the pixel represents intensity from <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">to</span> <span class="pre">255</span></code> and in the case of a colored RGB image, each pixel is a vector <code class="docutils literal notranslate"><span class="pre">[R,</span> <span class="pre">G,</span> <span class="pre">B]</span></code> values ranging from 0 to 255. Depending on different combinations of R, G, and B, we can visualize different colors at each pixel.</p>
+<p><em>In this lecture, we will look at various image processing techniques that will result in extraction of various features from images.</em></p>
+<p>To get started, lets look at some simple image transformations that we can perform with the information that an image is simply a numpy array.</p>
+<div class="tip admonition">
+<p class="admonition-title">Use the Live Code feature in this webpage</p>
+<p>Already installed packages: <code class="docutils literal notranslate"><span class="pre">skimage,</span> <span class="pre">cv2,</span> <span class="pre">matplotlib</span></code> (other required packages).</p>
+<p>Hit the rocket icon on the top right, and wait for <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">interaction</span> <span class="pre">ready</span></code>.</p>
+</div>
+<div class="cell tag_thebe-init tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_side_by_side</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">transformed</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Original Image&quot;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">transformed</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Transformed Image&quot;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.ndimage</span><span class="w"> </span><span class="kn">import</span> <span class="n">affine_transform</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skimage</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">widgets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">clear_output</span><span class="p">,</span> <span class="n">HTML</span>
+
+<span class="c1"># Load image</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">camera</span><span class="p">()</span>
+<span class="n">transformed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">image</span><span class="p">)</span> <span class="c1"># Creates an empty array with the same shape as the image</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">image</span><span class="p">),</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+  <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+    <span class="n">transformed</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">255</span> <span class="o">-</span> <span class="n">image</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="c1"># This code simply inverts the image</span>
+    
+<span class="n">plot_side_by_side</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">transformed</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;numpy.ndarray&#39;&gt; (512, 512)
+</pre></div>
+</div>
+<img alt="../_images/20e0d1e2ff4037babe265b429b6f6da07bb5471055deff8bd783f408e49ebeb7.png" src="../_images/20e0d1e2ff4037babe265b429b6f6da07bb5471055deff8bd783f408e49ebeb7.png" />
+</div>
+</div>
+<p>The above code is a nice way to interact with numpy arrays. <em>Try performing some other transformations using Numpy Arrays.</em></p>
+<p><code class="docutils literal notranslate"><span class="pre">Play</span> <span class="pre">around</span> <span class="pre">with</span> <span class="pre">different</span> <span class="pre">images</span> <span class="pre">that</span> <span class="pre">are</span> <span class="pre">pre-built</span> <span class="pre">into</span> <span class="pre">the</span> <span class="pre">matplotlib</span> <span class="pre">library.</span> <span class="pre">Image</span> <span class="pre">reading</span> <span class="pre">from</span> <span class="pre">URLs</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">currently</span> <span class="pre">supported</span> <span class="pre">yet.</span></code></p>
+<section id="simple-affine-transformations">
+<h2>Simple Affine Transformations<a class="headerlink" href="#simple-affine-transformations" title="Link to this heading">#</a></h2>
+<p>In the next part of the code, we borrow concepts from Linear Algebra to perform various transformations such as <code class="docutils literal notranslate"><span class="pre">Scaling,</span> <span class="pre">Shear,</span> <span class="pre">Translation</span></code> using Matrix Multiplication. To explain this concept let’s take a simple scenario where an image is made up of a 2*2 grid.</p>
+<div class="cell tag_thebe-init tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">widgets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">clear_output</span>
+
+<span class="c1"># Define square</span>
+<span class="n">square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Close the square</span>
+<span class="p">])</span>
+
+<span class="c1"># Display matrix and translation vector in HTML</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">matrix_html_display</span><span class="p">(</span><span class="n">a00</span><span class="p">,</span> <span class="n">a01</span><span class="p">,</span> <span class="n">a10</span><span class="p">,</span> <span class="n">a11</span><span class="p">,</span> <span class="n">tx</span><span class="p">,</span> <span class="n">ty</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">HTML</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;div style=&#39;font-size: 20px; font-family: monospace; color: gray;&#39;&gt;&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;strong&gt;Transformation:&lt;/strong&gt;&lt;br&gt;&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;strong&gt;x′ = A·x + v&lt;/strong&gt;&lt;br&gt;&lt;br&gt;&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;A = [ [</span><span class="si">{</span><span class="n">a00</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">a01</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">]&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;[</span><span class="si">{</span><span class="n">a10</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">a11</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">] ]&lt;br&gt;&lt;br&gt;&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;v = [ </span><span class="si">{</span><span class="n">tx</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ]&lt;br&gt;&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;[ </span><span class="si">{</span><span class="n">ty</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ]&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;/div&gt;&quot;</span>
+    <span class="p">)</span>
+
+<span class="c1"># Main interactive function</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">show_square_affine_transform</span><span class="p">(</span><span class="n">interactive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">a00</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">a01</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">a10</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">a11</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">tx</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">ty</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">interactive</span><span class="p">:</span>
+        <span class="n">display</span><span class="p">(</span><span class="n">matrix_html_display</span><span class="p">(</span><span class="n">a00</span><span class="p">,</span> <span class="n">a01</span><span class="p">,</span> <span class="n">a10</span><span class="p">,</span> <span class="n">a11</span><span class="p">,</span> <span class="n">tx</span><span class="p">,</span> <span class="n">ty</span><span class="p">))</span>
+        <span class="n">apply_affine_to_square_and_plot</span><span class="p">(</span><span class="n">a00</span><span class="p">,</span> <span class="n">a01</span><span class="p">,</span> <span class="n">a10</span><span class="p">,</span> <span class="n">a11</span><span class="p">,</span> <span class="n">tx</span><span class="p">,</span> <span class="n">ty</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c1"># Matrix sliders</span>
+    <span class="n">a00_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">a00</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mf">2.0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;A[0,0]&#39;</span><span class="p">)</span>
+    <span class="n">a01_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">a01</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mf">2.0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;A[0,1]&#39;</span><span class="p">)</span>
+    <span class="n">a10_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">a10</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mf">2.0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;A[1,0]&#39;</span><span class="p">)</span>
+    <span class="n">a11_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">a11</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mf">2.0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;A[1,1]&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Translation sliders</span>
+    <span class="n">tx_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">tx</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mf">5.0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;tx&#39;</span><span class="p">)</span>
+    <span class="n">ty_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">ty</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mf">5.0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;ty&#39;</span><span class="p">)</span>
+
+    <span class="n">slider_box</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">VBox</span><span class="p">([</span>
+        <span class="n">a00_slider</span><span class="p">,</span> <span class="n">a01_slider</span><span class="p">,</span> <span class="n">a10_slider</span><span class="p">,</span> <span class="n">a11_slider</span><span class="p">,</span>
+        <span class="n">widgets</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="s2">&quot;Translation Vector&quot;</span><span class="p">),</span>
+        <span class="n">tx_slider</span><span class="p">,</span> <span class="n">ty_slider</span>
+    <span class="p">])</span>
+    <span class="n">matrix_box</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HTML</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_matrix_display</span><span class="p">(</span><span class="n">a00</span><span class="p">,</span> <span class="n">a01</span><span class="p">,</span> <span class="n">a10</span><span class="p">,</span> <span class="n">a11</span><span class="p">,</span> <span class="n">tx</span><span class="p">,</span> <span class="n">ty</span><span class="p">):</span>
+        <span class="n">matrix_box</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&lt;div style=&#39;font-size: 20px; font-family: monospace; color: gray;&#39;&gt;&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;&lt;strong&gt;x′ = A·x + v&lt;/strong&gt;&lt;br&gt;&lt;br&gt;&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;A = [ [</span><span class="si">{</span><span class="n">a00</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">a01</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">]&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;[</span><span class="si">{</span><span class="n">a10</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">a11</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">] ]&lt;br&gt;&lt;br&gt;&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;v = [ </span><span class="si">{</span><span class="n">tx</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ]&lt;br&gt;&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;[ </span><span class="si">{</span><span class="n">ty</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ]&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;&lt;/div&gt;&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">full_update</span><span class="p">(</span><span class="n">a00</span><span class="p">,</span> <span class="n">a01</span><span class="p">,</span> <span class="n">a10</span><span class="p">,</span> <span class="n">a11</span><span class="p">,</span> <span class="n">tx</span><span class="p">,</span> <span class="n">ty</span><span class="p">):</span>
+        <span class="n">update_matrix_display</span><span class="p">(</span><span class="n">a00</span><span class="p">,</span> <span class="n">a01</span><span class="p">,</span> <span class="n">a10</span><span class="p">,</span> <span class="n">a11</span><span class="p">,</span> <span class="n">tx</span><span class="p">,</span> <span class="n">ty</span><span class="p">)</span>
+        <span class="n">apply_affine_to_square_and_plot</span><span class="p">(</span><span class="n">a00</span><span class="p">,</span> <span class="n">a01</span><span class="p">,</span> <span class="n">a10</span><span class="p">,</span> <span class="n">a11</span><span class="p">,</span> <span class="n">tx</span><span class="p">,</span> <span class="n">ty</span><span class="p">)</span>
+
+    <span class="n">interactive_plot</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">interactive_output</span><span class="p">(</span>
+        <span class="n">full_update</span><span class="p">,</span>
+        <span class="p">{</span><span class="s1">&#39;a00&#39;</span><span class="p">:</span> <span class="n">a00_slider</span><span class="p">,</span> <span class="s1">&#39;a01&#39;</span><span class="p">:</span> <span class="n">a01_slider</span><span class="p">,</span> <span class="s1">&#39;a10&#39;</span><span class="p">:</span> <span class="n">a10_slider</span><span class="p">,</span> <span class="s1">&#39;a11&#39;</span><span class="p">:</span> <span class="n">a11_slider</span><span class="p">,</span>
+         <span class="s1">&#39;tx&#39;</span><span class="p">:</span> <span class="n">tx_slider</span><span class="p">,</span> <span class="s1">&#39;ty&#39;</span><span class="p">:</span> <span class="n">ty_slider</span><span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="n">ui_row</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">([</span>
+        <span class="n">slider_box</span><span class="p">,</span>
+        <span class="n">widgets</span><span class="o">.</span><span class="n">Box</span><span class="p">([</span><span class="n">matrix_box</span><span class="p">],</span> <span class="n">layout</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span><span class="n">padding</span><span class="o">=</span><span class="s1">&#39;0 0 0 50px&#39;</span><span class="p">))</span>
+    <span class="p">])</span>
+
+    <span class="n">display</span><span class="p">(</span><span class="n">ui_row</span><span class="p">,</span> <span class="n">interactive_plot</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot function</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">apply_affine_to_square_and_plot</span><span class="p">(</span><span class="n">a00</span><span class="p">,</span> <span class="n">a01</span><span class="p">,</span> <span class="n">a10</span><span class="p">,</span> <span class="n">a11</span><span class="p">,</span> <span class="n">tx</span><span class="p">,</span> <span class="n">ty</span><span class="p">):</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">a00</span><span class="p">,</span> <span class="n">a01</span><span class="p">],</span>
+                  <span class="p">[</span><span class="n">a10</span><span class="p">,</span> <span class="n">a11</span><span class="p">]])</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">tx</span><span class="p">,</span> <span class="n">ty</span><span class="p">])</span>
+
+    <span class="n">transformed_square</span> <span class="o">=</span> <span class="p">(</span><span class="n">square</span> <span class="o">@</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="n">t</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">square</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">square</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lime&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">transformed_square</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">transformed_square</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lime&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Transformed&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">transformed_square</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">transformed_square</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lime&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+<span class="n">show_square_affine_transform</span><span class="p">(</span><span class="n">interactive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># interactive = True to enable sliders</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div style='font-size: 20px; font-family: monospace; color: gray;'><strong>Transformation:</strong><br><strong>x′ = A·x + v</strong><br><br>A = [ [1.00, 0.00]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0.00, 1.00] ]<br><br>v = [ 0.00 ]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ 0.00 ]</div></div><img alt="../_images/962a16df92a96d806d752a9757e0b2d8aea41796899781f130998763dfad0028.png" src="../_images/962a16df92a96d806d752a9757e0b2d8aea41796899781f130998763dfad0028.png" />
+</div>
+</div>
+<p>In the above code we observe that a simple 2D matrix can perform scaling and shear transformation, while a vector can perform translation transformation.</p>
+<p>Another interesting detail is that <code class="docutils literal notranslate"><span class="pre">shear</span> <span class="pre">and</span> <span class="pre">scaling</span> <span class="pre">transformations</span> <span class="pre">together</span> <span class="pre">can</span> <span class="pre">result</span> <span class="pre">in</span> <span class="pre">rotation</span> <span class="pre">transformation</span></code>. Play around with the sliders to simulate this!</p>
+<div class="cell tag_thebe-init tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">widgets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+
+<span class="c1"># Define original square</span>
+<span class="n">square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Closing the loop</span>
+<span class="p">])</span>
+
+<span class="c1"># Display rotation matrix as HTML</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rotation_matrix_html</span><span class="p">(</span><span class="n">theta_deg</span><span class="p">):</span>
+    <span class="n">theta_rad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">theta_deg</span><span class="p">)</span>
+    <span class="n">cos_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta_rad</span><span class="p">)</span>
+    <span class="n">sin_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta_rad</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HTML</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;div style=&#39;font-size: 20px; font-family: monospace; color: gray;&#39;&gt;&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;strong&gt;Rotation Matrix (θ = </span><span class="si">{</span><span class="n">theta_deg</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°):&lt;/strong&gt;&lt;br&gt;&lt;br&gt;&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;R(θ) = [ [cos(θ), -sin(θ)]&lt;br&gt;&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;[sin(θ), cos(θ)] ]&lt;br&gt;&lt;br&gt;&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;= [ [</span><span class="si">{</span><span class="n">cos_val</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="o">-</span><span class="n">sin_val</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">]&lt;br&gt;&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;[</span><span class="si">{</span><span class="n">sin_val</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">cos_val</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">] ]&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;/div&gt;&quot;</span>
+    <span class="p">)</span>
+
+<span class="c1"># Plot rotated square</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_rotated_square</span><span class="p">(</span><span class="n">theta_deg</span><span class="p">):</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">rotation_matrix</span><span class="p">(</span><span class="n">theta_deg</span><span class="p">)</span>
+    <span class="n">rotated</span> <span class="o">=</span> <span class="n">square</span> <span class="o">@</span> <span class="n">R</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">square</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">square</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lime&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rotated</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">rotated</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lime&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Rotated&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">rotated</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">rotated</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lime&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Master function with interactive toggle</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">show_rotation_transform</span><span class="p">(</span><span class="n">interactive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">theta_deg</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">interactive</span><span class="p">:</span>
+        <span class="n">display</span><span class="p">(</span><span class="n">rotation_matrix_html</span><span class="p">(</span><span class="n">theta_deg</span><span class="p">))</span>
+        <span class="n">plot_rotated_square</span><span class="p">(</span><span class="n">theta_deg</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">theta_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">theta_deg</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mi">180</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Angle θ&#39;</span><span class="p">)</span>
+    <span class="n">matrix_box</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HTML</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
+        <span class="n">matrix_box</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">rotation_matrix_html</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">plot_rotated_square</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+
+    <span class="n">interactive_plot</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">interactive_output</span><span class="p">(</span><span class="n">update</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;theta&#39;</span><span class="p">:</span> <span class="n">theta_slider</span><span class="p">})</span>
+
+    <span class="n">ui</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">([</span>
+        <span class="n">theta_slider</span><span class="p">,</span>
+        <span class="n">widgets</span><span class="o">.</span><span class="n">Box</span><span class="p">([</span><span class="n">matrix_box</span><span class="p">],</span> <span class="n">layout</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span><span class="n">padding</span><span class="o">=</span><span class="s1">&#39;0 0 0 50px&#39;</span><span class="p">))</span>
+    <span class="p">])</span>
+
+    <span class="n">display</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span> <span class="n">interactive_plot</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Function to create rotation matrix</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rotation_matrix</span><span class="p">(</span><span class="n">theta_deg</span><span class="p">):</span>
+    <span class="n">theta_rad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">theta_deg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta_rad</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta_rad</span><span class="p">)],</span>
+        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta_rad</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta_rad</span><span class="p">)]</span>
+    <span class="p">])</span>
+
+<span class="n">show_rotation_transform</span><span class="p">(</span><span class="n">interactive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># interactive = True to enable sliders</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div style='font-size: 20px; font-family: monospace; color: gray;'><strong>Rotation Matrix (θ = 0.0°):</strong><br><br>R(θ) = [ [cos(θ), -sin(θ)]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[sin(θ), cos(θ)] ]<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= [ [1.00, -0.00]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0.00, 1.00] ]</div></div><img alt="../_images/ece203808b2cb0738e975751458a219f160570878bd828978fcc5fecf009d5d0.png" src="../_images/ece203808b2cb0738e975751458a219f160570878bd828978fcc5fecf009d5d0.png" />
+</div>
+</div>
+</section>
+<section id="affine-transformations-on-grayscale-images">
+<h2>Affine transformations on Grayscale images<a class="headerlink" href="#affine-transformations-on-grayscale-images" title="Link to this heading">#</a></h2>
+<p>Now, let’s apply these transformations to images.</p>
+<div class="cell tag_thebe-init tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.ndimage</span><span class="w"> </span><span class="kn">import</span> <span class="n">affine_transform</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skimage</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">widgets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">clear_output</span><span class="p">,</span> <span class="n">HTML</span>
+
+<span class="c1"># Load image</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">camera</span><span class="p">()</span>
+
+<span class="c1"># Matrix display (HTML format)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">matrix_html_display</span><span class="p">(</span><span class="n">a00</span><span class="p">,</span> <span class="n">a01</span><span class="p">,</span> <span class="n">a10</span><span class="p">,</span> <span class="n">a11</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">HTML</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;div style=&#39;font-size: 22px; font-family: monospace; color: gray;&#39;&gt;&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;A = [ [</span><span class="si">{</span><span class="n">a00</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">a01</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">]&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;[</span><span class="si">{</span><span class="n">a10</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">a11</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">] ]&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;/div&gt;&quot;</span>
+    <span class="p">)</span>
+
+
+<span class="c1"># Main driver</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">show_affine_transform</span><span class="p">(</span><span class="n">interactive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">a00</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">a01</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">a10</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">a11</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">interactive</span><span class="p">:</span>
+        <span class="n">display</span><span class="p">(</span><span class="n">matrix_html_display</span><span class="p">(</span><span class="n">a00</span><span class="p">,</span> <span class="n">a01</span><span class="p">,</span> <span class="n">a10</span><span class="p">,</span> <span class="n">a11</span><span class="p">))</span>
+        <span class="n">apply_affine_and_plot</span><span class="p">(</span><span class="n">a00</span><span class="p">,</span> <span class="n">a01</span><span class="p">,</span> <span class="n">a10</span><span class="p">,</span> <span class="n">a11</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c1"># Sliders</span>
+    <span class="n">a00_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">a00</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mf">2.0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;A[0,0]&#39;</span><span class="p">)</span>
+    <span class="n">a01_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">a01</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mf">2.0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;A[0,1]&#39;</span><span class="p">)</span>
+    <span class="n">a10_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">a10</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mf">2.0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;A[1,0]&#39;</span><span class="p">)</span>
+    <span class="n">a11_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">a11</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mf">2.0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;A[1,1]&#39;</span><span class="p">)</span>
+
+    <span class="n">slider_box</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">VBox</span><span class="p">([</span><span class="n">a00_slider</span><span class="p">,</span> <span class="n">a01_slider</span><span class="p">,</span> <span class="n">a10_slider</span><span class="p">,</span> <span class="n">a11_slider</span><span class="p">])</span>
+    <span class="n">matrix_box</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HTML</span><span class="p">()</span>
+
+    <span class="c1"># Update HTML matrix</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_matrix_display</span><span class="p">(</span><span class="n">a00</span><span class="p">,</span> <span class="n">a01</span><span class="p">,</span> <span class="n">a10</span><span class="p">,</span> <span class="n">a11</span><span class="p">):</span>
+        <span class="n">matrix_box</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&lt;div style=&#39;font-size: 22px; font-family: monospace; color: gray;&#39;&gt;&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;A = [ [</span><span class="si">{</span><span class="n">a00</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">a01</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">]&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;[</span><span class="si">{</span><span class="n">a10</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">a11</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">] ]&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;&lt;/div&gt;&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Combined update</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">full_update</span><span class="p">(</span><span class="n">a00</span><span class="p">,</span> <span class="n">a01</span><span class="p">,</span> <span class="n">a10</span><span class="p">,</span> <span class="n">a11</span><span class="p">):</span>
+        <span class="n">update_matrix_display</span><span class="p">(</span><span class="n">a00</span><span class="p">,</span> <span class="n">a01</span><span class="p">,</span> <span class="n">a10</span><span class="p">,</span> <span class="n">a11</span><span class="p">)</span>
+        <span class="n">apply_affine_and_plot</span><span class="p">(</span><span class="n">a00</span><span class="p">,</span> <span class="n">a01</span><span class="p">,</span> <span class="n">a10</span><span class="p">,</span> <span class="n">a11</span><span class="p">)</span>
+
+    <span class="c1"># Bind interactive output</span>
+    <span class="n">interactive_plot</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">interactive_output</span><span class="p">(</span>
+        <span class="n">full_update</span><span class="p">,</span>
+        <span class="p">{</span><span class="s1">&#39;a00&#39;</span><span class="p">:</span> <span class="n">a00_slider</span><span class="p">,</span> <span class="s1">&#39;a01&#39;</span><span class="p">:</span> <span class="n">a01_slider</span><span class="p">,</span> <span class="s1">&#39;a10&#39;</span><span class="p">:</span> <span class="n">a10_slider</span><span class="p">,</span> <span class="s1">&#39;a11&#39;</span><span class="p">:</span> <span class="n">a11_slider</span><span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Final UI</span>
+    <span class="n">ui_row</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">([</span>
+        <span class="n">slider_box</span><span class="p">,</span>
+        <span class="n">widgets</span><span class="o">.</span><span class="n">Box</span><span class="p">([</span><span class="n">matrix_box</span><span class="p">],</span> <span class="n">layout</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span><span class="n">padding</span><span class="o">=</span><span class="s1">&#39;0 0 0 50px&#39;</span><span class="p">))</span>
+    <span class="p">])</span>
+
+    <span class="n">display</span><span class="p">(</span><span class="n">ui_row</span><span class="p">,</span> <span class="n">interactive_plot</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">apply_affine_and_plot</span><span class="p">(</span><span class="n">a00</span><span class="p">,</span> <span class="n">a01</span><span class="p">,</span> <span class="n">a10</span><span class="p">,</span> <span class="n">a11</span><span class="p">):</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">a00</span><span class="p">,</span> <span class="n">a01</span><span class="p">],</span>
+                  <span class="p">[</span><span class="n">a10</span><span class="p">,</span> <span class="n">a11</span><span class="p">]])</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">invA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">LinAlgError</span><span class="p">:</span>
+        <span class="n">invA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">transformed</span> <span class="o">=</span> <span class="n">affine_transform</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">invA</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;constant&#39;</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Original Image&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">transformed</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Transformed Image&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">pad</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+<span class="n">show_affine_transform</span><span class="p">(</span><span class="n">interactive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># default interactive</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div style='font-size: 22px; font-family: monospace; color: gray;'>A = [ [1.20, 0.20]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[-0.30, 1.10] ]</div></div><img alt="../_images/4fda4d1a7041a02377452bdfdb24daf3a41519012353678501f61cfad5ec9c08.png" src="../_images/4fda4d1a7041a02377452bdfdb24daf3a41519012353678501f61cfad5ec9c08.png" />
+</div>
+</div>
+<p>We see that some information is lost while performing shear and scale transformation. We take a look at <code class="docutils literal notranslate"><span class="pre">interpolation</span></code> to fill in the values for these pixels.</p>
+</section>
+<section id="bilinear-interpolation">
+<h2>BiLinear Interpolation<a class="headerlink" href="#bilinear-interpolation" title="Link to this heading">#</a></h2>
+<div class="cell tag_thebe-init tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">widgets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+
+<span class="c1"># 5x5 grayscale image</span>
+<span class="n">original_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">200</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mi">10</span><span class="p">,</span>  <span class="mi">60</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">210</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mi">20</span><span class="p">,</span>  <span class="mi">70</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">170</span><span class="p">,</span> <span class="mi">220</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mi">30</span><span class="p">,</span>  <span class="mi">80</span><span class="p">,</span> <span class="mi">130</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">230</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mi">40</span><span class="p">,</span>  <span class="mi">90</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">190</span><span class="p">,</span> <span class="mi">240</span><span class="p">]</span>
+<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+
+<span class="c1"># Bilinear interpolation function</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">bilinear_interpolate</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+    <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">i</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="n">j</span>
+
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">f00</span> <span class="o">=</span> <span class="n">img</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+    <span class="n">f10</span> <span class="o">=</span> <span class="n">img</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">f01</span> <span class="o">=</span> <span class="n">img</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+    <span class="n">f11</span> <span class="o">=</span> <span class="n">img</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">interpolated</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">f00</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">dx</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">dy</span><span class="p">)</span> <span class="o">+</span>
+        <span class="n">f10</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">dy</span><span class="p">)</span> <span class="o">+</span>
+        <span class="n">f01</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">dx</span><span class="p">)</span> <span class="o">*</span> <span class="n">dy</span> <span class="o">+</span>
+        <span class="n">f11</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">dy</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">interpolated</span><span class="p">,</span> <span class="p">(</span><span class="n">f00</span><span class="p">,</span> <span class="n">f10</span><span class="p">,</span> <span class="n">f01</span><span class="p">,</span> <span class="n">f11</span><span class="p">),</span> <span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
+
+<span class="c1"># Plotting and explanation function</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_interpolation</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">interp_val</span><span class="p">,</span> <span class="p">(</span><span class="n">f00</span><span class="p">,</span> <span class="n">f10</span><span class="p">,</span> <span class="n">f01</span><span class="p">,</span> <span class="n">f11</span><span class="p">),</span> <span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span> <span class="o">=</span> <span class="n">bilinear_interpolate</span><span class="p">(</span><span class="n">original_image</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">original_image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">original_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">original_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">original_image</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
+                    <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Interpolated: </span><span class="si">{</span><span class="n">interp_val</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bilinear Interpolation at (</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">y</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">) = </span><span class="si">{</span><span class="n">interp_val</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Static Equation:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I(x, y) = f00*(1-dx)*(1-dy) + f10*dx*(1-dy) + f01*(1-dx)*dy + f11*dx*dy</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dynamic Equation:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;I(</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">y</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">) = &quot;</span>
+          <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">f00</span><span class="si">}</span><span class="s2">*(1-</span><span class="si">{</span><span class="n">dx</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)*(1-</span><span class="si">{</span><span class="n">dy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">) + &quot;</span>
+          <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">f10</span><span class="si">}</span><span class="s2">*</span><span class="si">{</span><span class="n">dx</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">*(1-</span><span class="si">{</span><span class="n">dy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">) + &quot;</span>
+          <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">f01</span><span class="si">}</span><span class="s2">*(1-</span><span class="si">{</span><span class="n">dx</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)*</span><span class="si">{</span><span class="n">dy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> + &quot;</span>
+          <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">f11</span><span class="si">}</span><span class="s2">*</span><span class="si">{</span><span class="n">dx</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">*</span><span class="si">{</span><span class="n">dy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">interp_val</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Master function</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">show_bilinear_interpolation</span><span class="p">(</span><span class="n">interactive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">2.5</span><span class="p">):</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;&lt;h5 style=&#39;font-family: sans-serif;&#39;&gt;Interactive Bilinear Interpolation Demo&lt;/h5&gt;&quot;</span><span class="p">))</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">interactive</span><span class="p">:</span>
+        <span class="n">plot_interpolation</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">x_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">3.99</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="n">y_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">3.99</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+
+    <span class="n">ui</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">VBox</span><span class="p">([</span><span class="n">x_slider</span><span class="p">,</span> <span class="n">y_slider</span><span class="p">])</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">interactive_output</span><span class="p">(</span><span class="n">plot_interpolation</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">x_slider</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">y_slider</span><span class="p">})</span>
+
+    <span class="n">display</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show_bilinear_interpolation</span><span class="p">(</span><span class="n">interactive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Set to True to enable sliders</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><h5 style='font-family: sans-serif;'>Interactive Bilinear Interpolation Demo</h5></div><img alt="../_images/f0a145e89f8623d55f19e1e89436a36166929588969a8ecebde5dd86b67439a6.png" src="../_images/f0a145e89f8623d55f19e1e89436a36166929588969a8ecebde5dd86b67439a6.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Static Equation:
+I(x, y) = f00*(1-dx)*(1-dy) + f10*dx*(1-dy) + f01*(1-dx)*dy + f11*dx*dy
+
+Dynamic Equation:
+I(2.50, 2.50) = 120*(1-0.50)*(1-0.50) + 170*0.50*(1-0.50) + 130*(1-0.50)*0.50 + 180*0.50*0.50 = 150.00
+</pre></div>
+</div>
+</div>
+</div>
+<section id="can-interpolation-restore-missing-pixels-from-an-image-and-perform-inpainting-task">
+<h3>Can Interpolation restore missing pixels from an image and perform inpainting task?<a class="headerlink" href="#can-interpolation-restore-missing-pixels-from-an-image-and-perform-inpainting-task" title="Link to this heading">#</a></h3>
+<div class="cell tag_thebe-init tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skimage</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">restoration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.interpolate</span><span class="w"> </span><span class="kn">import</span> <span class="n">griddata</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
+
+<span class="c1"># Load and prepare grayscale image</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_image</span><span class="p">():</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">color</span><span class="o">.</span><span class="n">rgb2gray</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">astronaut</span><span class="p">())</span>  <span class="c1"># Convert astronaut image to grayscale</span>
+    <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">))</span>
+
+<span class="c1"># Create mask with missing regions</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_mask</span><span class="p">(</span><span class="n">image_shape</span><span class="p">):</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">image_shape</span><span class="p">)</span>
+    <span class="n">mask</span><span class="p">[</span><span class="mi">60</span><span class="p">:</span><span class="mi">120</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="mi">160</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># large rectangular missing region</span>
+    <span class="n">mask</span><span class="p">[</span><span class="mi">180</span><span class="p">:</span><span class="mi">220</span><span class="p">,</span> <span class="mi">50</span><span class="p">:</span><span class="mi">90</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">mask</span>
+
+<span class="c1"># Bilinear interpolation using known pixel values</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">bilinear_interpolate_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
+    <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">mask</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">grid_x</span><span class="p">,</span> <span class="n">grid_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">griddata</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="p">(</span><span class="n">grid_y</span><span class="p">,</span> <span class="n">grid_x</span><span class="p">),</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Inpainting using skimage&#39;s biharmonic method</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">inpaint_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">restoration</span><span class="o">.</span><span class="n">inpaint_biharmonic</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">channel_axis</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="c1"># Visualization</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_inpainting_results</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">damaged</span><span class="p">,</span> <span class="n">interp_result</span><span class="p">,</span> <span class="n">inpaint_result</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Original Image&quot;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">damaged</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Damaged Image&quot;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+    <span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">interp_result</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Bilinear Interpolation (Fails)&quot;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+    <span class="n">axs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">inpaint_result</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Inpainting Result (Partially Works)&quot;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load image and create mask</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">()</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">create_mask</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">damaged</span> <span class="o">=</span> <span class="n">image</span> <span class="o">*</span> <span class="n">mask</span>
+
+<span class="c1"># Apply interpolation and inpainting</span>
+<span class="n">interp_result</span> <span class="o">=</span> <span class="n">bilinear_interpolate_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+<span class="n">inpaint_result</span> <span class="o">=</span> <span class="n">inpaint_image</span><span class="p">(</span><span class="n">damaged</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+
+<span class="c1"># Plot results</span>
+<span class="n">plot_inpainting_results</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">damaged</span><span class="p">,</span> <span class="n">interp_result</span><span class="p">,</span> <span class="n">inpaint_result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/020adf5c12f667380b7ff20a9341a51129ddcd90f04ec7274bd33ebe85f029c0.png" src="../_images/020adf5c12f667380b7ff20a9341a51129ddcd90f04ec7274bd33ebe85f029c0.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="convolution-operation-in-signal-processing">
+<h2>Convolution Operation in Signal Processing<a class="headerlink" href="#convolution-operation-in-signal-processing" title="Link to this heading">#</a></h2>
+<p>We now take a look at the convolution operation from signal processing</p>
+<div class="cell tag_thebe-init tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">widgets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+
+<span class="c1"># Input signal</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">input_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">input_signal</span><span class="p">[</span><span class="mi">10</span><span class="p">:</span><span class="mi">20</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">input_signal</span><span class="p">[</span><span class="mi">25</span><span class="p">:</span><span class="mi">27</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">input_signal</span><span class="p">[</span><span class="mi">35</span><span class="p">:</span><span class="mi">40</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<span class="c1"># Kernel selection</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_kernel</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;Box&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">3</span>
+    <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;Triangle&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">4</span>
+    <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;Edge&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># Convolution visualization logic</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">visualize_convolution</span><span class="p">(</span><span class="n">kernel_type</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+    <span class="n">kernel</span> <span class="o">=</span> <span class="n">get_kernel</span><span class="p">(</span><span class="n">kernel_type</span><span class="p">)</span>
+    <span class="n">flipped_kernel</span> <span class="o">=</span> <span class="n">kernel</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">k_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">kernel</span><span class="p">)</span>
+
+    <span class="n">output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">input_signal</span><span class="p">,</span> <span class="n">flipped_kernel</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;valid&#39;</span><span class="p">)</span>
+    <span class="n">output_x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)]</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># Get convolution window</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">step</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">k_size</span>
+    <span class="k">if</span> <span class="n">end</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_signal</span><span class="p">):</span> <span class="k">return</span>
+    <span class="n">window_vals</span> <span class="o">=</span> <span class="n">input_signal</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+    <span class="n">window_x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+
+    <span class="c1"># Subplot 1: Input Window</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">input_signal</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">window_x</span><span class="p">,</span> <span class="n">window_vals</span><span class="p">,</span> <span class="s1">&#39;o-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Window&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Input&quot;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+    <span class="c1"># Subplot 2: Kernel</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">window_x</span><span class="p">,</span> <span class="n">flipped_kernel</span><span class="p">,</span> <span class="s1">&#39;o-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Flipped Kernel&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Kernel&quot;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+    <span class="c1"># Subplot 3: Output</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">output_x</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Total Output&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">output_x</span><span class="p">[:</span><span class="n">step</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">output</span><span class="p">[:</span><span class="n">step</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;o-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Computed So Far&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Output&quot;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="c1"># Equation Display</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&lt;br&gt;&lt;b&gt;Convolution Details at Step </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">&lt;/b&gt;&lt;br&gt;&quot;</span>
+    <span class="n">window_txt</span> <span class="o">=</span> <span class="s2">&quot;Window:       [&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">window_vals</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;]&lt;br&gt;&quot;</span>
+    <span class="n">kernel_txt</span> <span class="o">=</span> <span class="s2">&quot;Kernel:       [&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">flipped_kernel</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;]&lt;br&gt;&quot;</span>
+    <span class="n">mults</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">×</span><span class="si">{</span><span class="n">k</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">window_vals</span><span class="p">,</span> <span class="n">flipped_kernel</span><span class="p">)]</span>
+    <span class="n">equation_txt</span> <span class="o">=</span> <span class="s2">&quot;Multiplying:  &quot;</span> <span class="o">+</span> <span class="s2">&quot; + &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mults</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&lt;br&gt;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">window_vals</span><span class="p">,</span> <span class="n">flipped_kernel</span><span class="p">)</span>
+    <span class="n">result_txt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Dot Product:  &lt;b&gt;</span><span class="si">{</span><span class="n">result</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&lt;/b&gt;&quot;</span>
+
+    <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;div style=&quot;font-family: monospace; font-size: 15px; margin-top: -10px;&quot;&gt;</span>
+<span class="s2">        </span><span class="si">{</span><span class="n">header</span><span class="si">}</span>
+<span class="s2">        </span><span class="si">{</span><span class="n">window_txt</span><span class="si">}</span>
+<span class="s2">        </span><span class="si">{</span><span class="n">kernel_txt</span><span class="si">}</span>
+<span class="s2">        </span><span class="si">{</span><span class="n">equation_txt</span><span class="si">}</span>
+<span class="s2">        </span><span class="si">{</span><span class="n">result_txt</span><span class="si">}</span>
+<span class="s2">    &lt;/div&gt;</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">))</span>
+
+<span class="c1"># Master function to control interactivity</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">show_convolution_visualizer</span><span class="p">(</span><span class="n">interactive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">kernel_type</span><span class="o">=</span><span class="s2">&quot;Box&quot;</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">interactive</span><span class="p">:</span>
+        <span class="n">visualize_convolution</span><span class="p">(</span><span class="n">kernel_type</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">kernel_selector</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
+        <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Box&quot;</span><span class="p">,</span> <span class="s2">&quot;Triangle&quot;</span><span class="p">,</span> <span class="s2">&quot;Edge&quot;</span><span class="p">],</span>
+        <span class="n">value</span><span class="o">=</span><span class="n">kernel_type</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Kernel:&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">step_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span>
+        <span class="n">value</span><span class="o">=</span><span class="n">step</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Step&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">ui</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">([</span><span class="n">kernel_selector</span><span class="p">,</span> <span class="n">step_slider</span><span class="p">])</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">interactive_output</span><span class="p">(</span>
+        <span class="n">visualize_convolution</span><span class="p">,</span>
+        <span class="p">{</span><span class="s1">&#39;kernel_type&#39;</span><span class="p">:</span> <span class="n">kernel_selector</span><span class="p">,</span> <span class="s1">&#39;step&#39;</span><span class="p">:</span> <span class="n">step_slider</span><span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="n">display</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show_convolution_visualizer</span><span class="p">(</span><span class="n">interactive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Set to True for sliders</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e65a5dbd1023d737ca124afc71b3a9f9b51151a50be2763e3913576d51bd643d.png" src="../_images/e65a5dbd1023d737ca124afc71b3a9f9b51151a50be2763e3913576d51bd643d.png" />
+<div class="output text_html">
+    <div style="font-family: monospace; font-size: 15px; margin-top: -10px;">
+        <br><b>Convolution Details at Step 0</b><br>
+        Window:       [0.0, 0.0, 0.0]<br>
+        Kernel:       [0.33, 0.33, 0.33]<br>
+        Multiplying:  0.0×0.33 + 0.0×0.33 + 0.0×0.33<br>
+        Dot Product:  <b>0.000</b>
+    </div>
+    </div></div>
+</div>
+</section>
+<section id="finally-convolutions-on-images">
+<h2>Finally convolutions on images<a class="headerlink" href="#finally-convolutions-on-images" title="Link to this heading">#</a></h2>
+<p>Convolution is an operation that “slides” a small kernel <span class="math notranslate nohighlight">\(K\)</span> over an image <span class="math notranslate nohighlight">\(I\)</span>. At each location <span class="math notranslate nohighlight">\((i,j)\)</span>, you take a weighted sum of the pixels under the kernel to produce the output pixel <span class="math notranslate nohighlight">\(O(i,j)\)</span>.</p>
+<section id="discrete-formula">
+<h3>Discrete Formula<a class="headerlink" href="#discrete-formula" title="Link to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[
+I \in \mathbb{R}^{H \times W}, 
+\quad
+K \in \mathbb{R}^{(2r+1) \times (2r+1)}, 
+\quad
+r = \frac{k-1}{2}.
+\]</div>
+<p>The convolution <span class="math notranslate nohighlight">\(O = I * K\)</span> is defined by</p>
+<div class="math notranslate nohighlight">
+\[
+O(i,j)
+=
+\sum_{u=-r}^{r} \sum_{v=-r}^{r}
+I\bigl(i+u,\,j+v\bigr)\;K\bigl(-u,\,-v\bigr),
+\]</div>
+<p>for <span class="math notranslate nohighlight">\(i = 0, \dots, H-1\)</span> and <span class="math notranslate nohighlight">\(j = 0, \dots, W-1\)</span>.</p>
+<blockquote>
+<div><p><strong>Note:</strong> The indices <span class="math notranslate nohighlight">\((-u,-v)\)</span> indicate that the kernel is flipped both horizontally and vertically.</p>
+</div></blockquote>
+<div class="note dropdown closed admonition">
+<p class="admonition-title">Why Flip the Kernel?</p>
+<ol class="arabic">
+<li><p><strong>Mathematical Consistency</strong><br />
+Flipping makes convolution commutative:</p>
+<div class="math notranslate nohighlight">
+\[
+   I * K = K * I,
+   \]</div>
+<p>which is important for many theoretical results (e.g., convolution theorems in Fourier analysis).</p>
+</li>
+<li><p><strong>System Response Interpretation</strong><br />
+In signal processing, convolution represents the response of a system with impulse response <span class="math notranslate nohighlight">\(K\)</span>. Flipping aligns the “past” and “future” contributions correctly.</p></li>
+<li><p><strong>Distinction from Cross-Correlation</strong><br />
+If you omit the flip and write</p>
+<div class="math notranslate nohighlight">
+\[
+   \sum_{u=-r}^{r} \sum_{v=-r}^{r}
+   I(i+u,\,j+v)\;K(u,v),
+   \]</div>
+<p>you get <strong>cross-correlation</strong> instead of convolution. Cross-correlation measures similarity, while convolution implements filtering.</p>
+</li>
+</ol>
+<p>Putting it all together, the flip ensures both the desired mathematical properties (commutativity, associativity) and the correct interpretation of the kernel as an impulse response.</p>
+</div>
+<div class="tip dropdown closed admonition">
+<p class="admonition-title">Convolution with Stride and Padding</p>
+<ul class="simple">
+<li><p><strong>Convolution with Stride and Padding</strong></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+I \in \mathbb{R}^{H \times W}, \quad
+K \in \mathbb{R}^{k \times k}, \quad
+s \in \mathbb{N} \ (\text{stride}), \quad
+p \in \mathbb{N} \ (\text{padding}).
+\]</div>
+<ul class="simple">
+<li><p><strong>Padded Image</strong></p></li>
+</ul>
+<p>We surround <span class="math notranslate nohighlight">\(I\)</span> with a border of <span class="math notranslate nohighlight">\(p\)</span> zeros on all sides to form<br />
+<span class="math notranslate nohighlight">\(I_{\text{pad}} \in \mathbb{R}^{(H+2p) \times (W+2p)}\)</span>, defined by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+I_{\text{pad}}(x,y) =
+\begin{cases}
+I(x - p,\, y - p), &amp; \text{if } 0 \leq x - p &lt; H,\; 0 \leq y - p &lt; W, \\
+0, &amp; \text{otherwise}.
+\end{cases}
+\end{split}\]</div>
+<ul class="simple">
+<li><p><strong>Output Dimensions</strong></p></li>
+</ul>
+<p>The output <span class="math notranslate nohighlight">\(O \in \mathbb{R}^{H_{\text{out}} \times W_{\text{out}}}\)</span> has</p>
+<div class="math notranslate nohighlight">
+\[
+H_{\text{out}} = \left\lfloor \frac{H + 2p - k}{s} \right\rfloor + 1, \quad
+W_{\text{out}} = \left\lfloor \frac{W + 2p - k}{s} \right\rfloor + 1.
+\]</div>
+<ul class="simple">
+<li><p><strong>Convolution Operation</strong></p></li>
+</ul>
+<p>Slide <span class="math notranslate nohighlight">\(K\)</span> in steps of <span class="math notranslate nohighlight">\(s\)</span> over <span class="math notranslate nohighlight">\(I_{\text{pad}}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+O(i,j) =
+\sum_{u=0}^{k-1} \sum_{v=0}^{k-1}
+I_{\text{pad}}(i \times s + u,\, j \times s + v) \times K(u,v),
+\]</div>
+<p>for <span class="math notranslate nohighlight">\(i = 0, \dots, H_{\text{out}}-1\)</span> and <span class="math notranslate nohighlight">\(j = 0, \dots, W_{\text{out}}-1\)</span>.</p>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Why These Matter</strong></p></li>
+<li><p><strong>Stride <span class="math notranslate nohighlight">\(s\)</span>:</strong><br />
+Controls how far the kernel jumps each time.</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(s=1\)</span>: full resolution</p></li>
+<li><p><span class="math notranslate nohighlight">\(s&gt;1\)</span>: downsampling (reduces output size and computation)</p></li>
+</ul>
+</li>
+<li><p><strong>Padding <span class="math notranslate nohighlight">\(p\)</span>:</strong><br />
+Includes border pixels and controls output size.</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(p=0\)</span>: no padding (shrinks output)</p></li>
+<li><p><span class="math notranslate nohighlight">\(p = \frac{k-1}{2}\)</span> (for odd <span class="math notranslate nohighlight">\(k\)</span>): preserves input size (“same” convolution).</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<figure class="align-center" id="conv-demo">
+<img alt="https://upload.wikimedia.org/wikipedia/commons/1/19/2D_Convolution_Animation.gif" src="https://upload.wikimedia.org/wikipedia/commons/1/19/2D_Convolution_Animation.gif" />
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Convolution Example</span><a class="headerlink" href="#conv-demo" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="convolution-on-2d-images-code">
+<h3>Convolution on 2D images Code<a class="headerlink" href="#convolution-on-2d-images-code" title="Link to this heading">#</a></h3>
+<p>Test with different kernels to understand what features are extracted by convolution operations.</p>
+<div class="cell tag_hide-input tag_thebe-init docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">pad_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">padding</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Zero-pad a 2D image.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">pad_width</span><span class="o">=</span><span class="n">padding</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="n">constant_values</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">convolve2d</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform 2D convolution with optional stride and zero-padding.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        image (np.ndarray): Grayscale image (H x W)</span>
+<span class="sd">        kernel (np.ndarray): Convolution kernel (k x k)</span>
+<span class="sd">        stride (int): Stride for sliding the kernel</span>
+<span class="sd">        padding (int): Zero-padding size</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: Convolved output image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Flip the kernel for convolution (not needed for cross-correlation)</span>
+    <span class="n">kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fliplr</span><span class="p">(</span><span class="n">kernel</span><span class="p">))</span>
+
+    <span class="c1"># Pad the image</span>
+    <span class="k">if</span> <span class="n">padding</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">pad_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span>
+
+    <span class="n">H</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">kH</span><span class="p">,</span> <span class="n">kW</span> <span class="o">=</span> <span class="n">kernel</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="c1"># Compute output dimensions</span>
+    <span class="n">out_H</span> <span class="o">=</span> <span class="p">(</span><span class="n">H</span> <span class="o">-</span> <span class="n">kH</span><span class="p">)</span> <span class="o">//</span> <span class="n">stride</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">out_W</span> <span class="o">=</span> <span class="p">(</span><span class="n">W</span> <span class="o">-</span> <span class="n">kW</span><span class="p">)</span> <span class="o">//</span> <span class="n">stride</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="c1"># Initialize output</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">out_H</span><span class="p">,</span> <span class="n">out_W</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+    <span class="c1"># Perform convolution</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">out_H</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">out_W</span><span class="p">):</span>
+            <span class="n">region</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">stride</span><span class="p">:</span><span class="n">i</span><span class="o">*</span><span class="n">stride</span><span class="o">+</span><span class="n">kH</span><span class="p">,</span> <span class="n">j</span><span class="o">*</span><span class="n">stride</span><span class="p">:</span><span class="n">j</span><span class="o">*</span><span class="n">stride</span><span class="o">+</span><span class="n">kW</span><span class="p">]</span>
+            <span class="n">output</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">region</span> <span class="o">*</span> <span class="n">kernel</span><span class="p">)</span>
+
+    <span class="c1"># Normalize output to range [0, 255] for display</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">output</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_images_grid</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">titles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">images_per_row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">cmap</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="n">num_images</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+    <span class="n">num_rows</span> <span class="o">=</span> <span class="p">(</span><span class="n">num_images</span> <span class="o">+</span> <span class="n">images_per_row</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="n">images_per_row</span>
+ 
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">images</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">num_rows</span><span class="p">,</span> <span class="n">images_per_row</span><span class="p">,</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">titles</span> <span class="ow">and</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">titles</span><span class="p">):</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">titles</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+        <span class="n">img_shape</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">x</span><span class="si">{</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape: </span><span class="si">{</span><span class="n">img_shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+ 
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+<span class="kn">from</span><span class="w"> </span><span class="nn">skimage.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">camera</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># 1. Identity (no change)</span>
+<span class="n">identity_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="c1"># 2. Simple blur (average)</span>
+<span class="n">blur_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">9.0</span>
+
+<span class="c1"># 3. Gaussian blur</span>
+<span class="n">gaussian_blur_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">16.0</span>
+
+<span class="c1"># 4. Sharpen</span>
+<span class="n">sharpen_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="c1"># 5. Edge detection (Sobel X)</span>
+<span class="n">sobel_x_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="c1"># 6. Edge detection (Sobel Y)</span>
+<span class="n">sobel_y_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="c1"># 7. Laplacian (strong edge detection)</span>
+<span class="n">laplacian_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="c1"># 8. Emboss</span>
+<span class="n">emboss_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="c1"># 9. Outline</span>
+<span class="n">outline_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="c1"># 10. Box edge (another edge detector)</span>
+<span class="n">box_edge_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">camera</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="c1"># example image</span>
+
+<span class="n">kernel</span> <span class="o">=</span> <span class="n">sobel_y_kernel</span>
+
+<span class="c1"># Apply convolution</span>
+<span class="n">convolved_img</span> <span class="o">=</span> <span class="n">convolve2d</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># padding=1 to preserve size</span>
+
+<span class="n">plot_images_grid</span><span class="p">([</span><span class="n">image</span><span class="p">,</span> <span class="n">convolved_img</span><span class="p">],</span> <span class="n">titles</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Original Image&quot;</span><span class="p">,</span> <span class="s2">&quot;Convolved Image&quot;</span><span class="p">],</span> <span class="n">images_per_row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/9d1084c797ec0f1af3e414935d4deac4dcc91d9d867c7b529311053cbaa32814.png" src="../_images/9d1084c797ec0f1af3e414935d4deac4dcc91d9d867c7b529311053cbaa32814.png" />
+</div>
+</div>
+<p>In the next lecture, we will discuss Image Processing in the Fourier Space.</p>
+</section>
+</section>
+</section>
+
+        <script type="text/x-thebe-config">
+        {
+            "rootPath": "..",
+            "requestKernel": true,
+            "useJupyterLite": true,
+            "useBinder": false,
+            "kernelOptions": {
+                "path": "/"
+            },
+            "codeMirrorConfig": {
+                "theme": "default",
+                "mode": "python"
+            },
+            "mountRestartButton": false,
+            "mountRestartallButton": false
+        }
+        </script>
+        <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lecture-2-3.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">How is an image formed?</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="lecture-5.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Image Processing (Part 2) Fourier Domain</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-affine-transformations">Simple Affine Transformations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#affine-transformations-on-grayscale-images">Affine transformations on Grayscale images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bilinear-interpolation">BiLinear Interpolation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#can-interpolation-restore-missing-pixels-from-an-image-and-perform-inpainting-task">Can Interpolation restore missing pixels from an image and perform inpainting task?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convolution-operation-in-signal-processing">Convolution Operation in Signal Processing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finally-convolutions-on-images">Finally convolutions on images</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-formula">Discrete Formula</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convolution-on-2d-images-code">Convolution on 2D images Code</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Naresh Devulapally, Summer 2025, UB. Built with Teachbooks.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on June 25, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
