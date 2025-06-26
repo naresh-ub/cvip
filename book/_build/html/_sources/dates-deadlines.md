@@ -22,7 +22,7 @@ The schedule balances theory with hands-on learning, including coding exercises 
 | CVIP 1.0 | Jun. 17, Tue   | Stereo Vision, Depth Estimation (Part 2) | [Lecture 7](lectures/lecture-6-7-8.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-6-7-8) | Capstone Project Release |
 | CVIP 1.0 | Jun. 19, Thu  | Juneteenth Holiday | No Lecture | |
 | CVIP 1.0 | Jun. 24, Tue  | Stereo Vision, Depth Estimation (Part 3) | [Lecture 8](lectures/lecture-6-7-8.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-6-7-8) | Quiz 2 |
-| CVIP 1.0 | Jun. 26, Thu  | Feature Detection | |
+| CVIP 1.0 | Jun. 26, Thu  | Feature Detection | [Lecture 9](lectures/lecture-9.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-9) | |
 | CVIP 1.0 | Jul. 1, Tue   | Learning-based Computer Vision methods (Part 1) | | Quiz 3, Assignment 1 Due Date |
 | CVIP 1.0 | Jul. 3, Thu  | Learning-based Computer Vision methods (Part 2) and Midterm Review | | |
 | | Jul. 8, Tue | Midterm Exam | | |

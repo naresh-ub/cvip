@@ -23,6 +23,7 @@ parts:
       - file: lectures/lecture-4.ipynb
       - file: lectures/lecture-5.ipynb
       - file: lectures/lecture-6-7-8.ipynb
+      - file: lectures/lecture-9.ipynb
   
 
 #   - caption: Courses I taught at UB

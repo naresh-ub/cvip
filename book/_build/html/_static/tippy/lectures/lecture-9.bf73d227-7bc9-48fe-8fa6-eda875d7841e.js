@@ -1,4 +1,4 @@
-selector_to_html = {"a[href=\"#depth-estimation-using-stereo-vision\"]": "<h1 class=\"tippy-header\" style=\"margin-top: 0;\">Depth Estimation using Stereo Vision<a class=\"headerlink\" href=\"#depth-estimation-using-stereo-vision\" title=\"Link to this heading\">#</a></h1>"}
+selector_to_html = {"a[href=\"#feature-detection-and-extraction\"]": "<h1 class=\"tippy-header\" style=\"margin-top: 0;\">Feature Detection and Extraction<a class=\"headerlink\" href=\"#feature-detection-and-extraction\" title=\"Link to this heading\">#</a></h1>"}
 skip_classes = ["headerlink", "sd-stretched-link"]
 
 window.onload = function () {
