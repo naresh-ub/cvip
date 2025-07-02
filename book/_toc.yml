@@ -8,9 +8,11 @@ parts:
   - caption: "About the Instructor"
     chapters:
       - url: https://naresh-ub.github.io  
-        title: "Naresh Kumar Devulapally"
+        title: "👨🏻‍🏫 Naresh Kumar Devulapally"
   - caption: "Logistics and Weekly Schedule"
     chapters:
+      - url: https://buffalo.app.box.com/embed/s/agqkobz1pl5dynjiohwchybpnq5ke9py?sortColumn=date
+        title: "🎥 Lecture Recordings 🎥"
       - file: dates-deadlines.md
         title: "Dates and Deliverables ⏰"
       - file: syllabus.md
