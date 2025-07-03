@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>📌 Assignment 1: Camera Calibration &#8212; CSE 4/573 - Computer Vision and Image Processing</title>
+    <title>📌 Assignment 1 &#8212; CSE 4/573 - Computer Vision and Image Processing</title>
   
   
   
@@ -78,7 +78,7 @@ const thebe_selector_output = ".output, .cell_output"
 </script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
-    <script defer="defer" src="../_static/tippy/lectures/assignment-1.177b7257-db7b-4cac-9476-4a31e4c8a750.js"></script>
+    <script defer="defer" src="../_static/tippy/lectures/assignment-1.eb6eacc9-3cbc-418b-bca9-7a4a35ee679d.js"></script>
     <script>window.MathJax = {"chtml": {"mtextInheritFont": true}, "tex": {"macros": {"black": ["\\class{black}{#1}", 1], "silver": ["\\class{silver}{#1}", 1], "gray": ["\\class{gray}{#1}", 1], "white": ["\\class{white}{#1}", 1], "maroon": ["\\class{maroon}{#1}", 1], "red": ["\\class{red}{#1}", 1], "purple": ["\\class{purple}{#1}", 1], "fuchsia": ["\\class{fuchsia}{#1}", 1], "green": ["\\class{green}{#1}", 1], "lime": ["\\class{lime}{#1}", 1], "olive": ["\\class{olive}{#1}", 1], "yellow": ["\\class{yellow}{#1}", 1], "navy": ["\\class{navy}{#1}", 1], "blue": ["\\class{blue}{#1}", 1], "teal": ["\\class{teal}{#1}", 1], "aqua": ["\\class{aqua}{#1}", 1], "aliceblue": ["\\class{aliceblue}{#1}", 1], "antiquewhite": ["\\class{antiquewhite}{#1}", 1], "aquamarine": ["\\class{aquamarine}{#1}", 1], "azure": ["\\class{azure}{#1}", 1], "beige": ["\\class{beige}{#1}", 1], "bisque": ["\\class{bisque}{#1}", 1], "blanchedalmond": ["\\class{blanchedalmond}{#1}", 1], "blueviolet": ["\\class{blueviolet}{#1}", 1], "brown": ["\\class{brown}{#1}", 1], "burlywood": ["\\class{burlywood}{#1}", 1], "cadetblue": ["\\class{cadetblue}{#1}", 1], "chartreuse": ["\\class{chartreuse}{#1}", 1], "chocolate": ["\\class{chocolate}{#1}", 1], "coral": ["\\class{coral}{#1}", 1], "cornflowerblue": ["\\class{cornflowerblue}{#1}", 1], "cornsilk": ["\\class{cornsilk}{#1}", 1], "crimson": ["\\class{crimson}{#1}", 1], "cyan": ["\\class{cyan}{#1}", 1], "darkblue": ["\\class{darkblue}{#1}", 1], "darkcyan": ["\\class{darkcyan}{#1}", 1], "darkgoldenrod": ["\\class{darkgoldenrod}{#1}", 1], "darkgray": ["\\class{darkgray}{#1}", 1], "darkgreen": ["\\class{darkgreen}{#1}", 1], "darkgrey": ["\\class{darkgrey}{#1}", 1], "darkkhaki": ["\\class{darkkhaki}{#1}", 1], "darkmagenta": ["\\class{darkmagenta}{#1}", 1], "darkolivegreen": ["\\class{darkolivegreen}{#1}", 1], "darkorange": ["\\class{darkorange}{#1}", 1], "darkorchid": ["\\class{darkorchid}{#1}", 1], "darkred": ["\\class{darkred}{#1}", 1], "darksalmon": ["\\class{darksalmon}{#1}", 1], "darkseagreen": ["\\class{darkseagreen}{#1}", 1], "darkslateblue": ["\\class{darkslateblue}{#1}", 1], "darkslategray": ["\\class{darkslategray}{#1}", 1], "darkslategrey": ["\\class{darkslategrey}{#1}", 1], "darkturquoise": ["\\class{darkturquoise}{#1}", 1], "darkviolet": ["\\class{darkviolet}{#1}", 1], "deeppink": ["\\class{deeppink}{#1}", 1], "deepskyblue": ["\\class{deepskyblue}{#1}", 1], "dimgray": ["\\class{dimgray}{#1}", 1], "dimgrey": ["\\class{dimgrey}{#1}", 1], "dodgerblue": ["\\class{dodgerblue}{#1}", 1], "firebrick": ["\\class{firebrick}{#1}", 1], "floralwhite": ["\\class{floralwhite}{#1}", 1], "forestgreen": ["\\class{forestgreen}{#1}", 1], "gainsboro": ["\\class{gainsboro}{#1}", 1], "ghostwhite": ["\\class{ghostwhite}{#1}", 1], "gold": ["\\class{gold}{#1}", 1], "goldenrod": ["\\class{goldenrod}{#1}", 1], "greenyellow": ["\\class{greenyellow}{#1}", 1], "grey": ["\\class{grey}{#1}", 1], "honeydew": ["\\class{honeydew}{#1}", 1], "hotpink": ["\\class{hotpink}{#1}", 1], "indianred": ["\\class{indianred}{#1}", 1], "indigo": ["\\class{indigo}{#1}", 1], "ivory": ["\\class{ivory}{#1}", 1], "khaki": ["\\class{khaki}{#1}", 1], "lavender": ["\\class{lavender}{#1}", 1], "lavenderblush": ["\\class{lavenderblush}{#1}", 1], "lawngreen": ["\\class{lawngreen}{#1}", 1], "lemonchiffon": ["\\class{lemonchiffon}{#1}", 1], "lightblue": ["\\class{lightblue}{#1}", 1], "lightcoral": ["\\class{lightcoral}{#1}", 1], "lightcyan": ["\\class{lightcyan}{#1}", 1], "lightgoldenrodyellow": ["\\class{lightgoldenrodyellow}{#1}", 1], "lightgray": ["\\class{lightgray}{#1}", 1], "lightgreen": ["\\class{lightgreen}{#1}", 1], "lightgrey": ["\\class{lightgrey}{#1}", 1], "lightpink": ["\\class{lightpink}{#1}", 1], "lightsalmon": ["\\class{lightsalmon}{#1}", 1], "lightseagreen": ["\\class{lightseagreen}{#1}", 1], "lightskyblue": ["\\class{lightskyblue}{#1}", 1], "lightslategray": ["\\class{lightslategray}{#1}", 1], "lightslategrey": ["\\class{lightslategrey}{#1}", 1], "lightsteelblue": ["\\class{lightsteelblue}{#1}", 1], "lightyellow": ["\\class{lightyellow}{#1}", 1], "limegreen": ["\\class{limegreen}{#1}", 1], "linen": ["\\class{linen}{#1}", 1], "magenta": ["\\class{magenta}{#1}", 1], "mediumaquamarine": ["\\class{mediumaquamarine}{#1}", 1], "mediumblue": ["\\class{mediumblue}{#1}", 1], "mediumorchid": ["\\class{mediumorchid}{#1}", 1], "mediumpurple": ["\\class{mediumpurple}{#1}", 1], "mediumseagreen": ["\\class{mediumseagreen}{#1}", 1], "mediumslateblue": ["\\class{mediumslateblue}{#1}", 1], "mediumspringgreen": ["\\class{mediumspringgreen}{#1}", 1], "mediumturquoise": ["\\class{mediumturquoise}{#1}", 1], "mediumvioletred": ["\\class{mediumvioletred}{#1}", 1], "midnightblue": ["\\class{midnightblue}{#1}", 1], "mintcream": ["\\class{mintcream}{#1}", 1], "mistyrose": ["\\class{mistyrose}{#1}", 1], "moccasin": ["\\class{moccasin}{#1}", 1], "navajowhite": ["\\class{navajowhite}{#1}", 1], "oldlace": ["\\class{oldlace}{#1}", 1], "olivedrab": ["\\class{olivedrab}{#1}", 1], "orange": ["\\class{orange}{#1}", 1], "orangered": ["\\class{orangered}{#1}", 1], "orchid": ["\\class{orchid}{#1}", 1], "palegoldenrod": ["\\class{palegoldenrod}{#1}", 1], "palegreen": ["\\class{palegreen}{#1}", 1], "paleturquoise": ["\\class{paleturquoise}{#1}", 1], "palevioletred": ["\\class{palevioletred}{#1}", 1], "papayawhip": ["\\class{papayawhip}{#1}", 1], "peachpuff": ["\\class{peachpuff}{#1}", 1], "peru": ["\\class{peru}{#1}", 1], "pink": ["\\class{pink}{#1}", 1], "plum": ["\\class{plum}{#1}", 1], "powderblue": ["\\class{powderblue}{#1}", 1], "rebeccapurple": ["\\class{rebeccapurple}{#1}", 1], "rosybrown": ["\\class{rosybrown}{#1}", 1], "royalblue": ["\\class{royalblue}{#1}", 1], "saddlebrown": ["\\class{saddlebrown}{#1}", 1], "salmon": ["\\class{salmon}{#1}", 1], "sandybrown": ["\\class{sandybrown}{#1}", 1], "seagreen": ["\\class{seagreen}{#1}", 1], "seashell": ["\\class{seashell}{#1}", 1], "sienna": ["\\class{sienna}{#1}", 1], "skyblue": ["\\class{skyblue}{#1}", 1], "slateblue": ["\\class{slateblue}{#1}", 1], "slategray": ["\\class{slategray}{#1}", 1], "slategrey": ["\\class{slategrey}{#1}", 1], "snow": ["\\class{snow}{#1}", 1], "springgreen": ["\\class{springgreen}{#1}", 1], "steelblue": ["\\class{steelblue}{#1}", 1], "tan": ["\\class{tan}{#1}", 1], "thistle": ["\\class{thistle}{#1}", 1], "tomato": ["\\class{tomato}{#1}", 1], "turquoise": ["\\class{turquoise}{#1}", 1], "violet": ["\\class{violet}{#1}", 1], "wheat": ["\\class{wheat}{#1}", 1], "whitesmoke": ["\\class{whitesmoke}{#1}", 1], "yellowgreen": ["\\class{yellowgreen}{#1}", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/assignment-1';</script>
@@ -215,7 +215,9 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="lecture-1.html">What is a Pixel and what is an Image?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lecture-2-3.html">How is an image formed?</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">📌 Assignment 1: Camera Calibration</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">📌 Assignment 1</a></li>
+
+
 <li class="toctree-l1"><a class="reference internal" href="lecture-4.html">Image Processing (Part 1) Spatial Domain</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lecture-5.html">Image Processing (Part 2) Fourier Domain</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lecture-6-7-8.html">Depth Estimation using Stereo Vision</a></li>
@@ -437,7 +439,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>📌 Assignment 1: Camera Calibration</h1>
+    <h1>📌 Assignment 1</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -447,6 +449,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">📌 Assignment 1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-rotation-matrix">Part 1: Rotation Matrix</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-to-see-all-transformations">Visualization to see all transformations</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-camera-calibration">Part 2: Camera Calibration</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chessboard-corner-detection">Chessboard Corner Detection</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-camera-intrinsic-parameters">Finding Camera Intrinsic Parameters</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-it-does">What It Does</a></li>
@@ -466,6 +474,9 @@ document.write(`
 </ul>
 </li>
 </ul>
+</li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -476,9 +487,121 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="assignment-1-camera-calibration">
-<h1>📌 Assignment 1: Camera Calibration<a class="headerlink" href="#assignment-1-camera-calibration" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="assignment-1">
+<h1>📌 Assignment 1<a class="headerlink" href="#assignment-1" title="Link to this heading">#</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">Live</span> <span class="pre">code</span> <span class="pre">works</span> <span class="pre">with</span> <span class="pre">this</span> <span class="pre">webpage,</span> <span class="pre">play</span> <span class="pre">around</span> <span class="pre">with</span> <span class="pre">the</span> <span class="pre">code.</span></code></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="part-1-rotation-matrix">
+<h1>Part 1: Rotation Matrix<a class="headerlink" href="#part-1-rotation-matrix" title="Link to this heading">#</a></h1>
+<p>To transform coordinates from the <strong>original frame <code class="docutils literal notranslate"><span class="pre">xyz</span></code></strong> to the <strong>rotated frame <code class="docutils literal notranslate"><span class="pre">XYZ</span></code></strong>, we follow a <strong>specific sequence of rotations</strong>, exactly as shown in Figure 1:</p>
+<p>1️⃣ <strong>Rotate around the initial <code class="docutils literal notranslate"><span class="pre">z</span></code> axis by angle α</strong></p>
+<ul class="simple">
+<li><p>After this, the frame becomes <code class="docutils literal notranslate"><span class="pre">x′y′z′</span></code>.</p></li>
+<li><p>This is a rotation about the global <code class="docutils literal notranslate"><span class="pre">z</span></code> axis.</p></li>
+</ul>
+<p>2️⃣ <strong>Rotate around the new <code class="docutils literal notranslate"><span class="pre">x′</span></code> axis by angle β</strong></p>
+<ul class="simple">
+<li><p>After this, the frame becomes <code class="docutils literal notranslate"><span class="pre">x″y″z″</span></code>.</p></li>
+<li><p>This rotation is around the local <code class="docutils literal notranslate"><span class="pre">x′</span></code> axis that was formed after the first rotation.</p></li>
+</ul>
+<p>3️⃣ <strong>Rotate around the new <code class="docutils literal notranslate"><span class="pre">z″</span></code> axis by angle γ</strong></p>
+<ul class="simple">
+<li><p>Finally, the coordinate frame becomes the target <code class="docutils literal notranslate"><span class="pre">XYZ</span></code>.</p></li>
+<li><p>This is a rotation about the local <code class="docutils literal notranslate"><span class="pre">z″</span></code> axis that was formed after the second rotation.</p></li>
+</ul>
+<p>So the full transformation from <strong><code class="docutils literal notranslate"><span class="pre">xyz</span></code> to <code class="docutils literal notranslate"><span class="pre">XYZ</span></code></strong> is:</p>
+<div class="math notranslate nohighlight">
+\[
+R_{xyz \rightarrow XYZ} = R_z(\gamma) \cdot R_x(\beta) \cdot R_z(\alpha)
+\]</div>
+<p>To <strong>reverse</strong> the transformation (<strong><code class="docutils literal notranslate"><span class="pre">XYZ</span></code> to <code class="docutils literal notranslate"><span class="pre">xyz</span></code></strong>), the inverse is:</p>
+<div class="math notranslate nohighlight">
+\[
+R_{XYZ \rightarrow xyz} = \Big(R_{xyz \rightarrow XYZ}\Big)^{-1} = R_z(-\alpha) \cdot R_x(-\beta) \cdot R_z(-\gamma)
+\]</div>
+<ul class="simple">
+<li><p>The <strong>order of rotations</strong> matters and must match the diagram.</p></li>
+<li><p>Each rotation is about the <strong>current local axis</strong> after the previous rotation.</p></li>
+<li><p>Angles are in <strong>degrees</strong>, so you must convert them to <strong>radians</strong> in your code.</p></li>
+</ul>
+<p>This step-by-step order guarantees that the <strong>Euler angles α, β, and γ</strong> rotate the system exactly as required to match the <code class="docutils literal notranslate"><span class="pre">xyz</span></code> to <code class="docutils literal notranslate"><span class="pre">XYZ</span></code> mapping.</p>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">findRot_xyz2XYZ</span><span class="p">(</span><span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">beta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">gamma</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes rotation matrix from local xyz to global XYZ.</span>
+<span class="sd">    Rotation order:</span>
+<span class="sd">    1) Rotate about z by alpha</span>
+<span class="sd">    2) Rotate about x&#39; by beta</span>
+<span class="sd">    3) Rotate about z&#39;&#39; by gamma</span>
+
+<span class="sd">    All angles in degrees.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
+
+    <span class="c1"># Rz(alpha)</span>
+    <span class="n">Rz_a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">a</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="p">])</span>
+
+    <span class="c1"># Rx(beta) (about x&#39;)</span>
+    <span class="n">Rx_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">b</span><span class="p">)],</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">b</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">b</span><span class="p">)]</span>
+    <span class="p">])</span>
+
+    <span class="c1"># Rz(gamma) (about z&#39;&#39;)</span>
+    <span class="n">Rz_g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">g</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">g</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">g</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">g</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="p">])</span>
+
+    <span class="c1"># Total: R = Rz(gamma) @ Rx(beta) @ Rz(alpha)</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">Rz_g</span> <span class="o">@</span> <span class="n">Rx_b</span> <span class="o">@</span> <span class="n">Rz_a</span>
+
+    <span class="k">return</span> <span class="n">R</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">findRot_XYZ2xyz</span><span class="p">(</span><span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">beta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">gamma</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Inverse: rotation from global XYZ back to local xyz.</span>
+<span class="sd">    Since rotation matrices are orthogonal: inverse = transpose.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">findRot_xyz2XYZ</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
+    <span class="n">R_inv</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">return</span> <span class="n">R_inv</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="visualization-to-see-all-transformations">
+<h2>Visualization to see all transformations<a class="headerlink" href="#visualization-to-see-all-transformations" title="Link to this heading">#</a></h2>
+<div class="cell tag_remove-input tag_disable-execution-cell docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html">
+        <iframe
+            width="100%"
+            height="450"
+            src="iframe_figures/euler_rotation.html"
+            frameborder="0"
+            allowfullscreen
+            
+        ></iframe>
+        </div></div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="part-2-camera-calibration">
+<h1>Part 2: Camera Calibration<a class="headerlink" href="#part-2-camera-calibration" title="Link to this heading">#</a></h1>
 <p>(There are multiple ways to read an image. Code for reading the image, is not a part of grading.)</p>
 <div class="cell tag_thebe-init tag_hide-input docutils container">
 <details class="hide above-input">
@@ -624,7 +747,7 @@ These 2D points will later be matched with known 3D world coordinates to solve f
 
     <span class="c1"># Remove unwanted edges</span>
     <span class="n">corners</span> <span class="o">=</span> <span class="n">corners</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">corners_to_remove</span> <span class="o">=</span> <span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">]</span>  <span class="c1"># Example: adjust based on your board</span>
+    <span class="n">corners_to_remove</span> <span class="o">=</span> <span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">]</span>
 
     <span class="n">valid_corners</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">pt</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">corners</span><span class="p">):</span>
@@ -1175,6 +1298,12 @@ Visualizes both the original detected points (<strong>lime circles</strong>) and
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">📌 Assignment 1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-rotation-matrix">Part 1: Rotation Matrix</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-to-see-all-transformations">Visualization to see all transformations</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-camera-calibration">Part 2: Camera Calibration</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chessboard-corner-detection">Chessboard Corner Detection</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-camera-intrinsic-parameters">Finding Camera Intrinsic Parameters</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-it-does">What It Does</a></li>
@@ -1194,6 +1323,9 @@ Visualizes both the original detected points (<strong>lime circles</strong>) and
 </ul>
 </li>
 </ul>
+</li>
+</ul>
+
   </nav></div>
 
 </div></div>
