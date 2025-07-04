@@ -23,13 +23,13 @@ The schedule balances theory with hands-on learning, including coding exercises 
 | CVIP 1.0 | Jun. 19, Thu  | Juneteenth Holiday | No Lecture | |
 | CVIP 1.0 | Jun. 24, Tue  | Stereo Vision, Depth Estimation (Part 3) | [Lecture 8](lectures/lecture-6-7-8.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-6-7-8) | Quiz 2 |
 | CVIP 1.0 | Jun. 26, Thu  | Feature Detection | [Lecture 9](lectures/lecture-9.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-9) | |
-| CVIP 1.0 | Jul. 1, Tue   | Learning-based Computer Vision methods (Part 1) | | Quiz 3, Assignment 1 Due Date |
-| CVIP 1.0 | Jul. 3, Thu  | Learning-based Computer Vision methods (Part 2) and Midterm Review | | |
+| CVIP 1.0 | Jul. 1, Tue   | Learning-based Computer Vision methods (Part 1) | [Lecture 10](lectures/lecture-10-11.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-10) | Assignment 1 Due Date |
+| CVIP 1.0 | Jul. 3, Thu  | Learning-based Computer Vision methods (Part 2) and Midterm Review | [Lecture 11](lectures/lecture-10-11.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-10) | |
 | | Jul. 8, Tue | Midterm Exam | | |
-| CVIP 2.0 | Jul. 10, Thu  | Introduction to Generative AI (Computer Vision Applications) | | |
+| CVIP 2.0 | Jul. 10, Thu  | Introduction to Generative AI (Computer Vision Applications) | | Quiz 3 |
 | CVIP 2.0 | Jul. 15, Tue  | Variational AutoEncoders (Part 1) | | |
-| CVIP 2.0 | Jul. 17, Thu  | Variational AutoEncoders (Part 2) | | Quiz 4, Capstone Project Milestone 1 Due Date |
-| CVIP 2.0 | Jul. 22, Tue   | Diffusion Models (Part 1) | | |
+| CVIP 2.0 | Jul. 17, Thu  | Variational AutoEncoders (Part 2) | | Capstone Project Milestone 1 Due Date |
+| CVIP 2.0 | Jul. 22, Tue   | Diffusion Models (Part 1) | | Quiz 4 |
 | CVIP 2.0 | Jul. 24, Thu  | Diffusion Models (Part 2) | | |
 | CVIP 2.0 | Jul. 29, Tue   | Diffusion Models (Part 3) | | |
 | CVIP 2.0 | Jul. 31, Thu  | Open slot for Guest Lecture | | Quiz 5, Capstone Project Milestone 2 Due Date |
