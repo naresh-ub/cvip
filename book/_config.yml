@@ -9,6 +9,7 @@ html:
   favicon : "figures/TB_favicon.ico"
   baseurl :  "https://naresh-ub.github.io/cvip" #Replace this with your own URL
   extra_css: ["_static/color.css"]
+  extra_js: ["_static/analytics.js"]
 
 html:
   analytics:
