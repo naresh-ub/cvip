@@ -1,0 +1,1056 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Intro to GenAI: What is a Data Distribution? &#8212; CSE 4/573 - Computer Vision and Image Processing</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe.css?v=9bca0c2f" />
+    <link rel="stylesheet" type="text/css" href="../_static/code.css?v=1719a5f1" />
+    <link rel="stylesheet" type="text/css" href="../_static/image_dark_mode.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_iframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tippy.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tb_cc.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/fix_admonition_style.css?v=8627ce31" />
+    <link rel="stylesheet" type="text/css" href="../_static/fix_dropdown_style.css?v=f3461767" />
+    <link rel="stylesheet" type="text/css" href="../_static/fix_code_header_style.css?v=7d542921" />
+    <link rel="stylesheet" type="text/css" href="../_static/color.css?v=fb14535a" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/h5p-resizer.js"></script>
+    <script defer="defer" src="../_static/refresh.js?v=9bea9b76"></script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script defer="defer" src="../_static/sphinx-thebe-lite.js?v=94e8009d"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script defer="defer" src="../_static/tippy/lectures/lecture-12.8b7352e3-a48f-4c78-adce-06e8a10f92bd.js"></script>
+    <script>window.MathJax = {"chtml": {"mtextInheritFont": true}, "tex": {"macros": {"black": ["\\class{black}{#1}", 1], "silver": ["\\class{silver}{#1}", 1], "gray": ["\\class{gray}{#1}", 1], "white": ["\\class{white}{#1}", 1], "maroon": ["\\class{maroon}{#1}", 1], "red": ["\\class{red}{#1}", 1], "purple": ["\\class{purple}{#1}", 1], "fuchsia": ["\\class{fuchsia}{#1}", 1], "green": ["\\class{green}{#1}", 1], "lime": ["\\class{lime}{#1}", 1], "olive": ["\\class{olive}{#1}", 1], "yellow": ["\\class{yellow}{#1}", 1], "navy": ["\\class{navy}{#1}", 1], "blue": ["\\class{blue}{#1}", 1], "teal": ["\\class{teal}{#1}", 1], "aqua": ["\\class{aqua}{#1}", 1], "aliceblue": ["\\class{aliceblue}{#1}", 1], "antiquewhite": ["\\class{antiquewhite}{#1}", 1], "aquamarine": ["\\class{aquamarine}{#1}", 1], "azure": ["\\class{azure}{#1}", 1], "beige": ["\\class{beige}{#1}", 1], "bisque": ["\\class{bisque}{#1}", 1], "blanchedalmond": ["\\class{blanchedalmond}{#1}", 1], "blueviolet": ["\\class{blueviolet}{#1}", 1], "brown": ["\\class{brown}{#1}", 1], "burlywood": ["\\class{burlywood}{#1}", 1], "cadetblue": ["\\class{cadetblue}{#1}", 1], "chartreuse": ["\\class{chartreuse}{#1}", 1], "chocolate": ["\\class{chocolate}{#1}", 1], "coral": ["\\class{coral}{#1}", 1], "cornflowerblue": ["\\class{cornflowerblue}{#1}", 1], "cornsilk": ["\\class{cornsilk}{#1}", 1], "crimson": ["\\class{crimson}{#1}", 1], "cyan": ["\\class{cyan}{#1}", 1], "darkblue": ["\\class{darkblue}{#1}", 1], "darkcyan": ["\\class{darkcyan}{#1}", 1], "darkgoldenrod": ["\\class{darkgoldenrod}{#1}", 1], "darkgray": ["\\class{darkgray}{#1}", 1], "darkgreen": ["\\class{darkgreen}{#1}", 1], "darkgrey": ["\\class{darkgrey}{#1}", 1], "darkkhaki": ["\\class{darkkhaki}{#1}", 1], "darkmagenta": ["\\class{darkmagenta}{#1}", 1], "darkolivegreen": ["\\class{darkolivegreen}{#1}", 1], "darkorange": ["\\class{darkorange}{#1}", 1], "darkorchid": ["\\class{darkorchid}{#1}", 1], "darkred": ["\\class{darkred}{#1}", 1], "darksalmon": ["\\class{darksalmon}{#1}", 1], "darkseagreen": ["\\class{darkseagreen}{#1}", 1], "darkslateblue": ["\\class{darkslateblue}{#1}", 1], "darkslategray": ["\\class{darkslategray}{#1}", 1], "darkslategrey": ["\\class{darkslategrey}{#1}", 1], "darkturquoise": ["\\class{darkturquoise}{#1}", 1], "darkviolet": ["\\class{darkviolet}{#1}", 1], "deeppink": ["\\class{deeppink}{#1}", 1], "deepskyblue": ["\\class{deepskyblue}{#1}", 1], "dimgray": ["\\class{dimgray}{#1}", 1], "dimgrey": ["\\class{dimgrey}{#1}", 1], "dodgerblue": ["\\class{dodgerblue}{#1}", 1], "firebrick": ["\\class{firebrick}{#1}", 1], "floralwhite": ["\\class{floralwhite}{#1}", 1], "forestgreen": ["\\class{forestgreen}{#1}", 1], "gainsboro": ["\\class{gainsboro}{#1}", 1], "ghostwhite": ["\\class{ghostwhite}{#1}", 1], "gold": ["\\class{gold}{#1}", 1], "goldenrod": ["\\class{goldenrod}{#1}", 1], "greenyellow": ["\\class{greenyellow}{#1}", 1], "grey": ["\\class{grey}{#1}", 1], "honeydew": ["\\class{honeydew}{#1}", 1], "hotpink": ["\\class{hotpink}{#1}", 1], "indianred": ["\\class{indianred}{#1}", 1], "indigo": ["\\class{indigo}{#1}", 1], "ivory": ["\\class{ivory}{#1}", 1], "khaki": ["\\class{khaki}{#1}", 1], "lavender": ["\\class{lavender}{#1}", 1], "lavenderblush": ["\\class{lavenderblush}{#1}", 1], "lawngreen": ["\\class{lawngreen}{#1}", 1], "lemonchiffon": ["\\class{lemonchiffon}{#1}", 1], "lightblue": ["\\class{lightblue}{#1}", 1], "lightcoral": ["\\class{lightcoral}{#1}", 1], "lightcyan": ["\\class{lightcyan}{#1}", 1], "lightgoldenrodyellow": ["\\class{lightgoldenrodyellow}{#1}", 1], "lightgray": ["\\class{lightgray}{#1}", 1], "lightgreen": ["\\class{lightgreen}{#1}", 1], "lightgrey": ["\\class{lightgrey}{#1}", 1], "lightpink": ["\\class{lightpink}{#1}", 1], "lightsalmon": ["\\class{lightsalmon}{#1}", 1], "lightseagreen": ["\\class{lightseagreen}{#1}", 1], "lightskyblue": ["\\class{lightskyblue}{#1}", 1], "lightslategray": ["\\class{lightslategray}{#1}", 1], "lightslategrey": ["\\class{lightslategrey}{#1}", 1], "lightsteelblue": ["\\class{lightsteelblue}{#1}", 1], "lightyellow": ["\\class{lightyellow}{#1}", 1], "limegreen": ["\\class{limegreen}{#1}", 1], "linen": ["\\class{linen}{#1}", 1], "magenta": ["\\class{magenta}{#1}", 1], "mediumaquamarine": ["\\class{mediumaquamarine}{#1}", 1], "mediumblue": ["\\class{mediumblue}{#1}", 1], "mediumorchid": ["\\class{mediumorchid}{#1}", 1], "mediumpurple": ["\\class{mediumpurple}{#1}", 1], "mediumseagreen": ["\\class{mediumseagreen}{#1}", 1], "mediumslateblue": ["\\class{mediumslateblue}{#1}", 1], "mediumspringgreen": ["\\class{mediumspringgreen}{#1}", 1], "mediumturquoise": ["\\class{mediumturquoise}{#1}", 1], "mediumvioletred": ["\\class{mediumvioletred}{#1}", 1], "midnightblue": ["\\class{midnightblue}{#1}", 1], "mintcream": ["\\class{mintcream}{#1}", 1], "mistyrose": ["\\class{mistyrose}{#1}", 1], "moccasin": ["\\class{moccasin}{#1}", 1], "navajowhite": ["\\class{navajowhite}{#1}", 1], "oldlace": ["\\class{oldlace}{#1}", 1], "olivedrab": ["\\class{olivedrab}{#1}", 1], "orange": ["\\class{orange}{#1}", 1], "orangered": ["\\class{orangered}{#1}", 1], "orchid": ["\\class{orchid}{#1}", 1], "palegoldenrod": ["\\class{palegoldenrod}{#1}", 1], "palegreen": ["\\class{palegreen}{#1}", 1], "paleturquoise": ["\\class{paleturquoise}{#1}", 1], "palevioletred": ["\\class{palevioletred}{#1}", 1], "papayawhip": ["\\class{papayawhip}{#1}", 1], "peachpuff": ["\\class{peachpuff}{#1}", 1], "peru": ["\\class{peru}{#1}", 1], "pink": ["\\class{pink}{#1}", 1], "plum": ["\\class{plum}{#1}", 1], "powderblue": ["\\class{powderblue}{#1}", 1], "rebeccapurple": ["\\class{rebeccapurple}{#1}", 1], "rosybrown": ["\\class{rosybrown}{#1}", 1], "royalblue": ["\\class{royalblue}{#1}", 1], "saddlebrown": ["\\class{saddlebrown}{#1}", 1], "salmon": ["\\class{salmon}{#1}", 1], "sandybrown": ["\\class{sandybrown}{#1}", 1], "seagreen": ["\\class{seagreen}{#1}", 1], "seashell": ["\\class{seashell}{#1}", 1], "sienna": ["\\class{sienna}{#1}", 1], "skyblue": ["\\class{skyblue}{#1}", 1], "slateblue": ["\\class{slateblue}{#1}", 1], "slategray": ["\\class{slategray}{#1}", 1], "slategrey": ["\\class{slategrey}{#1}", 1], "snow": ["\\class{snow}{#1}", 1], "springgreen": ["\\class{springgreen}{#1}", 1], "steelblue": ["\\class{steelblue}{#1}", 1], "tan": ["\\class{tan}{#1}", 1], "thistle": ["\\class{thistle}{#1}", 1], "tomato": ["\\class{tomato}{#1}", 1], "turquoise": ["\\class{turquoise}{#1}", 1], "violet": ["\\class{violet}{#1}", 1], "wheat": ["\\class{wheat}{#1}", 1], "whitesmoke": ["\\class{whitesmoke}{#1}", 1], "yellowgreen": ["\\class{yellowgreen}{#1}", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/lecture-12';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/analytics.js?v=b6170321"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Computer Vision applications with Neural Networks" href="lecture-10-11.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="July 10, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../_static/logo_dark.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">CSE 4/573 - CVIP</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">About the Instructor</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://naresh-ub.github.io">👨🏻‍🏫 Naresh Kumar Devulapally</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Logistics and Weekly Schedule</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://buffalo.app.box.com/embed/s/agqkobz1pl5dynjiohwchybpnq5ke9py?sortColumn=date">🎥 Lecture Recordings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dates-deadlines.html">⏰ Dates and Deliverables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">Course Logistics and Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../website-features.html">Website Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../capstone-project.html">Capstone Project Details and Deliverables</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Content</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lecture-1.html">What is a Pixel and what is an Image?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-2-3.html">How is an image formed?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assignment-1.html">📌 Assignment 1 Solution</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="lecture-4.html">Image Processing (Part 1) Spatial Domain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-5.html">Image Processing (Part 2) Fourier Domain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-6-7-8.html">Depth Estimation using Stereo Vision</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lecture-9.html">Feature Detection and Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-10-11.html">Computer Vision applications with Neural Networks</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Intro to GenAI: What is a Data Distribution?</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/naresh-ub/cvip/blob/main/book/lectures/lecture-12.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/naresh-ub/cvip" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/lecture-12.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Intro to GenAI: What is a Data Distribution?</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#function-approximators">Function Approximators</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-data-distribution">What is Data Distribution?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-distribution-and-central-limit-theorem">Gaussian Distribution and Central Limit Theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pdf-of-a-distribution-parametrized-by-mean-and-variance">PDF of a distribution parametrized by Mean and Variance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sum-and-product-of-two-gaussians">Sum and Product of Two Gaussians</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sum-of-two-gaussians">Sum of Two Gaussians</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#product-of-two-gaussians">Product of Two Gaussians</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expected-value-definition-and-practical-implementation">Expected Value: Definition and Practical Implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolation-as-a-simple-generative-technique">Interpolation as a Simple Generative Technique</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multivariate-gaussian-distribution">Multivariate Gaussian Distribution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-density-function-pdf">Probability Density Function (PDF)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-properties">Key Properties</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="intro-to-genai-what-is-a-data-distribution">
+<h1>Intro to GenAI: What is a Data Distribution?<a class="headerlink" href="#intro-to-genai-what-is-a-data-distribution" title="Link to this heading">#</a></h1>
+<div>
+<iframe src="https://slides.com/naresh-ub/cvip-lec-12/embed" width="100%" height="500" title="Intro to GenAI" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div><section id="function-approximators">
+<h2>Function Approximators<a class="headerlink" href="#function-approximators" title="Link to this heading">#</a></h2>
+<p>Neural networks are universal function approximators.<br />
+They learn to model an unknown function <span class="math notranslate nohighlight">\(y = f(x)\)</span> by training on pairs of <span class="math notranslate nohighlight">\((x, y)\)</span>.</p>
+<p>Given data points:</p>
+<p><span class="math notranslate nohighlight">\((1, 2), (1.5, 3), (-0.5, -1)\)</span>, a network can learn <span class="math notranslate nohighlight">\(f\)</span> and predict <span class="math notranslate nohighlight">\(y\)</span> for new <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<p>The goal is to find a function <span class="math notranslate nohighlight">\(f\)</span> such that:</p>
+<div class="math notranslate nohighlight">
+\[ y = f(x) \]</div>
+<p>In practice, <span class="math notranslate nohighlight">\(f\)</span> is parameterized by trainable weights.</p>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">interact</span><span class="p">,</span> <span class="n">FloatSlider</span>
+
+<span class="c1"># Toggle ON/OFF</span>
+<span class="n">interactive</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># ⇦ SET TO True or False</span>
+
+<span class="c1"># True function to approximate</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">true_f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="c1"># Main plotting logic</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_approximation</span><span class="p">(</span><span class="n">weight</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">y_true</span> <span class="o">=</span> <span class="n">true_f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">weight</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">bias</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True f(x)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;NN Approximation&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Function Approximation&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Interactive or Static</span>
+<span class="k">if</span> <span class="n">interactive</span><span class="p">:</span>
+    <span class="n">interact</span><span class="p">(</span>
+        <span class="n">plot_approximation</span><span class="p">,</span>
+        <span class="n">weight</span><span class="o">=</span><span class="n">FloatSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">),</span>
+        <span class="n">bias</span><span class="o">=</span><span class="n">FloatSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">plot_approximation</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1c72fc5f8c30ea082a084952fa7c9f12fe55568f2780c3726f4b0d631c535e05.png" src="../_images/1c72fc5f8c30ea082a084952fa7c9f12fe55568f2780c3726f4b0d631c535e05.png" />
+</div>
+</div>
+</section>
+<section id="what-is-data-distribution">
+<h2>What is Data Distribution?<a class="headerlink" href="#what-is-data-distribution" title="Link to this heading">#</a></h2>
+<p>Where does data come from?<br />
+Behind any dataset is a hidden data-generating process.</p>
+<p>A <strong>random experiment</strong> (like flipping a coin) defines a <strong>random variable</strong> <span class="math notranslate nohighlight">\(X\)</span> whose outcomes follow a <strong>probability distribution</strong> <span class="math notranslate nohighlight">\(p(x)\)</span>.</p>
+<p>For discrete <span class="math notranslate nohighlight">\(X\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ 
+P(X = x) = \text{Probability that X takes value x}
+\]</div>
+<p>For continuous <span class="math notranslate nohighlight">\(X\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+P(a \leq X \leq b) = \int_{a}^{b} p(x) dx
+\]</div>
+<p>The <strong>PDF</strong> describes how likely different <span class="math notranslate nohighlight">\(x\)</span> values are.</p>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">widgets</span>
+
+<span class="c1"># Function to simulate tossing a fair coin</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">simulate_coin_tosses</span><span class="p">(</span><span class="n">n_experiments</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">n_experiments</span><span class="p">)</span>  <span class="c1"># 0 = Tails, 1 = Heads</span>
+    <span class="n">heads_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>  <span class="c1"># Count number of heads</span>
+    <span class="n">proportion_heads</span> <span class="o">=</span> <span class="n">heads_count</span> <span class="o">/</span> <span class="n">n_experiments</span>  <span class="c1"># Proportion of heads</span>
+
+    <span class="c1"># Plot distribution</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">([</span><span class="s1">&#39;Heads&#39;</span><span class="p">,</span> <span class="s1">&#39;Tails&#39;</span><span class="p">],</span> <span class="p">[</span><span class="n">heads_count</span><span class="p">,</span> <span class="n">n_experiments</span> <span class="o">-</span> <span class="n">heads_count</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Outcome&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Coin Toss Simulation (</span><span class="si">{</span><span class="n">n_experiments</span><span class="si">}</span><span class="s2"> Tosses)</span><span class="se">\n</span><span class="s2">Heads: </span><span class="si">{</span><span class="n">heads_count</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">proportion_heads</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_experiments</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Unified function to handle slider-based or static plotting</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_coin_toss_distribution</span><span class="p">(</span><span class="n">n_experiments</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">slider</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">slider</span><span class="p">:</span>
+        <span class="n">slider_widget</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">n_experiments</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Tosses&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">widgets</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">plot_coin_toss_distribution</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">slider</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">n</span><span class="o">=</span><span class="n">slider_widget</span><span class="p">)</span>
+    
+    <span class="c1"># Run the simulation and plot the distribution</span>
+    <span class="n">simulate_coin_tosses</span><span class="p">(</span><span class="n">n_experiments</span><span class="p">)</span>
+
+<span class="c1"># Call the function with a slider</span>
+<span class="n">plot_coin_toss_distribution</span><span class="p">(</span><span class="n">slider</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/8603c072a5559d51abe7962a6dd1716b88ac1309c360f6f160a1fc03846334ec.png" src="../_images/8603c072a5559d51abe7962a6dd1716b88ac1309c360f6f160a1fc03846334ec.png" />
+</div>
+</div>
+</section>
+<section id="gaussian-distribution-and-central-limit-theorem">
+<h2>Gaussian Distribution and Central Limit Theorem<a class="headerlink" href="#gaussian-distribution-and-central-limit-theorem" title="Link to this heading">#</a></h2>
+<p>The <strong>Gaussian distribution</strong>, also called the <strong>Normal distribution</strong>, is a fundamental continuous probability distribution with a bell-shaped curve. Its probability density function (PDF) for a scalar random variable <span class="math notranslate nohighlight">\(x\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[
+p(x) = \frac{1}{\sqrt{2\pi \sigma^2}} \exp\left( -\frac{(x - \mu)^2}{2\sigma^2} \right)
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mu\)</span> is the mean (the center of the distribution)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma^2\)</span> is the variance (the spread)</p></li>
+</ul>
+<p>The Gaussian is symmetric about <span class="math notranslate nohighlight">\(\mu\)</span> and is fully described by its first two moments.</p>
+<hr class="docutils" />
+<p><strong>Central Limit Theorem (CLT):</strong><br />
+The CLT states that <strong>the sum (or average) of a large number of independent and identically distributed (i.i.d.) random variables — regardless of their original distribution — will approximate a Gaussian distribution</strong> as the number of variables grows large. Formally:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{If} \quad X_1, X_2, \dots, X_n \text{ are i.i.d. with mean } \mu \text{ and variance } \sigma^2, \quad
+\text{then} \quad \frac{1}{n}\sum_{i=1}^n X_i \approx \mathcal{N}\left(\mu, \frac{\sigma^2}{n}\right)
+\]</div>
+<p>The CLT explains why the Gaussian appears so frequently in nature and underpins many generative models and statistical inference techniques.</p>
+</section>
+<section id="pdf-of-a-distribution-parametrized-by-mean-and-variance">
+<h2>PDF of a distribution parametrized by Mean and Variance<a class="headerlink" href="#pdf-of-a-distribution-parametrized-by-mean-and-variance" title="Link to this heading">#</a></h2>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Parameters</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="c1"># Support</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+<span class="c1"># PDF: Gaussian (Normal) Distribution</span>
+<span class="n">pdf</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="c1"># Plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\mu$ = </span><span class="si">{</span><span class="n">mu</span><span class="si">}</span><span class="s2">, $\sigma$ = </span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribution Parameterized by $</span><span class="se">\\</span><span class="s2">mu$ and $</span><span class="se">\\</span><span class="s2">sigma$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Probability Density&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/72cdecea7d5d8a4126bfc53a592354e2488955f6a7f82144f04a64babd2aa81c.png" src="../_images/72cdecea7d5d8a4126bfc53a592354e2488955f6a7f82144f04a64babd2aa81c.png" />
+</div>
+</div>
+</section>
+<section id="sum-and-product-of-two-gaussians">
+<h2>Sum and Product of Two Gaussians<a class="headerlink" href="#sum-and-product-of-two-gaussians" title="Link to this heading">#</a></h2>
+<section id="sum-of-two-gaussians">
+<h3>Sum of Two Gaussians<a class="headerlink" href="#sum-of-two-gaussians" title="Link to this heading">#</a></h3>
+<p>If two random variables <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are independent and both normally distributed:</p>
+<div class="math notranslate nohighlight">
+\[
+X \sim \mathcal{N}(\mu_X, \sigma_X^2), \quad Y \sim \mathcal{N}(\mu_Y, \sigma_Y^2)
+\]</div>
+<p>then their sum <span class="math notranslate nohighlight">\(Z = X + Y\)</span> is also Gaussian:</p>
+<div class="math notranslate nohighlight">
+\[
+Z \sim \mathcal{N}(\mu_X + \mu_Y, \; \sigma_X^2 + \sigma_Y^2).
+\]</div>
+<p>The mean adds and the variances add.</p>
+</section>
+<section id="product-of-two-gaussians">
+<h3>Product of Two Gaussians<a class="headerlink" href="#product-of-two-gaussians" title="Link to this heading">#</a></h3>
+<p>If we multiply the PDFs of two Gaussian distributions (often used in Bayesian updating), the result is proportional to another Gaussian:</p>
+<div class="math notranslate nohighlight">
+\[
+p(x) \propto \mathcal{N}(x | \mu_1, \sigma_1^2) \times \mathcal{N}(x | \mu_2, \sigma_2^2).
+\]</div>
+<p>The product is:</p>
+<div class="math notranslate nohighlight">
+\[
+p(x) = \mathcal{N}\Big( x \;|\; \mu', \sigma'^2 \Big)
+\]</div>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[
+\sigma'^2 = \left( \frac{1}{\sigma_1^2} + \frac{1}{\sigma_2^2} \right)^{-1}, 
+\quad 
+\mu' = \sigma'^2 \left( \frac{\mu_1}{\sigma_1^2} + \frac{\mu_2}{\sigma_2^2} \right).
+\]</div>
+<p>So the product of two Gaussians is another Gaussian with updated mean and variance.</p>
+<p>This property is fundamental for many <strong>Bayesian inference</strong> and <strong>Kalman filter</strong> algorithms.</p>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">norm</span>
+
+<span class="c1"># Define parameters for two Gaussian distributions</span>
+<span class="n">mu1</span><span class="p">,</span> <span class="n">sigma1</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span>
+<span class="n">mu2</span><span class="p">,</span> <span class="n">sigma2</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span>
+
+<span class="c1"># Define the range for plotting</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+
+<span class="c1"># Compute the PDFs of the two Gaussians</span>
+<span class="n">pdf1</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu1</span><span class="p">,</span> <span class="n">sigma1</span><span class="p">)</span>
+<span class="n">pdf2</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">sigma2</span><span class="p">)</span>
+
+<span class="c1"># Sum of two independent Gaussians</span>
+<span class="n">mu_sum</span> <span class="o">=</span> <span class="n">mu1</span> <span class="o">+</span> <span class="n">mu2</span>
+<span class="n">sigma_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">sigma2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">pdf_sum</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu_sum</span><span class="p">,</span> <span class="n">sigma_sum</span><span class="p">)</span>
+
+<span class="c1"># Product of two Gaussians (up to a normalization constant)</span>
+<span class="n">sigma_prod</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">sigma1</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sigma2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">sigma1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">sigma2</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">mu_prod</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu1</span> <span class="o">*</span> <span class="n">sigma2</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">mu2</span> <span class="o">*</span> <span class="n">sigma1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">sigma1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">sigma2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">pdf_prod</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu_prod</span><span class="p">,</span> <span class="n">sigma_prod</span><span class="p">)</span>
+
+<span class="c1"># Plot the Gaussians</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Subplot for Sum of Gaussians</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathcal</span><span class="si">{N}</span><span class="s1">(\mu_1, \sigma_1^2)$&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathcal</span><span class="si">{N}</span><span class="s1">(\mu_2, \sigma_2^2)$&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;brown&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf_sum</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathcal</span><span class="si">{N}</span><span class="s1">(\mu_1+\mu_2, \sigma_1^2+\sigma_2^2)$&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sum of Two Gaussians&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1"># Subplot for Product of Gaussians</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathcal</span><span class="si">{N}</span><span class="s1">(\mu_1, \sigma_1^2)$&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathcal</span><span class="si">{N}</span><span class="s1">(\mu_2, \sigma_2^2)$&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;brown&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf_prod</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathcal</span><span class="si">{N}</span><span class="s1">(\mu^\prime, \sigma^{\prime 2})$&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Product of Two Gaussians&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/19405c07e710ee7220a9ece9efb95c5c8480b7731cc8efd2361a10b210dfb9e4.png" src="../_images/19405c07e710ee7220a9ece9efb95c5c8480b7731cc8efd2361a10b210dfb9e4.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="expected-value-definition-and-practical-implementation">
+<h2>Expected Value: Definition and Practical Implementation<a class="headerlink" href="#expected-value-definition-and-practical-implementation" title="Link to this heading">#</a></h2>
+<p>The expected value (or mean) is a fundamental concept in probability and statistics that represents the long-run average outcome of a random variable.</p>
+<p>For a continuous random variable X with probability density function p(x), the expected value is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}[X] = \int_{-\infty}^{\infty} x , p(x) , dx
+\]</div>
+<p>For a discrete random variable:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}[X] = \sum_{i} x_i , P(X = x_i)
+\]</div>
+<p>When we only have a finite sample x_1, x_2, \ldots, x_n, the expected value is approximated by the sample mean:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\mu} = \frac{1}{n} \sum_{i=1}^{n} x_i
+\]</div>
+<p>How this is implemented in the code:
+•	The code generates random samples from a true Gaussian distribution with known mean \mu = 0 and variance \sigma^2 = 1.
+•	The function estimated_function calculates the sample mean and variance, which are empirical estimates of the true expected value and spread.
+•	The plot_estimation function visualizes the true Gaussian PDF alongside the estimated PDF and the histogram of sampled data.
+•	The interactive slider lets you adjust the number of samples n. As n increases, the sample mean converges towards the true mean, illustrating the Law of Large Numbers.</p>
+<p>The expected value links the theoretical probability model with real-world data by showing how averages from samples approximate the true mean.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">widgets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+
+<span class="c1"># Function to generate Gaussian-distributed data</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_data</span><span class="p">(</span><span class="n">n_points</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">true_variance</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">true_variance</span><span class="p">),</span> <span class="n">n_points</span><span class="p">)</span>  <span class="c1"># Generate normal distributed data</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">true_variance</span><span class="p">)</span>
+
+<span class="c1"># Function to estimate mean and variance</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">estimated_function</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">estimated_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">estimated_variance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">estimated_mean</span><span class="p">,</span> <span class="n">estimated_variance</span>
+
+<span class="c1"># Unified function to handle both slider-based and static plotting</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_estimation</span><span class="p">(</span><span class="n">n_points</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">slider</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">estimated_function</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">slider</span><span class="p">:</span>
+        <span class="n">slider_widget</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">n_points</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;n_points&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">widgets</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">plot_estimation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">slider</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">estimated_function</span><span class="o">=</span><span class="n">estimated_function</span><span class="p">),</span> 
+                                   <span class="n">n</span><span class="o">=</span><span class="n">slider_widget</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">estimated_function</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You must provide an estimated_function to fit the data.&quot;</span><span class="p">)</span>
+
+    <span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">true_variance</span><span class="p">)</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">n_points</span><span class="p">)</span>
+    <span class="n">estimated_mean</span><span class="p">,</span> <span class="n">estimated_variance</span> <span class="o">=</span> <span class="n">estimated_function</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">variance</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">variance</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">variance</span><span class="p">))</span>
+    
+    <span class="n">y_true</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">true_mean</span><span class="p">,</span> <span class="n">true_variance</span><span class="p">)</span>
+    <span class="n">y_estimated</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">estimated_mean</span><span class="p">,</span> <span class="n">estimated_variance</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sampled Data Histogram&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="s1">&#39;g--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;True Gaussian (Mean=</span><span class="si">{</span><span class="n">true_mean</span><span class="si">}</span><span class="s2">, Var=</span><span class="si">{</span><span class="n">true_variance</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_estimated</span><span class="p">,</span> <span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Estimated Gaussian (Mean=</span><span class="si">{</span><span class="n">estimated_mean</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Var=</span><span class="si">{</span><span class="n">estimated_variance</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gaussian Distribution Estimation (n_points=</span><span class="si">{</span><span class="n">n_points</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plot_estimation</span><span class="p">(</span><span class="n">n_points</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">slider</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">estimated_function</span><span class="o">=</span><span class="n">estimated_function</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/de9590b44e3f17856694adfc1fdc4ea6f62f302e97e1cd02030c5d9362b86b17.png" src="../_images/de9590b44e3f17856694adfc1fdc4ea6f62f302e97e1cd02030c5d9362b86b17.png" />
+</div>
+</div>
+</section>
+<section id="interpolation-as-a-simple-generative-technique">
+<h2>Interpolation as a Simple Generative Technique<a class="headerlink" href="#interpolation-as-a-simple-generative-technique" title="Link to this heading">#</a></h2>
+<p>Interpolation is a basic yet powerful concept in generative modeling.
+When we interpolate, we create new data points by finding values between existing data points.</p>
+<p>For example, given two data points x_1 and x_2, a simple linear interpolation is:
+$<span class="math notranslate nohighlight">\(
+x_{\text{new}} = (1 - \alpha) , x_1 + \alpha , x_2,\quad \alpha \in [0, 1].
+\)</span>$</p>
+<p>By varying \alpha between 0 and 1, we generate a smooth transition between the two original data points.</p>
+<p>Why is this useful?
+•	In low dimensions, it helps to fill gaps between sparse data.
+•	In high-dimensional spaces (like images or embeddings), it is used to smoothly blend features.
+•	Many generative models (e.g., VAEs) use interpolation in latent space to show how well the model captures smooth, meaningful variations in data.</p>
+<p>Key idea:
+Interpolation doesn’t truly create data from scratch, but it extends the dataset by exploiting the structure of known points. It’s a simple starting point for understanding how generative models synthesize new samples.</p>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">interact</span><span class="p">,</span> <span class="n">FloatSlider</span>
+
+<span class="n">interactive</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_interpolation</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+    <span class="n">p0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">p0</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="n">p1</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">p0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p1</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">p0</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p1</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;ko-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Points&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Interpolated: t=</span><span class="si">{</span><span class="n">t</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Linear Interpolation&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">interactive</span><span class="p">:</span>
+    <span class="n">interact</span><span class="p">(</span>
+        <span class="n">plot_interpolation</span><span class="p">,</span>
+        <span class="n">t</span><span class="o">=</span><span class="n">FloatSlider</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">plot_interpolation</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/eb422a6b95d8d0b99e79a9c19812931c84da3090e5669630d409f89e993d093a.png" src="../_images/eb422a6b95d8d0b99e79a9c19812931c84da3090e5669630d409f89e993d093a.png" />
+</div>
+</div>
+</section>
+<section id="multivariate-gaussian-distribution">
+<h2>Multivariate Gaussian Distribution<a class="headerlink" href="#multivariate-gaussian-distribution" title="Link to this heading">#</a></h2>
+<p>A <strong>multivariate Gaussian distribution</strong> generalizes the normal distribution to multiple dimensions.<br />
+It models a vector of random variables <span class="math notranslate nohighlight">\(\mathbf{X} \in \mathbb{R}^d\)</span> that are jointly Gaussian.</p>
+<section id="probability-density-function-pdf">
+<h3>Probability Density Function (PDF)<a class="headerlink" href="#probability-density-function-pdf" title="Link to this heading">#</a></h3>
+<p>The PDF of a <span class="math notranslate nohighlight">\(d\)</span>-dimensional multivariate Gaussian is:</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x}) = 
+\frac{1}{(2\pi)^{d/2} |\boldsymbol{\Sigma}|^{1/2}} 
+\exp \left(
+- \frac{1}{2} 
+(\mathbf{x} - \boldsymbol{\mu})^T 
+\boldsymbol{\Sigma}^{-1} 
+(\mathbf{x} - \boldsymbol{\mu})
+\right)
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^d\)</span> is the data vector,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{\mu} \in \mathbb{R}^d\)</span> is the mean vector,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{\Sigma} \in \mathbb{R}^{d \times d}\)</span> is the covariance matrix,</p></li>
+<li><p><span class="math notranslate nohighlight">\(|\boldsymbol{\Sigma}|\)</span> denotes the determinant of the covariance matrix,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}^{-1}\)</span> is its inverse.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="key-properties">
+<h3>Key Properties<a class="headerlink" href="#key-properties" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The <strong>mean vector</strong> <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span> defines the center of the distribution.</p></li>
+<li><p>The <strong>covariance matrix</strong> <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span> encodes the variance of each dimension and the correlations between dimensions.</p></li>
+<li><p>If variables are uncorrelated, <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span> is diagonal.</p></li>
+</ul>
+<p>The multivariate Gaussian is fundamental for modeling high-dimensional continuous data and is widely used in generative modeling, probabilistic PCA, and Bayesian statistics.</p>
+<div class="cell tag_disable-execution-cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html">
+        <iframe
+            width="100%"
+            height="500"
+            src="iframe_figures/multivariate_gaussian_pdf.html"
+            frameborder="0"
+            allowfullscreen
+            
+        ></iframe>
+        </div></div>
+</div>
+</section>
+</section>
+</section>
+
+        <script type="text/x-thebe-config">
+        {
+            "rootPath": "..",
+            "requestKernel": true,
+            "useJupyterLite": true,
+            "useBinder": false,
+            "kernelOptions": {
+                "path": "/"
+            },
+            "codeMirrorConfig": {
+                "theme": "default",
+                "mode": "python"
+            },
+            "mountRestartButton": false,
+            "mountRestartallButton": false
+        }
+        </script>
+        <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lecture-10-11.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Computer Vision applications with Neural Networks</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#function-approximators">Function Approximators</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-data-distribution">What is Data Distribution?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-distribution-and-central-limit-theorem">Gaussian Distribution and Central Limit Theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pdf-of-a-distribution-parametrized-by-mean-and-variance">PDF of a distribution parametrized by Mean and Variance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sum-and-product-of-two-gaussians">Sum and Product of Two Gaussians</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sum-of-two-gaussians">Sum of Two Gaussians</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#product-of-two-gaussians">Product of Two Gaussians</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expected-value-definition-and-practical-implementation">Expected Value: Definition and Practical Implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolation-as-a-simple-generative-technique">Interpolation as a Simple Generative Technique</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multivariate-gaussian-distribution">Multivariate Gaussian Distribution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-density-function-pdf">Probability Density Function (PDF)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-properties">Key Properties</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Naresh Devulapally, Summer 2025, UB. Built with Teachbooks.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on July 10, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
