@@ -29,6 +29,11 @@ parts:
       - file: lectures/lecture-9.ipynb
       - file: lectures/lecture-10-11.ipynb
       - file: lectures/lecture-12.ipynb
+      - file: lectures/lecture-13.ipynb
+      - file: lectures/lecture-14.ipynb
+      - file: lectures/lecture-15.ipynb
+      - file: lectures/lecture-16.ipynb
+      - file: lectures/lecture-17.ipynb
   
 
 #   - caption: Courses I taught at UB

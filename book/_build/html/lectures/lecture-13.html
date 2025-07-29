@@ -1,0 +1,1200 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Feature Extractors for Generative Models &#8212; CSE 4/573 - Computer Vision and Image Processing</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe.css?v=9bca0c2f" />
+    <link rel="stylesheet" type="text/css" href="../_static/code.css?v=1719a5f1" />
+    <link rel="stylesheet" type="text/css" href="../_static/image_dark_mode.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_iframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tippy.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tb_cc.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/fix_admonition_style.css?v=8627ce31" />
+    <link rel="stylesheet" type="text/css" href="../_static/fix_dropdown_style.css?v=f3461767" />
+    <link rel="stylesheet" type="text/css" href="../_static/fix_code_header_style.css?v=7d542921" />
+    <link rel="stylesheet" type="text/css" href="../_static/color.css?v=fb14535a" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/h5p-resizer.js"></script>
+    <script defer="defer" src="../_static/refresh.js?v=9bea9b76"></script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script defer="defer" src="../_static/sphinx-thebe-lite.js?v=94e8009d"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script defer="defer" src="../_static/tippy/lectures/lecture-13.898a4131-5048-4b1a-a616-3457e8634469.js"></script>
+    <script>window.MathJax = {"chtml": {"mtextInheritFont": true}, "tex": {"macros": {"black": ["\\class{black}{#1}", 1], "silver": ["\\class{silver}{#1}", 1], "gray": ["\\class{gray}{#1}", 1], "white": ["\\class{white}{#1}", 1], "maroon": ["\\class{maroon}{#1}", 1], "red": ["\\class{red}{#1}", 1], "purple": ["\\class{purple}{#1}", 1], "fuchsia": ["\\class{fuchsia}{#1}", 1], "green": ["\\class{green}{#1}", 1], "lime": ["\\class{lime}{#1}", 1], "olive": ["\\class{olive}{#1}", 1], "yellow": ["\\class{yellow}{#1}", 1], "navy": ["\\class{navy}{#1}", 1], "blue": ["\\class{blue}{#1}", 1], "teal": ["\\class{teal}{#1}", 1], "aqua": ["\\class{aqua}{#1}", 1], "aliceblue": ["\\class{aliceblue}{#1}", 1], "antiquewhite": ["\\class{antiquewhite}{#1}", 1], "aquamarine": ["\\class{aquamarine}{#1}", 1], "azure": ["\\class{azure}{#1}", 1], "beige": ["\\class{beige}{#1}", 1], "bisque": ["\\class{bisque}{#1}", 1], "blanchedalmond": ["\\class{blanchedalmond}{#1}", 1], "blueviolet": ["\\class{blueviolet}{#1}", 1], "brown": ["\\class{brown}{#1}", 1], "burlywood": ["\\class{burlywood}{#1}", 1], "cadetblue": ["\\class{cadetblue}{#1}", 1], "chartreuse": ["\\class{chartreuse}{#1}", 1], "chocolate": ["\\class{chocolate}{#1}", 1], "coral": ["\\class{coral}{#1}", 1], "cornflowerblue": ["\\class{cornflowerblue}{#1}", 1], "cornsilk": ["\\class{cornsilk}{#1}", 1], "crimson": ["\\class{crimson}{#1}", 1], "cyan": ["\\class{cyan}{#1}", 1], "darkblue": ["\\class{darkblue}{#1}", 1], "darkcyan": ["\\class{darkcyan}{#1}", 1], "darkgoldenrod": ["\\class{darkgoldenrod}{#1}", 1], "darkgray": ["\\class{darkgray}{#1}", 1], "darkgreen": ["\\class{darkgreen}{#1}", 1], "darkgrey": ["\\class{darkgrey}{#1}", 1], "darkkhaki": ["\\class{darkkhaki}{#1}", 1], "darkmagenta": ["\\class{darkmagenta}{#1}", 1], "darkolivegreen": ["\\class{darkolivegreen}{#1}", 1], "darkorange": ["\\class{darkorange}{#1}", 1], "darkorchid": ["\\class{darkorchid}{#1}", 1], "darkred": ["\\class{darkred}{#1}", 1], "darksalmon": ["\\class{darksalmon}{#1}", 1], "darkseagreen": ["\\class{darkseagreen}{#1}", 1], "darkslateblue": ["\\class{darkslateblue}{#1}", 1], "darkslategray": ["\\class{darkslategray}{#1}", 1], "darkslategrey": ["\\class{darkslategrey}{#1}", 1], "darkturquoise": ["\\class{darkturquoise}{#1}", 1], "darkviolet": ["\\class{darkviolet}{#1}", 1], "deeppink": ["\\class{deeppink}{#1}", 1], "deepskyblue": ["\\class{deepskyblue}{#1}", 1], "dimgray": ["\\class{dimgray}{#1}", 1], "dimgrey": ["\\class{dimgrey}{#1}", 1], "dodgerblue": ["\\class{dodgerblue}{#1}", 1], "firebrick": ["\\class{firebrick}{#1}", 1], "floralwhite": ["\\class{floralwhite}{#1}", 1], "forestgreen": ["\\class{forestgreen}{#1}", 1], "gainsboro": ["\\class{gainsboro}{#1}", 1], "ghostwhite": ["\\class{ghostwhite}{#1}", 1], "gold": ["\\class{gold}{#1}", 1], "goldenrod": ["\\class{goldenrod}{#1}", 1], "greenyellow": ["\\class{greenyellow}{#1}", 1], "grey": ["\\class{grey}{#1}", 1], "honeydew": ["\\class{honeydew}{#1}", 1], "hotpink": ["\\class{hotpink}{#1}", 1], "indianred": ["\\class{indianred}{#1}", 1], "indigo": ["\\class{indigo}{#1}", 1], "ivory": ["\\class{ivory}{#1}", 1], "khaki": ["\\class{khaki}{#1}", 1], "lavender": ["\\class{lavender}{#1}", 1], "lavenderblush": ["\\class{lavenderblush}{#1}", 1], "lawngreen": ["\\class{lawngreen}{#1}", 1], "lemonchiffon": ["\\class{lemonchiffon}{#1}", 1], "lightblue": ["\\class{lightblue}{#1}", 1], "lightcoral": ["\\class{lightcoral}{#1}", 1], "lightcyan": ["\\class{lightcyan}{#1}", 1], "lightgoldenrodyellow": ["\\class{lightgoldenrodyellow}{#1}", 1], "lightgray": ["\\class{lightgray}{#1}", 1], "lightgreen": ["\\class{lightgreen}{#1}", 1], "lightgrey": ["\\class{lightgrey}{#1}", 1], "lightpink": ["\\class{lightpink}{#1}", 1], "lightsalmon": ["\\class{lightsalmon}{#1}", 1], "lightseagreen": ["\\class{lightseagreen}{#1}", 1], "lightskyblue": ["\\class{lightskyblue}{#1}", 1], "lightslategray": ["\\class{lightslategray}{#1}", 1], "lightslategrey": ["\\class{lightslategrey}{#1}", 1], "lightsteelblue": ["\\class{lightsteelblue}{#1}", 1], "lightyellow": ["\\class{lightyellow}{#1}", 1], "limegreen": ["\\class{limegreen}{#1}", 1], "linen": ["\\class{linen}{#1}", 1], "magenta": ["\\class{magenta}{#1}", 1], "mediumaquamarine": ["\\class{mediumaquamarine}{#1}", 1], "mediumblue": ["\\class{mediumblue}{#1}", 1], "mediumorchid": ["\\class{mediumorchid}{#1}", 1], "mediumpurple": ["\\class{mediumpurple}{#1}", 1], "mediumseagreen": ["\\class{mediumseagreen}{#1}", 1], "mediumslateblue": ["\\class{mediumslateblue}{#1}", 1], "mediumspringgreen": ["\\class{mediumspringgreen}{#1}", 1], "mediumturquoise": ["\\class{mediumturquoise}{#1}", 1], "mediumvioletred": ["\\class{mediumvioletred}{#1}", 1], "midnightblue": ["\\class{midnightblue}{#1}", 1], "mintcream": ["\\class{mintcream}{#1}", 1], "mistyrose": ["\\class{mistyrose}{#1}", 1], "moccasin": ["\\class{moccasin}{#1}", 1], "navajowhite": ["\\class{navajowhite}{#1}", 1], "oldlace": ["\\class{oldlace}{#1}", 1], "olivedrab": ["\\class{olivedrab}{#1}", 1], "orange": ["\\class{orange}{#1}", 1], "orangered": ["\\class{orangered}{#1}", 1], "orchid": ["\\class{orchid}{#1}", 1], "palegoldenrod": ["\\class{palegoldenrod}{#1}", 1], "palegreen": ["\\class{palegreen}{#1}", 1], "paleturquoise": ["\\class{paleturquoise}{#1}", 1], "palevioletred": ["\\class{palevioletred}{#1}", 1], "papayawhip": ["\\class{papayawhip}{#1}", 1], "peachpuff": ["\\class{peachpuff}{#1}", 1], "peru": ["\\class{peru}{#1}", 1], "pink": ["\\class{pink}{#1}", 1], "plum": ["\\class{plum}{#1}", 1], "powderblue": ["\\class{powderblue}{#1}", 1], "rebeccapurple": ["\\class{rebeccapurple}{#1}", 1], "rosybrown": ["\\class{rosybrown}{#1}", 1], "royalblue": ["\\class{royalblue}{#1}", 1], "saddlebrown": ["\\class{saddlebrown}{#1}", 1], "salmon": ["\\class{salmon}{#1}", 1], "sandybrown": ["\\class{sandybrown}{#1}", 1], "seagreen": ["\\class{seagreen}{#1}", 1], "seashell": ["\\class{seashell}{#1}", 1], "sienna": ["\\class{sienna}{#1}", 1], "skyblue": ["\\class{skyblue}{#1}", 1], "slateblue": ["\\class{slateblue}{#1}", 1], "slategray": ["\\class{slategray}{#1}", 1], "slategrey": ["\\class{slategrey}{#1}", 1], "snow": ["\\class{snow}{#1}", 1], "springgreen": ["\\class{springgreen}{#1}", 1], "steelblue": ["\\class{steelblue}{#1}", 1], "tan": ["\\class{tan}{#1}", 1], "thistle": ["\\class{thistle}{#1}", 1], "tomato": ["\\class{tomato}{#1}", 1], "turquoise": ["\\class{turquoise}{#1}", 1], "violet": ["\\class{violet}{#1}", 1], "wheat": ["\\class{wheat}{#1}", 1], "whitesmoke": ["\\class{whitesmoke}{#1}", 1], "yellowgreen": ["\\class{yellowgreen}{#1}", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/lecture-13';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/analytics.js?v=b6170321"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Conditional VAEs, GANs and Conditional GANs" href="lecture-14.html" />
+    <link rel="prev" title="Intro to GenAI: What is a Data Distribution?" href="lecture-12.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="July 29, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../_static/logo_dark.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">CSE 4/573 - CVIP</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">About the Instructor</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://naresh-ub.github.io">👨🏻‍🏫 Naresh Kumar Devulapally</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Logistics and Weekly Schedule</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://buffalo.app.box.com/embed/s/agqkobz1pl5dynjiohwchybpnq5ke9py?sortColumn=date">🎥 Lecture Recordings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dates-deadlines.html">⏰ Dates and Deliverables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">Course Logistics and Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../website-features.html">Website Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../capstone-project.html">Capstone Project Details and Deliverables</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Content</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lecture-1.html">What is a Pixel and what is an Image?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-2-3.html">How is an image formed?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assignment-1.html">📌 Assignment 1 Solution</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="lecture-4.html">Image Processing (Part 1) Spatial Domain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-5.html">Image Processing (Part 2) Fourier Domain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-6-7-8.html">Depth Estimation using Stereo Vision</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lecture-9.html">Feature Detection and Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-10-11.html">Computer Vision applications with Neural Networks</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lecture-12.html">Intro to GenAI: What is a Data Distribution?</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Feature Extractors for Generative Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-14.html">Conditional VAEs, GANs and Conditional GANs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-15.html">Diffusion Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-16.html">Diffusion Model on Swiss Roll (DDPM)</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="lecture-17.html">Conditional Diffusion Models</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/naresh-ub/cvip/blob/main/book/lectures/lecture-13.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/naresh-ub/cvip" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/lecture-13.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Feature Extractors for Generative Models</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="feature-extractors-for-generative-models">
+<h1>Feature Extractors for Generative Models<a class="headerlink" href="#feature-extractors-for-generative-models" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torchvision
+import torchvision.transforms as transforms
+from torch.utils.data import DataLoader
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Check GPU
+device = torch.device(&quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;)
+print(f&quot;Using device: {device}&quot;)
+
+# 1. Dataset
+transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize((0.1307,), (0.3081,))
+])
+
+train_dataset = torchvision.datasets.MNIST(root=&#39;./data&#39;, train=True, download=True, transform=transform)
+test_dataset  = torchvision.datasets.MNIST(root=&#39;./data&#39;, train=False, download=True, transform=transform)
+
+train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
+test_loader  = DataLoader(test_dataset, batch_size=256, shuffle=False)
+
+# 2. Model
+class MLP(nn.Module):
+    def __init__(self):
+        super(MLP, self).__init__()
+        self.fc1 = nn.Linear(28*28, 256)
+        self.fc2 = nn.Linear(256, 128)
+        self.feature_layer = nn.Linear(128, 2)  # 2D features
+        self.classifier = nn.Linear(2, 10)
+
+    def forward(self, x):
+        x = x.view(x.size(0), -1)
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        features = self.feature_layer(x)
+        out = self.classifier(features)
+        return out, features
+
+model = MLP().to(device)
+
+# 3. Training
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+criterion = nn.CrossEntropyLoss()
+
+def train(model, loader):
+    model.train()
+    for epoch in range(10):
+        total_loss = 0
+        for images, labels in loader:
+            images, labels = images.to(device), labels.to(device)
+
+            optimizer.zero_grad()
+            outputs, _ = model(images)
+            loss = criterion(outputs, labels)
+            loss.backward()
+            optimizer.step()
+
+            total_loss += loss.item()
+        print(f&quot;Epoch [{epoch+1}/10], Loss: {total_loss / len(loader):.4f}&quot;)
+
+train(model, train_loader)
+
+# 4. Extract 2D features from test set
+def extract_features(model, loader):
+    model.eval()
+    all_features = []
+    all_labels = []
+    with torch.no_grad():
+        for images, labels in loader:
+            images = images.to(device)
+            _, features = model(images)
+            all_features.append(features.cpu())
+            all_labels.append(labels)
+
+    return torch.cat(all_features, dim=0), torch.cat(all_labels, dim=0)
+
+features, labels = extract_features(model, test_loader)
+
+# 5. Scatter plot
+def plot_features(features, labels):
+    features = features.numpy()
+    labels = labels.numpy()
+    plt.figure(figsize=(10, 8))
+    for digit in range(10):
+        idxs = labels == digit
+        plt.scatter(features[idxs, 0], features[idxs, 1], label=str(digit), alpha=0.6, s=10)
+
+    plt.legend()
+    plt.title(&quot;2D Feature Representations from MLP (MNIST Test Set)&quot;)
+    plt.xlabel(&quot;Feature Dimension 1&quot;)
+    plt.ylabel(&quot;Feature Dimension 2&quot;)
+    plt.grid(True)
+    plt.show()
+
+plot_features(features, labels)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using device: cuda
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 9.91M/9.91M [00:01&lt;00:00, 5.00MB/s]
+100%|██████████| 28.9k/28.9k [00:00&lt;00:00, 132kB/s]
+100%|██████████| 1.65M/1.65M [00:01&lt;00:00, 1.24MB/s]
+100%|██████████| 4.54k/4.54k [00:00&lt;00:00, 5.96MB/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch [1/10], Loss: 0.7201
+Epoch [2/10], Loss: 0.3264
+Epoch [3/10], Loss: 0.2313
+Epoch [4/10], Loss: 0.1807
+Epoch [5/10], Loss: 0.1534
+Epoch [6/10], Loss: 0.1139
+Epoch [7/10], Loss: 0.1053
+Epoch [8/10], Loss: 0.0861
+Epoch [9/10], Loss: 0.0696
+Epoch [10/10], Loss: 0.0686
+</pre></div>
+</div>
+<img alt="../_images/d03a19d7c11754950980ae17541160281bb3fedf14c86084e4e9ab99dad5f9a1.png" src="../_images/d03a19d7c11754950980ae17541160281bb3fedf14c86084e4e9ab99dad5f9a1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torchvision
+import torchvision.transforms as transforms
+from torch.utils.data import DataLoader
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Device
+device = torch.device(&quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;)
+print(f&quot;Using device: {device}&quot;)
+
+# Dataset and loader
+transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize((0.1307,), (0.3081,))
+])
+
+train_dataset = torchvision.datasets.MNIST(root=&#39;./data&#39;, train=True, download=True, transform=transform)
+test_dataset  = torchvision.datasets.MNIST(root=&#39;./data&#39;, train=False, download=True, transform=transform)
+
+train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
+test_loader  = DataLoader(test_dataset, batch_size=256, shuffle=False)
+
+# CNN Model
+class CNN(nn.Module):
+    def __init__(self):
+        super(CNN, self).__init__()
+        self.conv1 = nn.Conv2d(1, 32, kernel_size=3, stride=1, padding=1)
+        self.pool1 = nn.MaxPool2d(2, 2)
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1)
+        self.pool2 = nn.MaxPool2d(2, 2)
+
+        self.fc1 = nn.Linear(64 * 7 * 7, 128)
+        self.feature_layer = nn.Linear(128, 2)
+        self.classifier = nn.Linear(2, 10)
+
+    def forward(self, x):
+        x = self.pool1(F.relu(self.conv1(x)))  # [B, 32, 14, 14]
+        x = self.pool2(F.relu(self.conv2(x)))  # [B, 64, 7, 7]
+        x = x.view(x.size(0), -1)
+        x = F.relu(self.fc1(x))
+        features = self.feature_layer(x)
+        out = self.classifier(features)
+        return out, features
+
+model = CNN().to(device)
+
+# Training setup
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+criterion = nn.CrossEntropyLoss()
+
+# Training loop
+def train(model, loader):
+    model.train()
+    for epoch in range(10):
+        total_loss = 0
+        for images, labels in loader:
+            images, labels = images.to(device), labels.to(device)
+
+            optimizer.zero_grad()
+            outputs, _ = model(images)
+            loss = criterion(outputs, labels)
+            loss.backward()
+            optimizer.step()
+
+            total_loss += loss.item()
+        print(f&quot;Epoch [{epoch+1}/10], Loss: {total_loss / len(loader):.4f}&quot;)
+
+train(model, train_loader)
+
+# Extract 2D features
+def extract_features(model, loader):
+    model.eval()
+    all_features = []
+    all_labels = []
+    with torch.no_grad():
+        for images, labels in loader:
+            images = images.to(device)
+            _, features = model(images)
+            all_features.append(features.cpu())
+            all_labels.append(labels)
+
+    return torch.cat(all_features, dim=0), torch.cat(all_labels, dim=0)
+
+features, labels = extract_features(model, test_loader)
+
+# Scatter plot with cluster centers labeled
+def plot_features(features, labels):
+    features = features.numpy()
+    labels = labels.numpy()
+    plt.figure(figsize=(10, 8))
+
+    for digit in range(10):
+        idxs = labels == digit
+        x_vals = features[idxs, 0]
+        y_vals = features[idxs, 1]
+        plt.scatter(x_vals, y_vals, label=str(digit), alpha=0.5, s=10)
+
+        # Cluster center
+        center_x = np.mean(x_vals)
+        center_y = np.mean(y_vals)
+        plt.text(center_x, center_y, str(digit), fontsize=14, weight=&#39;bold&#39;,
+                 ha=&#39;center&#39;, va=&#39;center&#39;, color=&#39;black&#39;, bbox=dict(facecolor=&#39;white&#39;, alpha=0.8, edgecolor=&#39;none&#39;))
+
+    plt.title(&quot;2D CNN Feature Representations (MNIST Test Set)&quot;)
+    plt.xlabel(&quot;Feature Dimension 1&quot;)
+    plt.ylabel(&quot;Feature Dimension 2&quot;)
+    plt.grid(True)
+    plt.show()
+
+plot_features(features, labels)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using device: cuda
+Epoch [1/10], Loss: 0.6191
+Epoch [2/10], Loss: 0.1905
+Epoch [3/10], Loss: 0.1265
+Epoch [4/10], Loss: 0.0929
+Epoch [5/10], Loss: 0.0731
+Epoch [6/10], Loss: 0.0570
+Epoch [7/10], Loss: 0.0464
+Epoch [8/10], Loss: 0.0370
+Epoch [9/10], Loss: 0.0302
+Epoch [10/10], Loss: 0.0307
+</pre></div>
+</div>
+<img alt="../_images/e487ffa6912bbf424cc2a25696ea70164ad4b52cd23d8b50f573563012951893.png" src="../_images/e487ffa6912bbf424cc2a25696ea70164ad4b52cd23d8b50f573563012951893.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import torch
+import torch.nn as nn
+import torchvision
+import torchvision.transforms as transforms
+from torch.utils.data import DataLoader
+import matplotlib.pyplot as plt
+import numpy as np
+
+device = torch.device(&quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;)
+print(f&quot;Using device: {device}&quot;)
+
+# Dataset
+transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize((0.1307,), (0.3081,))
+])
+
+train_dataset = torchvision.datasets.MNIST(root=&#39;./data&#39;, train=True, download=True, transform=transform)
+test_dataset  = torchvision.datasets.MNIST(root=&#39;./data&#39;, train=False, download=True, transform=transform)
+
+train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
+test_loader  = DataLoader(test_dataset, batch_size=256, shuffle=False)
+
+# Autoencoder Model
+class Autoencoder(nn.Module):
+    def __init__(self):
+        super(Autoencoder, self).__init__()
+        # Encoder
+        self.encoder = nn.Sequential(
+            nn.Conv2d(1, 32, 3, stride=2, padding=1),  # [B, 32, 14, 14]
+            nn.ReLU(),
+            nn.Conv2d(32, 64, 3, stride=2, padding=1), # [B, 64, 7, 7]
+            nn.ReLU(),
+            nn.Flatten(),
+            nn.Linear(64 * 7 * 7, 128),
+            nn.ReLU(),
+            nn.Linear(128, 2)  # 2D latent vector
+        )
+        # Decoder
+        self.decoder = nn.Sequential(
+            nn.Linear(2, 128),
+            nn.ReLU(),
+            nn.Linear(128, 64 * 7 * 7),
+            nn.ReLU(),
+            nn.Unflatten(1, (64, 7, 7)),
+            nn.ConvTranspose2d(64, 32, 3, stride=2, padding=1, output_padding=1),  # [B, 32, 14, 14]
+            nn.ReLU(),
+            nn.ConvTranspose2d(32, 1, 3, stride=2, padding=1, output_padding=1),   # [B, 1, 28, 28]
+            nn.Sigmoid()  # For grayscale pixel values between 0 and 1
+        )
+
+    def forward(self, x):
+        z = self.encoder(x)
+        out = self.decoder(z)
+        return out, z
+
+autoencoder = Autoencoder().to(device)
+optimizer = torch.optim.Adam(autoencoder.parameters(), lr=1e-3)
+criterion = nn.MSELoss()
+
+# Training loop
+def train(model, loader):
+    model.train()
+    for epoch in range(10):
+        total_loss = 0
+        for images, _ in loader:
+            images = images.to(device)
+
+            optimizer.zero_grad()
+            recon, _ = model(images)
+
+            # Reconstruction loss: How close is the decoded image to the original?
+            loss = criterion(recon, images)
+
+            loss.backward()
+            optimizer.step()
+
+            total_loss += loss.item()
+        print(f&quot;Epoch [{epoch+1}/10], Loss: {total_loss / len(loader):.4f}&quot;)
+
+train(autoencoder, train_loader)
+
+# Extract latent features for visualization
+def extract_latents(model, loader):
+    model.eval()
+    latents = []
+    labels = []
+    with torch.no_grad():
+        for images, label in loader:
+            images = images.to(device)
+            _, z = model(images)
+            latents.append(z.cpu())
+            labels.append(label)
+    return torch.cat(latents), torch.cat(labels)
+
+features, labels = extract_latents(autoencoder, test_loader)
+
+# Plot latent space with digit labels at cluster centers
+def plot_latents(features, labels):
+    features = features.numpy()
+    labels = labels.numpy()
+    plt.figure(figsize=(10, 8))
+    for digit in range(10):
+        idxs = labels == digit
+        x_vals = features[idxs, 0]
+        y_vals = features[idxs, 1]
+        plt.scatter(x_vals, y_vals, label=str(digit), alpha=0.5, s=10)
+
+        center_x = np.mean(x_vals)
+        center_y = np.mean(y_vals)
+        plt.text(center_x, center_y, str(digit), fontsize=14, weight=&#39;bold&#39;,
+                 ha=&#39;center&#39;, va=&#39;center&#39;, color=&#39;black&#39;, bbox=dict(facecolor=&#39;white&#39;, alpha=0.8))
+
+    plt.title(&quot;2D Latent Space (Autoencoder on MNIST)&quot;)
+    plt.xlabel(&quot;Latent Dimension 1&quot;)
+    plt.ylabel(&quot;Latent Dimension 2&quot;)
+    plt.grid(True)
+    plt.show()
+
+plot_latents(features, labels)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using device: cuda
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 9.91M/9.91M [00:00&lt;00:00, 17.3MB/s]
+100%|██████████| 28.9k/28.9k [00:00&lt;00:00, 460kB/s]
+100%|██████████| 1.65M/1.65M [00:00&lt;00:00, 4.26MB/s]
+100%|██████████| 4.54k/4.54k [00:00&lt;00:00, 4.81MB/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch [1/10], Loss: 0.7268
+Epoch [2/10], Loss: 0.6633
+Epoch [3/10], Loss: 0.6510
+Epoch [4/10], Loss: 0.6440
+Epoch [5/10], Loss: 0.6390
+Epoch [6/10], Loss: 0.6353
+Epoch [7/10], Loss: 0.6327
+Epoch [8/10], Loss: 0.6305
+Epoch [9/10], Loss: 0.6287
+Epoch [10/10], Loss: 0.6258
+</pre></div>
+</div>
+<img alt="../_images/f719cb63a7c7d9b3696cdf6376a8f683431ce6bab13904cf213bc3442da42971.png" src="../_images/f719cb63a7c7d9b3696cdf6376a8f683431ce6bab13904cf213bc3442da42971.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+import numpy as np
+import torch
+
+# Set this to your desired 2D latent vector (example: center of a cluster)
+custom_latent = np.array([2.0, -1.0], dtype=np.float32)
+
+# Convert to tensor
+z = torch.tensor(custom_latent).unsqueeze(0).to(device)  # shape [1, 2]
+
+# Decode
+autoencoder.eval()
+with torch.no_grad():
+    decoded_img = autoencoder.decoder(z).cpu().squeeze().numpy()
+
+# Plot image
+plt.figure(figsize=(3, 3))
+plt.imshow(decoded_img, cmap=&#39;gray&#39;)
+plt.title(f&quot;Decoded Image from Latent: {custom_latent}&quot;)
+plt.axis(&#39;off&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/04cb3f63abec5aebacac4ea3ebab50fdba5a452739d13db563667174eae17873.png" src="../_images/04cb3f63abec5aebacac4ea3ebab50fdba5a452739d13db563667174eae17873.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torchvision
+import torchvision.transforms as transforms
+from torch.utils.data import DataLoader
+import matplotlib.pyplot as plt
+import numpy as np
+
+device = torch.device(&quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;)
+print(f&quot;Using device: {device}&quot;)
+
+# Dataset
+transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize((0.1307,), (0.3081,))
+])
+
+train_dataset = torchvision.datasets.MNIST(root=&#39;./data&#39;, train=True, download=True, transform=transform)
+test_dataset  = torchvision.datasets.MNIST(root=&#39;./data&#39;, train=False, download=True, transform=transform)
+
+train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
+test_loader  = DataLoader(test_dataset, batch_size=256, shuffle=False)
+
+# VAE Model
+class VAE(nn.Module):
+    def __init__(self):
+        super(VAE, self).__init__()
+        # Encoder
+        self.encoder = nn.Sequential(
+            nn.Conv2d(1, 32, 3, stride=2, padding=1),  # [B, 32, 14, 14]
+            nn.ReLU(),
+            nn.Conv2d(32, 64, 3, stride=2, padding=1), # [B, 64, 7, 7]
+            nn.ReLU(),
+            nn.Flatten()
+        )
+        self.fc_mu = nn.Linear(64 * 7 * 7, 2)
+        self.fc_logvar = nn.Linear(64 * 7 * 7, 2)
+
+        # Decoder
+        self.decoder_input = nn.Linear(2, 64 * 7 * 7)
+        self.decoder = nn.Sequential(
+            nn.ReLU(),
+            nn.Unflatten(1, (64, 7, 7)),
+            nn.ConvTranspose2d(64, 32, 3, stride=2, padding=1, output_padding=1),  # [B, 32, 14, 14]
+            nn.ReLU(),
+            nn.ConvTranspose2d(32, 1, 3, stride=2, padding=1, output_padding=1),   # [B, 1, 28, 28]
+            nn.Sigmoid()
+        )
+
+    def reparameterize(self, mu, logvar):
+        std = torch.exp(0.5 * logvar)
+        eps = torch.randn_like(std)
+        return mu + eps * std
+
+    def encode(self, x):
+        h = self.encoder(x)
+        mu = self.fc_mu(h)
+        logvar = self.fc_logvar(h)
+        z = self.reparameterize(mu, logvar)
+        return z, mu, logvar
+
+    def decode(self, z):
+        x = self.decoder_input(z)
+        x = self.decoder(x)
+        return x
+
+    def forward(self, x):
+        z, mu, logvar = self.encode(x)
+        out = self.decode(z)
+        return out, mu, logvar, z
+
+vae = VAE().to(device)
+optimizer = torch.optim.Adam(vae.parameters(), lr=1e-3)
+
+# VAE Loss = Reconstruction + KL Divergence
+def loss_function(recon_x, x, mu, logvar):
+    recon_loss = F.mse_loss(recon_x, x, reduction=&#39;sum&#39;)  # Pixel-wise loss
+    kl_div = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())  # KL term
+    return recon_loss + kl_div
+
+# Training loop
+def train(model, loader):
+    model.train()
+    for epoch in range(10):
+        total_loss = 0
+        for images, _ in loader:
+            images = images.to(device)
+            optimizer.zero_grad()
+
+            recon, mu, logvar, _ = model(images)
+
+            # Loss = reconstruction + KL divergence
+            loss = loss_function(recon, images, mu, logvar)
+
+            loss.backward()
+            optimizer.step()
+            total_loss += loss.item()
+        print(f&quot;Epoch [{epoch+1}/10], Loss: {total_loss / len(loader.dataset):.4f}&quot;)
+
+train(vae, train_loader)
+
+# Visualize latent space
+def extract_latents(model, loader):
+    model.eval()
+    latents = []
+    labels = []
+    with torch.no_grad():
+        for images, label in loader:
+            images = images.to(device)
+            _, _, _, z = model(images)
+            latents.append(z.cpu())
+            labels.append(label)
+    return torch.cat(latents), torch.cat(labels)
+
+features, labels = extract_latents(vae, test_loader)
+
+def plot_latents(features, labels):
+    features = features.numpy()
+    labels = labels.numpy()
+    plt.figure(figsize=(10, 8))
+    for digit in range(10):
+        idxs = labels == digit
+        x_vals = features[idxs, 0]
+        y_vals = features[idxs, 1]
+        plt.scatter(x_vals, y_vals, label=str(digit), alpha=0.5, s=10)
+
+        center_x = np.mean(x_vals)
+        center_y = np.mean(y_vals)
+        plt.text(center_x, center_y, str(digit), fontsize=14, weight=&#39;bold&#39;,
+                 ha=&#39;center&#39;, va=&#39;center&#39;, color=&#39;black&#39;, bbox=dict(facecolor=&#39;white&#39;, alpha=0.8))
+
+    plt.title(&quot;2D Latent Space (VAE on MNIST)&quot;)
+    plt.xlabel(&quot;Latent Dimension 1&quot;)
+    plt.ylabel(&quot;Latent Dimension 2&quot;)
+    plt.grid(True)
+    plt.show()
+
+plot_latents(features, labels)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using device: cuda
+Epoch [1/10], Loss: 591.1454
+Epoch [2/10], Loss: 541.8582
+Epoch [3/10], Loss: 533.9161
+Epoch [4/10], Loss: 530.0660
+Epoch [5/10], Loss: 527.4918
+Epoch [6/10], Loss: 525.5694
+Epoch [7/10], Loss: 523.7681
+Epoch [8/10], Loss: 522.1676
+Epoch [9/10], Loss: 520.7486
+Epoch [10/10], Loss: 519.5998
+</pre></div>
+</div>
+<img alt="../_images/702c69553afb031406208e8faae58ab2c121774869c69761677b0ab71aabba34.png" src="../_images/702c69553afb031406208e8faae58ab2c121774869c69761677b0ab71aabba34.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+import numpy as np
+import torch
+
+# Example latent point (explore from -4 to 4)
+custom_latent = np.array([4.0, -1.0], dtype=np.float32)
+
+# Convert to tensor
+z = torch.tensor(custom_latent).unsqueeze(0).to(device)
+
+# Decode to image
+vae.eval()
+with torch.no_grad():
+    decoded_img = vae.decode(z).cpu().squeeze().numpy()
+
+# Plot the decoded image
+plt.figure(figsize=(3, 3))
+plt.imshow(decoded_img, cmap=&#39;gray&#39;)
+plt.title(f&quot;Decoded Image from Latent: {custom_latent}&quot;)
+plt.axis(&#39;off&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b69a02312c01d37483e310f3b6024c44e8563fcf4f3753fa5ab88c293a84fcce.png" src="../_images/b69a02312c01d37483e310f3b6024c44e8563fcf4f3753fa5ab88c293a84fcce.png" />
+</div>
+</div>
+</section>
+
+        <script type="text/x-thebe-config">
+        {
+            "rootPath": "..",
+            "requestKernel": true,
+            "useJupyterLite": true,
+            "useBinder": false,
+            "kernelOptions": {
+                "path": "/"
+            },
+            "codeMirrorConfig": {
+                "theme": "default",
+                "mode": "python"
+            },
+            "mountRestartButton": false,
+            "mountRestartallButton": false
+        }
+        </script>
+        <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lecture-12.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Intro to GenAI: What is a Data Distribution?</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="lecture-14.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Conditional VAEs, GANs and Conditional GANs</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Naresh Devulapally, Summer 2025, UB. Built with Teachbooks.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on July 29, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
