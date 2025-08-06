@@ -27,14 +27,14 @@ The schedule balances theory with hands-on learning, including coding exercises 
 | CVIP 1.0 | Jul. 3, Thu  | Learning-based Computer Vision methods (Part 2) and Midterm Review | [Lecture 11](lectures/lecture-10-11.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-10) | |
 | | Jul. 8, Tue | Midterm Exam | | |
 | CVIP 2.0 | Jul. 10, Thu  | Introduction to Generative AI (Computer Vision Applications) | [Lecture 12](lectures/lecture-12.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-12) | Quiz 3 |
-| CVIP 2.0 | Jul. 15, Tue  | Variational AutoEncoders (Part 1) | | |
-| CVIP 2.0 | Jul. 17, Thu  | Variational AutoEncoders (Part 2) | | Capstone Project Milestone 1 Due Date |
-| CVIP 2.0 | Jul. 22, Tue   | Diffusion Models (Part 1) | | Quiz 4 |
-| CVIP 2.0 | Jul. 24, Thu  | Diffusion Models (Part 2) | | |
-| CVIP 2.0 | Jul. 29, Tue   | Diffusion Models (Part 3) | | |
+| CVIP 2.0 | Jul. 15, Tue  | Variational AutoEncoders (Part 1) | [Lecture 13](lectures/lecture-13.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-13-14) | |
+| CVIP 2.0 | Jul. 17, Thu  | Variational AutoEncoders (Part 2) | [Lecture 14](lectures/lecture-14.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-13-14) | Capstone Project Milestone 1 Due Date |
+| CVIP 2.0 | Jul. 22, Tue   | Diffusion Models (Part 1) | [Lecture 15](lectures/lecture-15.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-15-16-17) | Quiz 4 |
+| CVIP 2.0 | Jul. 24, Thu  | Diffusion Models (Part 2) | [Lecture 16](lectures/lecture-16.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-15-16-17) | |
+| CVIP 2.0 | Jul. 29, Tue   | Diffusion Models (Part 3) | [Lecture 17](lectures/lecture-17.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-15-16-17) | |
 | CVIP 2.0 | Jul. 31, Thu  | Open slot for Guest Lecture | | Quiz 5, Capstone Project Milestone 2 Due Date |
 | CVIP 2.0 | Aug. 5, Tue   | Recent Trends, Models, Applications in GenAI | | |
-|  | Aug. 7, Thu  | Final Exam | | |
+|  | Aug. 7, Thu  | Final Exam | | 🔥 All the Best 🔥 |
 | CVIP 2.0 | Aug. 12, Tue   | Capstone Project Presentations - Batch 1 | | Quiz 6 |
 | CVIP 2.0 | Aug. 14, Thu  | Capstone Project Presentations - Batch 2 | | Final Project Due Date |
 
