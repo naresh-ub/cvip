@@ -15,9 +15,9 @@ Welcome to CSE 4/573: CVIP course (Summer 2025). This website contains **_everyt
 
 <table style="width:100%; border-collapse: collapse; border: 1px solid; text-align:center;">
   <tr>
-    <th style="width:40%; border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px;">Instructor</th>
-    <th style="width:35%; border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px;">Website & Email</th>
-    <th style="width:25%; border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px;">Office Hours</th>
+    <th style="width:33%; border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px;">Instructor</th>
+    <th style="width:33%; border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px;">Website & Email</th>
+    <th style="width:33%; border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px;">Office Hours</th>
   </tr>
   <tr>
     <td style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px;">
