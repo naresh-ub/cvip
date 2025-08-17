@@ -102,6 +102,7 @@ align: center
 ```
 
 ```{figure} figures/course_pic2.jpeg
+
 ---
 width: 100%
 name: course-pic2
