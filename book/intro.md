@@ -91,7 +91,7 @@ Details about Capstone Course Project.
 ::::
 
 
-```{figure} ../figures/course_pic.jpeg
+```{figure} figures/course_pic.jpeg
 
 ---
 width: 100%
@@ -101,7 +101,7 @@ align: center
 -
 ```
 
-```{figure} ../figures/course_pic2.jpeg
+```{figure} figures/course_pic2.jpeg
 ---
 width: 100%
 name: course-pic2
