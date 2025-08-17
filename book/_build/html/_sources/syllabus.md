@@ -1,4 +1,4 @@
-# Course Logistics and Syllabus
+# Course Syllabus
 
 <div>
 <iframe src="https://slides.com/naresh-ub/cvip-lec-0/embed" width="100%" height="500" title="Test Title" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>

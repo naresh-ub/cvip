@@ -1,6 +1,9 @@
-# Dates and Deliverables
+# Course Schedule
 
-This Computer Vision course runs from **May 27 to August 14, 2025**, meeting every Tuesday and Thursday. The curriculum progresses from fundamental concepts (image formation, processing) through core techniques (stereo vision, feature detection) to advanced topics (VAEs, diffusion models). Key deliverables include:
+This Computer Vision course runs from **May 27 to August 14, 2025**, meeting every Tuesday and Thursday. The curriculum progresses from fundamental concepts (image formation, processing) through core techniques (stereo vision, feature detection) to advanced topics (VAEs, diffusion models). 
+
+Key deliverables include:
+
 - **6 Quizzes** (Best 4 out of 6 considered)
 - **1 Programming Assignment** 
 - **Midterm exam** (July 8 2025) and **Final exam** (August 7 2025)
@@ -32,7 +35,7 @@ The schedule balances theory with hands-on learning, including coding exercises 
 | CVIP 2.0 | Jul. 22, Tue   | Diffusion Models (Part 1) | [Lecture 15](lectures/lecture-15.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-15-16-17) | Quiz 4 |
 | CVIP 2.0 | Jul. 24, Thu  | Diffusion Models (Part 2) | [Lecture 16](lectures/lecture-16.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-15-16-17) | |
 | CVIP 2.0 | Jul. 29, Tue   | Diffusion Models (Part 3) | [Lecture 17](lectures/lecture-17.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-15-16-17) | |
-| CVIP 2.0 | Jul. 31, Thu  | Open slot for Guest Lecture | | Quiz 5, Capstone Project Milestone 2 Due Date |
+| CVIP 2.0 | Jul. 31, Thu  | Open slot for Guest Lecture | [Shruti Agarwal from Adobe Research](https://agarwalshruti15.github.io/) | Quiz 5, Capstone Project Milestone 2 Due Date |
 | CVIP 2.0 | Aug. 5, Tue   | Recent Trends, Models, Applications in GenAI | | |
 |  | Aug. 7, Thu  | Final Exam | | 🔥 All the Best 🔥 |
 | CVIP 2.0 | Aug. 12, Tue   | Capstone Project Presentations - Batch 1 | | Quiz 6 |

@@ -1,5 +1,5 @@
 format: jb-book
-root: intro.ipynb
+root: intro.md
 
 
 ## TOC from main website
@@ -13,8 +13,8 @@ parts:
     chapters:
       - url: https://buffalo.app.box.com/embed/s/agqkobz1pl5dynjiohwchybpnq5ke9py?sortColumn=date
         title: "🎥 Lecture Recordings"
-      - file: dates-deadlines.md
-        title: "⏰ Dates and Deliverables"
+      - file: course-schedule.md
+        title: "⏰ Course Schedule"
       - file: syllabus.md
       - file: website-features.ipynb
       - file: capstone-project.ipynb
