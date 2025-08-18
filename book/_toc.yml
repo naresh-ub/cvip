@@ -22,7 +22,7 @@ parts:
     chapters:
       - file: lectures/lecture-1.ipynb
       - file: lectures/lecture-2-3.ipynb
-      - file: lectures/assignment-1.ipynb
+      # - file: lectures/assignment-1.ipynb
       - file: lectures/lecture-4.ipynb
       - file: lectures/lecture-5.ipynb
       - file: lectures/lecture-6-7-8.ipynb
