@@ -43,7 +43,7 @@
 
 This course offers a comprehensive introduction to the field of Computer Vision and Image Processing, focusing on both classical foundations and cutting-edge advancements. Students will explore the physical and mathematical principles underlying **image formation and filtering**, followed by core topics in intermediate vision such as **stereo vision** and **epipolar geometry**. Building on this foundation, the course delves into learning-based approaches including Convolutional Neural Networks (CNNs), Semantic segmentation, and Object Classification. A dedicated module on generative computer vision introduces students to state-of-the-art techniques like **Variational Autoencoders** (VAEs) and **Diffusion Models**. The course concludes with an exploration of recent trends, including Vision-Language models and Multimodal architectures that integrate vision with language and other sensory inputs. By the end, students will have gained both theoretical understanding and practical skills to develop intelligent vision systems for real-world applications.
 
-#### Topics covered include:
+### Topics covered include:
 
 **1. Foundations of Computer Vision (Weeks 1-3)**
 - Image formation and camera models

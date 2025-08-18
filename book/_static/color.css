@@ -277,3 +277,159 @@ html[data-theme="dark"] .bd-content div.cell_output img {
     color: black !important;
 }
 
+.feedback-section {
+    max-width: 1100px;
+    margin: 24px auto;
+    /* font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; */
+  }
+
+  .carousel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .profile-links {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-weight: 600;
+  }
+  .profile-links a {
+    text-decoration: none;
+  }
+
+  .carousel-controls {
+    display: flex;
+    gap: 8px;
+  }
+
+  .carousel-btn {
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    line-height: 1;
+    transition: background 0.2s ease, transform 0.05s ease;
+  }
+  .carousel-btn:hover { background: #f6f6f6; }
+  .carousel-btn:active { transform: scale(0.98); }
+  .carousel-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .carousel {
+    position: relative;
+  }
+
+  /* Track scrolls programmatically; scrollbar hidden */
+  .carousel-track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - 16px) / 2); /* 2 cards visible with 16px gap */
+    gap: 16px;
+    overflow: hidden;          /* hide scrollbar & manual scroll */
+    scroll-snap-type: x mandatory;
+  }
+
+  .card {
+    position: relative;
+    scroll-snap-align: start;
+    background: #fff;
+    border: 1px solid #e9e9e9;
+    border-radius: 14px;
+    padding: 18px 18px 48px;   /* extra bottom padding so quote doesn't touch signature */
+    min-height: 180px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    display: flex;
+  }
+
+  blockquote {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #222;
+  }
+
+  .student {
+    position: absolute;
+    right: 14px;
+    bottom: 12px;
+    font-size: 0.9rem;
+    color: #666;
+    white-space: nowrap;
+  }
+
+  /* Small screens: 1 per view */
+  @media (max-width: 640px) {
+    .carousel-track {
+      grid-auto-columns: 100%;
+    }
+  }
+
+/* ===== Dark mode fixes for the feedback carousel ===== */
+:root[data-theme="dark"] .feedback-section,
+:root[data-mode="dark"] .feedback-section,
+:root[data-mode="auto"][data-theme="dark"] .feedback-section {
+  color: #e6edf3; /* base text */
+}
+
+/* Links next to the arrows */
+:root[data-theme="dark"] .profile-links a,
+:root[data-mode="dark"] .profile-links a,
+:root[data-mode="auto"][data-theme="dark"] .profile-links a {
+  color: #5aa7ff;
+}
+:root[data-theme="dark"] .profile-links a:hover,
+:root[data-mode="dark"] .profile-links a:hover,
+:root[data-mode="auto"][data-theme="dark"] .profile-links a:hover {
+  color: #a8cfff;
+  text-decoration: underline;
+}
+
+/* Arrow buttons */
+:root[data-theme="dark"] .carousel-btn,
+:root[data-mode="dark"] .carousel-btn,
+:root[data-mode="auto"][data-theme="dark"] .carousel-btn {
+  background: #1a222c;
+  color: #e6edf3;
+  border: 1px solid #2a3644;
+}
+:root[data-theme="dark"] .carousel-btn:hover,
+:root[data-mode="dark"] .carousel-btn:hover,
+:root[data-mode="auto"][data-theme="dark"] .carousel-btn:hover {
+  background: #223042;
+}
+:root[data-theme="dark"] .carousel-btn:disabled,
+:root[data-mode="dark"] .carousel-btn:disabled,
+:root[data-mode="auto"][data-theme="dark"] .carousel-btn:disabled {
+  opacity: 0.45;
+}
+
+/* Cards */
+:root[data-theme="dark"] .card,
+:root[data-mode="dark"] .card,
+:root[data-mode="auto"][data-theme="dark"] .card {
+  background: #151b22;            /* card surface */
+  border: 1px solid #2a3644;       /* subtle border */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+}
+
+/* Quote block inside cards */
+:root[data-theme="dark"] .card blockquote,
+:root[data-mode="dark"] .card blockquote,
+:root[data-mode="auto"][data-theme="dark"] .card blockquote {
+  color: #e6edf3;                  /* readable quote text */
+  background: #1b2430;             /* slightly raised */
+  border: 1px solid #2a3644;
+  border-left: 3px solid #5aa7ff;  /* accent stripe */
+  border-radius: 10px;
+}
+
+/* Signature (bottom-right) */
+:root[data-theme="dark"] .card .student,
+:root[data-mode="dark"] .card .student,
+:root[data-mode="auto"][data-theme="dark"] .card .student {
+  color: #b3c0ce;
+}
