@@ -3,7 +3,7 @@
 ```{admonition} Course Links
 :class: tip
 
-- Location: NSC 215 or [Zoom](https://buffalo.zoom.us/j/5207086567?pwd=Tlh4blE2S3hJeFFLWUFkWXpKMDV0Zz09)
+- Location: NSC 215 or Zoom
 - Slides: slides.com/naresh-ub/decks/cvip_summer25
 - Piazza: Registered students only at University at Buffalo
 - Lecture Timings: Tue/Thu - 10:30 AM to 11:50 AM Eastern
