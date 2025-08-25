@@ -3,7 +3,7 @@
 ```{admonition} Course Links
 :class: tip
 
-- Location: NSC 215 or [Zoom](https://buffalo.zoom.us/j/5207086567?pwd=Tlh4blE2S3hJeFFLWUFkWXpKMDV0Zz09)
+- Location: NSC 215
 - Slides: slides.com/naresh-ub/decks/cvip_summer25
 - Piazza: Registered students only at University at Buffalo
 - Lecture Timings: Tue/Thu - 10:30 AM to 11:50 AM Eastern
@@ -90,6 +90,37 @@ Details about Capstone Course Project.
 
 ::::
 
+```{admonition} Course Schedule (Summer 2025). Lecture Notes and Slides.
+:class: dropdown, open, tip
+
+  | **Version** | **Date** | **Topic** | **Webpage/Slides** |**Assignments/Exercises** |
+  |-|-|-|-|-|
+  | | May 27, Tue   | Course Details, Logistics | [Lecture 0](syllabus.md) / [Slides](https://slides.com/naresh-ub/cvip-lec-0)| 
+  | CVIP 1.0 | May 27, Tue | What is an Image?| [Lecture 1](lectures/lecture-1.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-1)| 
+  | CVIP 1.0 | May 29, Thu  | Image Formation and the Pinhole Camera (Part 1) | [Lecture 2](lectures/lecture-2-3.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-2-3) |
+  | CVIP 1.0 | Jun. 3, Tue  | Image Formation and the Pinhole Camera (Part 2) | [Lecture 3](lectures/lecture-2-3.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-2-3) |
+  | CVIP 1.0 | Jun. 5, Thu  | Image Processing (Pixel Domain) | [Lecture 4](lectures/lecture-4.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-4) |
+  | CVIP 1.0 | Jun. 10, Tue  | Image Processing (Fourier Domain) | [Lecture 5](lectures/lecture-5.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-5) | Quiz 1, Assignment 1 Release |
+  | CVIP 1.0 | Jun. 12, Thu  | Stereo Vision, Depth Estimation (Part 1) | [Lecture 6](lectures/lecture-6-7-8.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-6-7-8) |
+  | CVIP 1.0 | Jun. 17, Tue   | Stereo Vision, Depth Estimation (Part 2) | [Lecture 7](lectures/lecture-6-7-8.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-6-7-8) | Capstone Project Release |
+  | CVIP 1.0 | Jun. 19, Thu  | Juneteenth Holiday | No Lecture | |
+  | CVIP 1.0 | Jun. 24, Tue  | Stereo Vision, Depth Estimation (Part 3) | [Lecture 8](lectures/lecture-6-7-8.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-6-7-8) | Quiz 2 |
+  | CVIP 1.0 | Jun. 26, Thu  | Feature Detection | [Lecture 9](lectures/lecture-9.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-9) | |
+  | CVIP 1.0 | Jul. 1, Tue   | Learning-based Computer Vision methods (Part 1) | [Lecture 10](lectures/lecture-10-11.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-10) | Assignment 1 Due Date |
+  | CVIP 1.0 | Jul. 3, Thu  | Learning-based Computer Vision methods (Part 2) and Midterm Review | [Lecture 11](lectures/lecture-10-11.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-10) | |
+  | | Jul. 8, Tue | Midterm Exam | | |
+  | CVIP 2.0 | Jul. 10, Thu  | Introduction to Generative AI (Computer Vision Applications) | [Lecture 12](lectures/lecture-12.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-12) | Quiz 3 |
+  | CVIP 2.0 | Jul. 15, Tue  | Variational AutoEncoders (Part 1) | [Lecture 13](lectures/lecture-13.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-13-14) | |
+  | CVIP 2.0 | Jul. 17, Thu  | Variational AutoEncoders (Part 2) | [Lecture 14](lectures/lecture-14.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-13-14) | Capstone Project Milestone 1 Due Date |
+  | CVIP 2.0 | Jul. 22, Tue   | Diffusion Models (Part 1) | [Lecture 15](lectures/lecture-15.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-15-16-17) | Quiz 4 |
+  | CVIP 2.0 | Jul. 24, Thu  | Diffusion Models (Part 2) | [Lecture 16](lectures/lecture-16.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-15-16-17) | |
+  | CVIP 2.0 | Jul. 29, Tue   | Diffusion Models (Part 3) | [Lecture 17](lectures/lecture-17.ipynb) / [Slides](https://slides.com/naresh-ub/cvip-lec-15-16-17) | |
+  | CVIP 2.0 | Jul. 31, Thu  | Open slot for Guest Lecture | [Shruti Agarwal from Adobe Research](https://agarwalshruti15.github.io/) | Quiz 5, Capstone Project Milestone 2 Due Date |
+  | CVIP 2.0 | Aug. 5, Tue   | Recent Trends, Models, Applications in GenAI | | |
+  |  | Aug. 7, Thu  | Final Exam | | 🔥 All the Best 🔥 |
+  | CVIP 2.0 | Aug. 12, Tue   | Capstone Project Presentations - Batch 1 | | Quiz 6 |
+  | CVIP 2.0 | Aug. 14, Thu  | Capstone Project Presentations - Batch 2 | | Final Project Due Date |
+```
 
 ```{figure} figures/course_pic.jpeg
 
@@ -119,7 +150,7 @@ In-class pictures with a few students (Students Enrolled: 71)
     <!-- Replace with your real links -->
     <div class="profile-links">
       <a href="https://www.ratemyprofessors.com/professor/3113460" target="_blank" rel="noopener">RateMyProfessors</a>
-      <a href="#student-feedback" target="_blank" rel="noopener">UB Course Evaluations (soon)</a>
+      <a href="https://raw.githubusercontent.com/naresh-ub/cvip/master/book/docs/summer_25_feedback_573.pdf" target="_blank" rel="noopener">UB Course Evaluations</a>
     </div>
     <div class="carousel-controls">
       <button class="carousel-btn" id="prevBtn" aria-label="Previous feedback">◀</button>
