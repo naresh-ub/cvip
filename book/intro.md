@@ -150,7 +150,7 @@ In-class pictures with a few students (Students Enrolled: 71)
     <!-- Replace with your real links -->
     <div class="profile-links">
       <a href="https://www.ratemyprofessors.com/professor/3113460" target="_blank" rel="noopener">RateMyProfessors</a>
-      <a href="https://raw.githubusercontent.com/naresh-ub/cvip/master/book/docs/summer_25_feedback_573.pdf" target="_blank" rel="noopener">UB Course Evaluations</a>
+      <a href="https://github.com/naresh-ub/cvip/blob/master/book/docs/summer_25_feedback_573.pdf" target="_blank" rel="noopener">UB Course Evaluations</a>
     </div>
     <div class="carousel-controls">
       <button class="carousel-btn" id="prevBtn" aria-label="Previous feedback">◀</button>
