@@ -1,4 +1,4 @@
-# CSE 4/573: Intro to Computer Vision and Image Processing
+# CSE 4/573: Computer Vision & Generative AI
 
 ```{admonition} Course Links
 :class: tip
@@ -9,7 +9,19 @@
 - Lecture Timings: Tue/Thu - 10:30 AM to 11:50 AM Eastern
 ```
 
-Welcome to CSE 4/573: CVIP course (Summer 2025). This website contains **_everything_ (all material)** for the course. To support engaging and interactive learning, this website is powered by [Jupyter Book](https://jupyterbook.org/) and the [TeachBooks](https://teachbooks.io/) package. The site hosts all course content in an accessible and interactive format, including self-hosted animated lecture slides via [Reveal.JS](https://revealjs.com/), executable live code blocks with [Thebe](https://github.com/executablebooks/thebe), rich 3D visualizations using [Plotly](https://plotly.com/python/), spaced-repetition flashcards through [JupyterCards](https://github.com/jmshea/jupytercards), and auto-graded practice quizzes via [Jupyter Quizzes](https://github.com/jmshea/jupyterquiz). This platform enhances student engagement by blending theory with hands-on experimentation directly in the browser.
+<!-- Welcome to CSE 4/573: CVIP course (Summer 2025). This website contains **_everything_ (all material)** for the course. To support engaging and interactive learning, this website is powered by [Jupyter Book](https://jupyterbook.org/) and the [TeachBooks](https://teachbooks.io/) package. The site hosts all course content in an accessible and interactive format, including self-hosted animated lecture slides via [Reveal.JS](https://revealjs.com/), executable live code blocks with [Thebe](https://github.com/executablebooks/thebe), rich 3D visualizations using [Plotly](https://plotly.com/python/), spaced-repetition flashcards through [JupyterCards](https://github.com/jmshea/jupytercards), and auto-graded practice quizzes via [Jupyter Quizzes](https://github.com/jmshea/jupyterquiz). This platform enhances student engagement by blending theory with hands-on experimentation directly in the browser. -->
+
+## About the Course
+
+CSE 4/573: Computer Vision & Generative AI (Summer 2025) at the University at Buffalo offered students a comprehensive journey from **classical computer vision foundations to cutting-edge generative AI**. The curriculum began with the mathematical and physical principles of image formation, camera calibration, and pixel- and frequency-domain image processing, before progressing to geometric methods such as stereo vision, depth estimation, and epipolar geometry. Building on this foundation, students explored modern learning-based approaches, including convolutional neural networks for classification, segmentation, and object detection. **A hallmark of the course was a dedicated generative vision module, covering variational autoencoders, GANs, and diffusion models**, which placed students at the forefront of contemporary computer vision. By the end of the semester, students had achieved both theoretical mastery and practical skills, developing intelligent vision systems using frameworks like OpenCV, TensorFlow, and PyTorch for real-world applications.
+
+## Course Design Experience
+
+As the `first course at the University at Buffalo to incorporate diffusion models in a semester-long module`, CSE 4/573 distinguished itself through its emphasis on generative AI. The course materials for VAEs, GANs, and diffusion models were **created entirely from the ground up, blending intuitive mathematical derivations with from-scratch Python implementations**. Assignments were structured to guide students from foundational generative modeling exercises to advanced explorations, culminating in a [capstone project](capstone-project.ipynb) that challenged them to integrate generative methods into practical applications such as controllable image synthesis and multimodal vision-language systems. This focus on generative AI ensured that students not only gained early exposure to a rapidly evolving research frontier but also left the course with concrete, portfolio-ready projects demonstrating both technical rigor and creativity.
+
+## Teaching Philosophy and Approach
+
+My ([Naresh Devulapally](https://naresh-ub.github.io)) teaching approach is rooted in **intuition and curiosity**. To make abstract concepts tangible, I crafted every slide from scratch with rich **visuals, animations, and interactive plots**, reinforcing learning through quizzes and flashcards that promote long-term retention. Curiosity was cultivated through **interactive live coding on any browser** directly , where each algorithm was implemented interactively from first principles in Python, **without requiring students to set up local environments**. To support this, I developed a comprehensive course website powered by [Jupyter Book](https://jupyterbook.org/) and TeachBooks, hosting animated slides via [Reveal.JS](https://revealjs.com/), executable code blocks with [Thebe](https://github.com/executablebooks/thebe), 3D visualizations using [Plotly](https://plotly.com/python/), spaced-repetition flashcards through [JupyterCards](https://github.com/jmshea/jupytercards), and auto-graded practice quizzes. This ecosystem transformed the course into an engaging, hands-on experience that blended rigorous theory with immediate experimentation, equipping students to both understand and innovate in Computer Vision.
 
 ## Instructor
 
@@ -150,7 +162,7 @@ In-class pictures with a few students (Students Enrolled: 71)
     <!-- Replace with your real links -->
     <div class="profile-links">
       <a href="https://www.ratemyprofessors.com/professor/3113460" target="_blank" rel="noopener">RateMyProfessors</a>
-      <a href="https://raw.githubusercontent.com/naresh-ub/cvip/master/book/docs/summer_25_feedback_573.pdf" target="_blank" rel="noopener">UB Course Evaluations</a>
+      <a href="https://github.com/naresh-ub/cvip/blob/master/book/docs/summer_25_feedback_573.pdf" target="_blank" rel="noopener">UB Course Evaluations</a>
     </div>
     <div class="carousel-controls">
       <button class="carousel-btn" id="prevBtn" aria-label="Previous feedback">◀</button>
