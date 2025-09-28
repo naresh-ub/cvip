@@ -1,0 +1,22 @@
+body {
+  transition: filter 0.3s ease;
+  /* Smooth effect */
+}
+
+html:not([data-theme=dark]) body.high-contrast {
+    --pst-color-text-base: #000000 !important;
+    --pst-color-text-muted: #000000 !important;
+    --pst-color-background: #ffffff !important;
+    --pst-color-border: #000000 !important;
+    --pst-color-surface: #ffffff !important;
+    filter: saturate(200%) !important;
+}
+
+html[data-theme=dark] body.high-contrast {
+    --pst-color-text-base: #ffffff !important;
+    --pst-color-text-muted: #ffffff !important;
+    --pst-color-background: #000000 !important;
+    --pst-color-border: #ffffff !important;
+    --pst-color-surface: #000000 !important;
+    filter: saturate(200%) contrast(1.5) !important;
+}

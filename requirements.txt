@@ -8,6 +8,7 @@ teachbooks-sphinx-tippy
 sphinx-iframes
 sphinx-named-colors
 seaborn
+sphinx-accessibility
 
 # Now list the packages you want to download directly from GitHub
 git+https://github.com/TeachBooks/Sphinx-Thebe

@@ -1,0 +1,20 @@
+/* Size the main accessibility button SVG 20% larger */
+#AcccessibilityMenu .dropdown-toggle svg {
+  transform: scale(1.1);
+}
+
+/* Hover effects for accessibility menu SVG icons */
+#AcccessibilityMenu .btn:hover svg path {
+  stroke: var(--pst-color-text-base) !important;
+  /* fill: var(--pst-color-text-base) !important; */
+}
+
+/* Hover effects for dropdown items */
+#AcccessibilityMenu .dropdown-item:hover svg path {
+  stroke: var(--pst-color-text-base) !important;
+  fill: var(--pst-color-text-base) !important;
+}
+
+#AcccessibilityMenu .dropdown-item:hover svg {
+  fill: var(--pst-color-text-base) !important;
+}
