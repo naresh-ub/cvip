@@ -1,54 +1,68 @@
 title: CSE 4/573 - Computer Vision and Image Processing
 author: Naresh Devulapally, Summer 2025, UB. Built with Teachbooks.
+
 execute:
   execute_notebooks: "off"
 
 only_build_toc_files: false
 
+# --- Single html: block (merged; you had two)
 html:
-  favicon : "figures/TB_favicon.ico"
-  baseurl :  "https://naresh-ub.github.io/cvip" #Replace this with your own URL
+  favicon: "figures/TB_favicon.ico"
+  baseurl: "https://naresh-ub.github.io/cvip"
   extra_css: ["_static/color.css"]
   extra_js: ["_static/analytics.js"]
-
-html:
   analytics:
     google_analytics_id: G-YTF2311PDM
 
+# --- Thebe (lite) + Pyodide 0.29 wiring lives under sphinx.config
 sphinx:
   config:
+    # Load Pyodide 0.29.0 *before* thebe/thebe-lite so the kernel uses 0.29’s packages.
+    # The ?v=… busts browser/CDN cache after deploy.
     html_js_files:
-    - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js
-    - https://cdn.jsdelivr.net/pyodide/v0.29.0/full/pyodide.js
+      - https://cdn.jsdelivr.net/pyodide/v0.29.0/full/pyodide.js?v=2025-10-23
+      - https://unpkg.com/thebe-lite@latest/dist/thebe-lite.min.js
+      - https://unpkg.com/thebe@latest/dist/lib/index.js
+      - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js
+
+    # thebe configuration for LITE (Pyodide) runtime
     thebe_config:
-      use_thebe_lite: true
-      exclude_patterns: ["**/_*.yml", "**/*.md", "**/*.ipynb"]
-      preexecute: ["thebe-init"] # Automatically execute cells with this tag
+      use_thebe_lite: true          # <- force in-browser (Pyodide) kernel, not Binder
+      requestKernel: true
+      kernelName: "python"
+      selector: ".cell"             # adapt to your site; jupyter-book often uses .cell or .thebe
+      preexecute: ["thebe-init"]    # auto-run cells tagged thebe-init
+      # You can also exclude patterns if needed:
+      exclude_patterns:
+        - "**/_*.yml"
+        - "**/*.md"
+        - "**/*.ipynb"
+
+    # Theme + repo buttons (kept from your original)
     html_theme_options:
       logo:
         text: CSE 4/573 - CVIP
-        image_light: figures/logo.png # Put your logo for the light mode here (can be the same as image_dark)
-        image_dark: figures/logo_dark.png # Put your logo for the dark mode here (can be the same as image_light)
-      repository_url: "https://github.com/naresh-ub/cvip" #add your own repo URL here
+        image_light: figures/logo.png
+        image_dark: figures/logo_dark.png
+      repository_url: "https://github.com/naresh-ub/cvip"
       path_to_docs: "book"
       repository_branch: "main"
       use_edit_page_button: false
       use_repository_button: true
-      use_issues_button : false
-      launch_buttons:
-        thebe: true
-        colab_url: "https://colab.research.google.com"
+      use_issues_button: false
+
+    # Footer + static paths
     html_show_copyright: false
-    html_last_updated_fmt: '%B %-d, %Y'
-    html_static_path: ["figures"] # add folders that contain files that need to be included, such as the location of the logo(s)
+    html_last_updated_fmt: "%B %-d, %Y"
+    html_static_path: ["figures"]
+
+    # MathJax
     mathjax3_config:
-      chtml: {
-        mtextInheritFont: true # To typeset text within math prettier
-      }
-    # named_colors_include_CSS: true # default value
-    # named_colors_dark_and_light: true # default value
-    # named_colors_saturation: 1.5 # default value
-    # named_colors_custom_colors: None
+      chtml:
+        mtextInheritFont: true
+
+  # Sphinx extensions (unchanged)
   extra_extensions:
     - sphinx.ext.imgconverter
     - jupyterbook_patches
@@ -61,7 +75,10 @@ sphinx:
     - sphinx_named_colors
     - sphinx_accessibility
 
+# Jupyter Book “Launch” UI (keep the Thebe button visible)
+launch_buttons:
+  thebe: true
+  colab_url: "https://colab.research.google.com"
+
 bibtex_bibfiles:
   - references.bib
-
-
