@@ -6,7 +6,6 @@ execute:
 
 only_build_toc_files: false
 
-# --- Single html: block (merged; you had two)
 html:
   favicon: "figures/TB_favicon.ico"
   baseurl: "https://naresh-ub.github.io/cvip"
@@ -15,31 +14,45 @@ html:
   analytics:
     google_analytics_id: G-YTF2311PDM
 
-# --- Thebe (lite) + Pyodide 0.29 wiring lives under sphinx.config
+# ✅ Thebe button must be at top-level (not under sphinx:)
+launch_buttons:
+  thebe: true
+  colab_url: "https://colab.research.google.com"
+
 sphinx:
+  extra_extensions:
+    - sphinx_thebe                # ✅ load upstream extension explicitly
+    - sphinx.ext.imgconverter
+    - jupyterbook_patches
+    - download_link_replacer
+    - sphinx.ext.extlinks
+    - sphinx_image_inverter
+    - sphinx_iframes
+    - sphinx_exercise
+    - teachbooks_sphinx_tippy
+    - sphinx_named_colors
+    - sphinx_accessibility
+
   config:
-    # Load Pyodide 0.29.0 *before* thebe/thebe-lite so the kernel uses 0.29’s packages.
-    # The ?v=… busts browser/CDN cache after deploy.
+    # ✅ Load Pyodide 0.29 (Matplotlib 3.8.4) BEFORE Thebe init
     html_js_files:
       - https://cdn.jsdelivr.net/pyodide/v0.29.0/full/pyodide.js?v=2025-10-23
       - https://unpkg.com/thebe-lite@latest/dist/thebe-lite.min.js
       - https://unpkg.com/thebe@latest/dist/lib/index.js
       - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js
 
-    # thebe configuration for LITE (Pyodide) runtime
+    # ✅ Tell sphinx-thebe to use the in-browser (Pyodide) kernel
     thebe_config:
-      use_thebe_lite: true          # <- force in-browser (Pyodide) kernel, not Binder
+      use_thebe_lite: true
       requestKernel: true
       kernelName: "python"
-      selector: ".cell"             # adapt to your site; jupyter-book often uses .cell or .thebe
-      preexecute: ["thebe-init"]    # auto-run cells tagged thebe-init
-      # You can also exclude patterns if needed:
+      selector: ".cell"          # change if your code blocks use a different class
+      preexecute: ["thebe-init"]
       exclude_patterns:
         - "**/_*.yml"
         - "**/*.md"
         - "**/*.ipynb"
 
-    # Theme + repo buttons (kept from your original)
     html_theme_options:
       logo:
         text: CSE 4/573 - CVIP
@@ -52,33 +65,5 @@ sphinx:
       use_repository_button: true
       use_issues_button: false
 
-    # Footer + static paths
-    html_show_copyright: false
-    html_last_updated_fmt: "%B %-d, %Y"
     html_static_path: ["figures"]
-
-    # MathJax
-    mathjax3_config:
-      chtml:
-        mtextInheritFont: true
-
-  # Sphinx extensions (unchanged)
-  extra_extensions:
-    - sphinx.ext.imgconverter
-    - jupyterbook_patches
-    - download_link_replacer
-    - sphinx.ext.extlinks
-    - sphinx_image_inverter
-    - sphinx_iframes
-    - sphinx_exercise
-    - teachbooks_sphinx_tippy
-    - sphinx_named_colors
-    - sphinx_accessibility
-
-# Jupyter Book “Launch” UI (keep the Thebe button visible)
-launch_buttons:
-  thebe: true
-  colab_url: "https://colab.research.google.com"
-
-bibtex_bibfiles:
-  - references.bib
+    html_last_updated_fmt: "%B %-d, %Y"
