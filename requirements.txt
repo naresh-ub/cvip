@@ -10,6 +10,7 @@ sphinx-named-colors
 seaborn
 sphinx-accessibility
 matplotlib==3.10.7
+micropip==0.11.0
 
 # Now list the packages you want to download directly from GitHub
 git+https://github.com/TeachBooks/Sphinx-Thebe
