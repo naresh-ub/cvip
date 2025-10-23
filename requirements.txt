@@ -1,4 +1,5 @@
-# requirements.txt  (root of repo)
+# requirements.txt  (root)
+
 teachbooks
 jupyterbook-patches
 sphinx-image-inverter
@@ -9,9 +10,10 @@ sphinx-iframes
 sphinx-named-colors
 seaborn
 sphinx-accessibility
+
+# Build-time pins you asked for
 matplotlib==3.10.7
 micropip==0.11.0
 
-# Pin to a stable tag or a commit SHA (avoid "latest on main")
-git+https://github.com/TeachBooks/Sphinx-Thebe@v0.4.1
-# or: git+https://github.com/TeachBooks/Sphinx-Thebe@<COMMIT_SHA>
+# Pin the Sphinx-Thebe plugin to a COMMIT SHA you choose
+git+https://github.com/TeachBooks/Sphinx-Thebe@065dad097af33da2d9453b2ab248028d3e7c5615
