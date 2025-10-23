@@ -11,6 +11,7 @@ sphinx-exercise
 teachbooks-sphinx-tippy
 sphinx-iframes
 sphinx-named-colors
+sphinx-accessibility
 
 # Thebe (kept from GitHub as TeachBooks docs suggest)
 git+https://github.com/TeachBooks/Sphinx-Thebe
