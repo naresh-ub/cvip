@@ -63,5 +63,28 @@ sphinx:
 bibtex_bibfiles:
   - references.bib
 
+# book/_config.yml  (only the relevant bits shown)
+html:
+  thebe: true
+
+# Tell Thebe to use the in-browser JupyterLite/Pyodide runtime
+thebe_config:
+  requestKernel: true
+  useJupyterLite: true
+  # Pin the exact Pyodide build => pins numpy/matplotlib/etc.
+  litePluginSettings:
+    pyodideUrl: https://cdn.jsdelivr.net/pyodide/v0.29.0/full/
+
+  # Serve your own wheels for pure-Python pkgs (faster & pinned)
+  pipliteUrls:
+    - _static/wheels/
+
+# Ensure this JS is loaded by the pages (it will do micropip installs)
+sphinx:
+  config:
+    html_js_files:
+      - _static/js/thebe-init.js
+
+
 
 

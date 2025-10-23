@@ -1,0 +1,139 @@
+name: deploy-book
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - book/**
+      - requirements.txt
+      - .github/workflows/deploy-book.yml
+  workflow_dispatch:
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GH_TOKEN: ${{ secrets.GH_PAT != '' && secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+
+  PRIMARY_BRANCH: ${{ vars.PRIMARY_BRANCH != '' && vars.PRIMARY_BRANCH || 'main' }}
+  BEHAVIOR_PRIMARY: ${{ vars.BEHAVIOR_PRIMARY != '' && vars.BEHAVIOR_PRIMARY || 'redirect' }}
+  BRANCH_ALIASES: ${{ vars.BRANCH_ALIASES }}
+  BRANCHES_TO_DEPLOY: ${{ vars.BRANCHES_TO_DEPLOY != '' && vars.BRANCHES_TO_DEPLOY || '*' }}
+  BRANCHES_TO_PREPROCESS: ${{ vars.BRANCHES_TO_PREPROCESS }}
+  BRANCHES_ARCHIVED: ${{ vars.BRANCHES_ARCHIVED }}
+
+jobs:
+  get-branches:
+    runs-on: ubuntu-latest
+    outputs:
+      branches: ${{ steps.set-branches.outputs.branches }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - id: set-branches
+        run: |
+          if [ "$BRANCHES_TO_DEPLOY" == '*' ]; then
+            branches=$(git branch -r | sed 's,\s*origin/,,g' | grep -v '\->')
+          else
+            branches=$(echo "$BRANCHES_TO_DEPLOY" | tr ' ' '\n' | grep -E '\S')
+          fi
+          echo "$branches" | tr ' ' '\n' > branches.txt
+          branches=$(echo "$branches" | jq -Rn '[inputs]')
+          echo "branches=$branches" >> "$GITHUB_OUTPUT"
+
+  build-books:
+    needs: get-branches
+    if: ${{ needs.get-branches.outputs.branches != '[]' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        branch: ${{ fromJson(needs.get-branches.outputs.branches) }}
+    permissions:
+      pages: write
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.branch }}
+          token: ${{ env.GH_TOKEN }}
+          submodules: 'true'
+
+      - name: Cache built HTML
+        id: cache-html
+        uses: actions/cache@v4
+        with:
+          path: book/_build/html
+          key: html-${{ matrix.branch }}-${{ hashFiles('book/**', 'requirements.txt') }}
+
+      - if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
+        name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        id: setup-py
+        with:
+          python-version: '3.13'
+
+      - if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
+        name: Cache venv
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-py${{ steps.setup-py.outputs.python-version }}-${{ hashFiles('requirements.txt') }}
+
+      - if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
+        name: Install dependencies (strict)
+        env:
+          PIP_DISABLE_PIP_VERSION_CHECK: "1"
+          PIP_NO_CACHE_DIR: "1"
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          python -m pip install --upgrade pip
+          pip install --upgrade-strategy only-if-needed -r requirements.txt
+          echo "$VIRTUAL_ENV/bin" >> $GITHUB_PATH
+          echo "VIRTUAL_ENV=$VIRTUAL_ENV" >> $GITHUB_ENV
+
+      - if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
+        name: Build book
+        run: |
+          set -o pipefail
+          teachbooks build book/ > >(tee stdout.log) 2> >(tee stderr.log >&2)
+          set +o pipefail
+
+      - name: Upload built book
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.branch }}
+          path: book/_build/html
+
+  deploy:
+    needs: [get-branches, build-books]
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with: { token: ${{ env.GH_TOKEN }} }
+      - run: mkdir final/
+      - uses: actions/download-artifact@v4
+        with: { path: final/ }
+
+      # Optional “move to root” behavior
+      - name: Move primary to root
+        if: ${{ env.BEHAVIOR_PRIMARY == 'move' && hashFiles(format('final/{0}', env.PRIMARY_BRANCH)) != '' }}
+        run: |
+          if [ -d final/"$PRIMARY_BRANCH" ]; then
+            mv -v final/"$PRIMARY_BRANCH"/* final/
+            rm -rf final/"$PRIMARY_BRANCH"
+          fi
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: final/
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
