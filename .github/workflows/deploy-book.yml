@@ -13,8 +13,11 @@ env:
   # tokens
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GH_TOKEN: ${{ secrets.GH_PAT != '' && secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+
   # site behavior
+  # PRIMARY_BRANCH is the branch you want readers to see at the root
   PRIMARY_BRANCH: ${{ vars.PRIMARY_BRANCH != '' && vars.PRIMARY_BRANCH || 'main' }}
+  # BEHAVIOR_PRIMARY: redirect | copy | move
   BEHAVIOR_PRIMARY: ${{ vars.BEHAVIOR_PRIMARY != '' && vars.BEHAVIOR_PRIMARY || 'redirect' }}
   BRANCH_ALIASES: ${{ vars.BRANCH_ALIASES }}
   BRANCHES_TO_DEPLOY: ${{ vars.BRANCHES_TO_DEPLOY != '' && vars.BRANCHES_TO_DEPLOY || '*' }}
@@ -36,23 +39,14 @@ jobs:
         run: |
           set -euo pipefail
 
-          # Collect the branch list
           if [ "${BRANCHES_TO_DEPLOY:-*}" = "*" ]; then
-            # All remote branches, strip "origin/" and the symbolic HEAD arrow
             branches_list="$(git branch -r | sed 's,^\s*origin/,,g' | grep -v '\->' | tr -d '\r')"
           else
-            # Space-separated list in env -> one per line, drop empties
             branches_list="$(printf '%s' "${BRANCHES_TO_DEPLOY:-}" | tr ' ' '\n' | grep -E '\S' | tr -d '\r')"
           fi
 
-          # Produce compact JSON array: ["main","dev",...]
           branches_json="$(printf '%s\n' "$branches_list" | jq -R -s -c 'split("\n") | map(select(length>0))')"
 
-          echo "Resolved branches:"
-          printf '%s\n' "$branches_list"
-          echo "JSON: $branches_json"
-
-          # Output using multiline syntax (avoids quoting issues)
           {
             echo "branches<<__JSON__"
             echo "$branches_json"
@@ -109,7 +103,6 @@ jobs:
           python -m venv .venv
           source .venv/bin/activate
           python -m pip install --upgrade pip
-          # Respect your pins; do not upgrade unless required by a NEW dependency
           pip install --upgrade-strategy only-if-needed -r requirements.txt
           echo "$VIRTUAL_ENV/bin" >> "$GITHUB_PATH"
           echo "VIRTUAL_ENV=$VIRTUAL_ENV" >> "$GITHUB_ENV"
@@ -167,7 +160,38 @@ jobs:
         with:
           path: final/
 
-      - name: Move primary to root (optional)
+      # --- ROOT BEHAVIOR CONTROL ---
+      # 1) redirect: create a root index.html that redirects to /PRIMARY_BRANCH/
+      - name: Create root redirect (default)
+        if: ${{ env.BEHAVIOR_PRIMARY == 'redirect' }}
+        shell: bash
+        run: |
+          cat > final/index.html <<'HTML'
+          <!doctype html>
+          <html><head>
+            <meta charset="utf-8">
+            <meta http-equiv="refresh" content="0; url=./PRIMARY_BRANCH/">
+            <script>location.replace('./PRIMARY_BRANCH/');</script>
+            <title>Redirecting…</title>
+          </head>
+          <body>
+            <p>Redirecting to <a href="./PRIMARY_BRANCH/">PRIMARY_BRANCH</a>…</p>
+          </body></html>
+          HTML
+          sed -i "s/PRIMARY_BRANCH/${{ env.PRIMARY_BRANCH }}/g" final/index.html
+
+      # 2) copy: copy the primary branch files to root (keeps also /PRIMARY_BRANCH/)
+      - name: Copy primary to root
+        if: ${{ env.BEHAVIOR_PRIMARY == 'copy' }}
+        shell: bash
+        run: |
+          if [ -d "final/${{ env.PRIMARY_BRANCH }}" ]; then
+            shopt -s dotglob
+            cp -a final/"${{ env.PRIMARY_BRANCH }}"/* final/
+          fi
+
+      # 3) move: move the primary branch files to root (removes /PRIMARY_BRANCH/)
+      - name: Move primary to root
         if: ${{ env.BEHAVIOR_PRIMARY == 'move' }}
         shell: bash
         run: |
@@ -176,6 +200,7 @@ jobs:
             mv -v final/"${{ env.PRIMARY_BRANCH }}"/* final/
             rm -rf final/"${{ env.PRIMARY_BRANCH }}"
           fi
+      # --- END ROOT BEHAVIOR CONTROL ---
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
