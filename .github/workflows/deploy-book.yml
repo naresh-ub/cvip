@@ -2,7 +2,7 @@ name: deploy-book
 
 on:
   push:
-    branches: ["**"]
+    branches: ['**']
     paths:
       - book/**
       - requirements.txt
@@ -34,14 +34,30 @@ jobs:
       - id: set-branches
         shell: bash
         run: |
-          if [ "$BRANCHES_TO_DEPLOY" = "*" ]; then
-            branches=$(git branch -r | sed 's,\s*origin/,,g' | grep -v '\->')
+          set -euo pipefail
+
+          # Collect the branch list
+          if [ "${BRANCHES_TO_DEPLOY:-*}" = "*" ]; then
+            # All remote branches, strip "origin/" and the symbolic HEAD arrow
+            branches_list="$(git branch -r | sed 's,^\s*origin/,,g' | grep -v '\->' | tr -d '\r')"
           else
-            branches=$(echo "$BRANCHES_TO_DEPLOY" | tr ' ' '\n' | grep -E '\S')
+            # Space-separated list in env -> one per line, drop empties
+            branches_list="$(printf '%s' "${BRANCHES_TO_DEPLOY:-}" | tr ' ' '\n' | grep -E '\S' | tr -d '\r')"
           fi
-          echo "$branches" | tr ' ' '\n' > branches.txt
-          branches_json=$(echo "$branches" | jq -Rn '[inputs]')
-          echo "branches=$branches_json" >> "$GITHUB_OUTPUT"
+
+          # Produce compact JSON array: ["main","dev",...]
+          branches_json="$(printf '%s\n' "$branches_list" | jq -R -s -c 'split("\n") | map(select(length>0))')"
+
+          echo "Resolved branches:"
+          printf '%s\n' "$branches_list"
+          echo "JSON: $branches_json"
+
+          # Output using multiline syntax (avoids quoting issues)
+          {
+            echo "branches<<__JSON__"
+            echo "$branches_json"
+            echo "__JSON__"
+          } >> "$GITHUB_OUTPUT"
 
   build-books:
     needs: get-branches
@@ -87,12 +103,13 @@ jobs:
         if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
         shell: bash
         env:
-          PIP_DISABLE_PIP_VERSION_CHECK: "1"
-          PIP_NO_CACHE_DIR: "1"
+          PIP_DISABLE_PIP_VERSION_CHECK: '1'
+          PIP_NO_CACHE_DIR: '1'
         run: |
           python -m venv .venv
           source .venv/bin/activate
           python -m pip install --upgrade pip
+          # Respect your pins; do not upgrade unless required by a NEW dependency
           pip install --upgrade-strategy only-if-needed -r requirements.txt
           echo "$VIRTUAL_ENV/bin" >> "$GITHUB_PATH"
           echo "VIRTUAL_ENV=$VIRTUAL_ENV" >> "$GITHUB_ENV"
@@ -150,7 +167,6 @@ jobs:
         with:
           path: final/
 
-      # If you want "move primary to root", do it unconditionally when present (no complex if)
       - name: Move primary to root (optional)
         if: ${{ env.BEHAVIOR_PRIMARY == 'move' }}
         shell: bash
