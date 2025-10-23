@@ -1,78 +1,53 @@
 title: CSE 4/573 - Computer Vision and Image Processing
 author: Naresh Devulapally, Summer 2025, UB. Built with Teachbooks.
-
 execute:
   execute_notebooks: "off"
 
 only_build_toc_files: false
 
-# ---- ONE html block only ----
 html:
-  favicon: "figures/TB_favicon.ico"
-  # Project Pages baseurl must include /cvip/ (trailing slash optional)
-  baseurl: "https://naresh-ub.github.io/cvip/"
+  favicon : "figures/TB_favicon.ico"
+  baseurl :  "https://naresh-ub.github.io/cvip" #Replace this with your own URL
+  extra_css: ["_static/color.css"]
+  extra_js: ["_static/analytics.js"]
 
-  extra_css:
-    - "_static/color.css"
-  extra_js:
-    - "_static/analytics.js"
-
+html:
   analytics:
-    google_analytics_id: "G-YTF2311PDM"
+    google_analytics_id: G-YTF2311PDM
 
-  # The button appears because launch_buttons.thebe=true
-  html_theme_options:
-    logo:
-      text: "CSE 4/573 - CVIP"
-      image_light: "figures/logo.png"
-      image_dark: "figures/logo_dark.png"
-    repository_url: "https://github.com/naresh-ub/cvip"
-    path_to_docs: "book"
-    repository_branch: "main"
-    use_edit_page_button: false
-    use_repository_button: true
-    use_issues_button: false
-    launch_buttons:
-      thebe: true         # <-- THIS shows the Thebe (rocket) button
-      colab_url: "https://colab.research.google.com"
-
-  html_show_copyright: false
-  html_last_updated_fmt: "%B %-d, %Y"
-  html_static_path:
-    - "figures"          # existing figures
-    - "_static"          # ensure our JS/wheels are copied
-
-# ---- Sphinx config & extensions ----
 sphinx:
   config:
-    # load RequireJS (as before) + our thebe-init.js loader
     html_js_files:
-      - "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"
-      - "_static/js/thebe-init.js"
-
-    # JupyterLite/Thebe-Lite runtime configuration (NO Binder)
+    - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js
     thebe_config:
       use_thebe_lite: true
       exclude_patterns: ["**/_*.yml", "**/*.md", "**/*.ipynb"]
-      preexecute: ["thebe-init"]
-
-      # These keys instruct Thebe-Lite (JupyterLite) to pin Pyodide
-      # and look for vendored pure-Python wheels. They are passed through
-      # by the Sphinx-Thebe integration.
-      requestKernel: true
-      useJupyterLite: true
-      litePluginSettings:
-        # Pin the exact Pyodide build -> pins core compiled packages (numpy/matplotlib/micropip)
-        pyodideUrl: "https://cdn.jsdelivr.net/pyodide/v0.29.0/full/"
-
-      # piplite will fetch wheels from here first (fast & deterministic)
-      pipliteUrls:
-        - "_static/wheels/"
-
+      preexecute: ["thebe-init"] # Automatically execute cells with this tag
+    html_theme_options:
+      logo:
+        text: CSE 4/573 - CVIP
+        image_light: figures/logo.png # Put your logo for the light mode here (can be the same as image_dark)
+        image_dark: figures/logo_dark.png # Put your logo for the dark mode here (can be the same as image_light)
+      repository_url: "https://github.com/naresh-ub/cvip" #add your own repo URL here
+      path_to_docs: "book"
+      repository_branch: "main"
+      use_edit_page_button: false
+      use_repository_button: true
+      use_issues_button : false
+      launch_buttons:
+        thebe: true
+        colab_url: "https://colab.research.google.com"
+    html_show_copyright: false
+    html_last_updated_fmt: '%B %-d, %Y'
+    html_static_path: ["figures"] # add folders that contain files that need to be included, such as the location of the logo(s)
     mathjax3_config:
-      chtml:
-        mtextInheritFont: true
-
+      chtml: {
+        mtextInheritFont: true # To typeset text within math prettier
+      }
+    # named_colors_include_CSS: true # default value
+    # named_colors_dark_and_light: true # default value
+    # named_colors_saturation: 1.5 # default value
+    # named_colors_custom_colors: None
   extra_extensions:
     - sphinx.ext.imgconverter
     - jupyterbook_patches
@@ -81,9 +56,11 @@ sphinx:
     - sphinx_image_inverter
     - sphinx_iframes
     - sphinx_exercise
+    - teachbooks_sphinx_tippy
     - sphinx_named_colors
     - sphinx_accessibility
-    - teachbooks_sphinx_tippy
 
 bibtex_bibfiles:
   - references.bib
+
+

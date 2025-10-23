@@ -1,8 +1,0 @@
-# book/_static/thebe-requirements.txt
-# These will be installed via micropip at page load.
-# IMPORTANT: do not list compiled packages here (numpy/matplotlib in practice).
-seaborn==0.13.2
-sphinx-accessibility==0.3.2
-sphinx-iframes==1.2.0
-sphinx-named-colors==0.1.0
-download_link_replacer==1.0.4

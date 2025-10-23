@@ -1,19 +1,16 @@
-# requirements.txt  (root)
+# Core (pin to known-good modern versions)
+teachbooks>=0.2.2           # wrapper around jupyter-book
+jupyterbook-patches>=1.9.0
+matplotlib==3.10.7          # <- force newer Matplotlib
+requests                    # ok to leave unpinned
 
-teachbooks
-jupyterbook-patches
+# Sphinx extensions (leave flexible unless you hit a conflict)
 sphinx-image-inverter
 download_link_replacer
 sphinx-exercise
 teachbooks-sphinx-tippy
 sphinx-iframes
 sphinx-named-colors
-seaborn
-sphinx-accessibility
 
-# Build-time pins you asked for
-matplotlib==3.10.7
-micropip==0.11.0
-
-# Pin the Sphinx-Thebe plugin to a COMMIT SHA you choose
-git+https://github.com/TeachBooks/Sphinx-Thebe@065dad097af33da2d9453b2ab248028d3e7c5615
+# Thebe (kept from GitHub as TeachBooks docs suggest)
+git+https://github.com/TeachBooks/Sphinx-Thebe
