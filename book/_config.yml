@@ -41,17 +41,16 @@ sphinx:
       - https://unpkg.com/thebe@latest/dist/lib/index.js
       - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js
 
+    
+
     # ✅ Tell sphinx-thebe to use the in-browser (Pyodide) kernel
     thebe_config:
-      use_thebe_lite: true
+      thebe: true
       requestKernel: true
       kernelName: "python"
       selector: ".cell"          # change if your code blocks use a different class
       preexecute: ["thebe-init"]
-      exclude_patterns:
-        - "**/_*.yml"
-        - "**/*.md"
-        - "**/*.ipynb"
+      exclude_patterns: ["**/_*.yml", "**/*.md", "**/*.ipynb"]
 
     html_theme_options:
       logo:
