@@ -1,5 +1,5 @@
-# first list the packages you wish to download from PyPI
-teachbooks # depends on jupyter-book
+# requirements.txt  (root of repo)
+teachbooks
 jupyterbook-patches
 sphinx-image-inverter
 download_link_replacer
@@ -12,5 +12,6 @@ sphinx-accessibility
 matplotlib==3.10.7
 micropip==0.11.0
 
-# Now list the packages you want to download directly from GitHub
-git+https://github.com/TeachBooks/Sphinx-Thebe
+# Pin to a stable tag or a commit SHA (avoid "latest on main")
+git+https://github.com/TeachBooks/Sphinx-Thebe@v0.4.1
+# or: git+https://github.com/TeachBooks/Sphinx-Thebe@<COMMIT_SHA>
