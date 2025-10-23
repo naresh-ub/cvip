@@ -1,27 +1,57 @@
 title: CSE 4/573 - Computer Vision and Image Processing
 author: Naresh Devulapally, Summer 2025, UB. Built with Teachbooks.
-
 execute:
   execute_notebooks: "off"
 
 only_build_toc_files: false
 
 html:
-  favicon: "figures/TB_favicon.ico"
-  baseurl: "https://naresh-ub.github.io/cvip"
+  favicon : "figures/TB_favicon.ico"
+  baseurl :  "https://naresh-ub.github.io/cvip" #Replace this with your own URL
   extra_css: ["_static/color.css"]
   extra_js: ["_static/analytics.js"]
+
+html:
   analytics:
     google_analytics_id: G-YTF2311PDM
 
-# ✅ Thebe button must be at top-level (not under sphinx:)
-launch_buttons:
-  thebe: true
-  colab_url: "https://colab.research.google.com"
-
 sphinx:
+  config:
+    html_js_files:
+    - https://cdn.jsdelivr.net/pyodide/v0.29.0/full/pyodide.js?v=2025-10-23
+    - https://unpkg.com/thebe-lite@latest/dist/thebe-lite.min.js
+    - https://unpkg.com/thebe@latest/dist/lib/index.js
+    - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js
+    thebe_config:
+      use_thebe_lite: true
+      exclude_patterns: ["**/_*.yml", "**/*.md", "**/*.ipynb"]
+      preexecute: ["thebe-init"] # Automatically execute cells with this tag
+    html_theme_options:
+      logo:
+        text: CSE 4/573 - CVIP
+        image_light: figures/logo.png # Put your logo for the light mode here (can be the same as image_dark)
+        image_dark: figures/logo_dark.png # Put your logo for the dark mode here (can be the same as image_light)
+      repository_url: "https://github.com/naresh-ub/cvip" #add your own repo URL here
+      path_to_docs: "book"
+      repository_branch: "main"
+      use_edit_page_button: false
+      use_repository_button: true
+      use_issues_button : false
+      launch_buttons:
+        thebe: true
+        colab_url: "https://colab.research.google.com"
+    html_show_copyright: false
+    html_last_updated_fmt: '%B %-d, %Y'
+    html_static_path: ["figures"] # add folders that contain files that need to be included, such as the location of the logo(s)
+    mathjax3_config:
+      chtml: {
+        mtextInheritFont: true # To typeset text within math prettier
+      }
+    # named_colors_include_CSS: true # default value
+    # named_colors_dark_and_light: true # default value
+    # named_colors_saturation: 1.5 # default value
+    # named_colors_custom_colors: None
   extra_extensions:
-    - sphinx_thebe                # ✅ load upstream extension explicitly
     - sphinx.ext.imgconverter
     - jupyterbook_patches
     - download_link_replacer
@@ -33,36 +63,7 @@ sphinx:
     - sphinx_named_colors
     - sphinx_accessibility
 
-  config:
-    # ✅ Load Pyodide 0.29 (Matplotlib 3.8.4) BEFORE Thebe init
-    html_js_files:
-      - https://cdn.jsdelivr.net/pyodide/v0.29.0/full/pyodide.js?v=2025-10-23
-      - https://unpkg.com/thebe-lite@latest/dist/thebe-lite.min.js
-      - https://unpkg.com/thebe@latest/dist/lib/index.js
-      - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js
+bibtex_bibfiles:
+  - references.bib
 
-    
 
-    # ✅ Tell sphinx-thebe to use the in-browser (Pyodide) kernel
-    thebe_config:
-      thebe: true
-      requestKernel: true
-      kernelName: "python"
-      selector: ".cell"          # change if your code blocks use a different class
-      preexecute: ["thebe-init"]
-      exclude_patterns: ["**/_*.yml", "**/*.md", "**/*.ipynb"]
-
-    html_theme_options:
-      logo:
-        text: CSE 4/573 - CVIP
-        image_light: figures/logo.png
-        image_dark: figures/logo_dark.png
-      repository_url: "https://github.com/naresh-ub/cvip"
-      path_to_docs: "book"
-      repository_branch: "main"
-      use_edit_page_button: false
-      use_repository_button: true
-      use_issues_button: false
-
-    html_static_path: ["figures"]
-    html_last_updated_fmt: "%B %-d, %Y"

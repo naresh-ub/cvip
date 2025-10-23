@@ -1,6 +1,6 @@
 # CSE 4/573: Computer Vision & Generative AI
 
-```{admonition} Course Links
+```{admonition} Course Links..
 :class: tip
 
 - Location: NSC 215
