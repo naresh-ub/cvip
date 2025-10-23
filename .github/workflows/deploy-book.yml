@@ -1,4 +1,4 @@
-name: deploy-book-control
+name: deploy-book
 
 on:
   push:
@@ -10,9 +10,10 @@ on:
   workflow_dispatch:
 
 env:
+  # tokens
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GH_TOKEN: ${{ secrets.GH_PAT != '' && secrets.GH_PAT || secrets.GITHUB_TOKEN }}
-
+  # site behavior
   PRIMARY_BRANCH: ${{ vars.PRIMARY_BRANCH != '' && vars.PRIMARY_BRANCH || 'main' }}
   BEHAVIOR_PRIMARY: ${{ vars.BEHAVIOR_PRIMARY != '' && vars.BEHAVIOR_PRIMARY || 'redirect' }}
   BRANCH_ALIASES: ${{ vars.BRANCH_ALIASES }}
@@ -27,17 +28,20 @@ jobs:
       branches: ${{ steps.set-branches.outputs.branches }}
     steps:
       - uses: actions/checkout@v4
-        with: { fetch-depth: 0 }
+        with:
+          fetch-depth: 0
+
       - id: set-branches
+        shell: bash
         run: |
-          if [ "$BRANCHES_TO_DEPLOY" == '*' ]; then
+          if [ "$BRANCHES_TO_DEPLOY" = "*" ]; then
             branches=$(git branch -r | sed 's,\s*origin/,,g' | grep -v '\->')
           else
             branches=$(echo "$BRANCHES_TO_DEPLOY" | tr ' ' '\n' | grep -E '\S')
           fi
           echo "$branches" | tr ' ' '\n' > branches.txt
-          branches=$(echo "$branches" | jq -Rn '[inputs]')
-          echo "branches=$branches" >> "$GITHUB_OUTPUT"
+          branches_json=$(echo "$branches" | jq -Rn '[inputs]')
+          echo "branches=$branches_json" >> "$GITHUB_OUTPUT"
 
   build-books:
     needs: get-branches
@@ -57,7 +61,7 @@ jobs:
         with:
           ref: ${{ matrix.branch }}
           token: ${{ env.GH_TOKEN }}
-          submodules: 'true'
+          submodules: true
 
       - name: Cache built HTML
         id: cache-html
@@ -66,22 +70,22 @@ jobs:
           path: book/_build/html
           key: html-${{ matrix.branch }}-${{ hashFiles('book/**', 'requirements.txt') }}
 
-      - if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
-        name: Set up Python 3.13
+      - name: Set up Python 3.13
+        if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
         uses: actions/setup-python@v5
-        id: setup-py
         with:
           python-version: '3.13'
 
-      - if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
-        name: Cache venv
+      - name: Cache virtualenv
+        if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
         uses: actions/cache@v4
         with:
           path: .venv
-          key: venv-${{ runner.os }}-py${{ steps.setup-py.outputs.python-version }}-${{ hashFiles('requirements.txt') }}
+          key: venv-${{ runner.os }}-py3.13-${{ hashFiles('requirements.txt') }}
 
-      - if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
-        name: Install dependencies (strict)
+      - name: Install dependencies (strict)
+        if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
+        shell: bash
         env:
           PIP_DISABLE_PIP_VERSION_CHECK: "1"
           PIP_NO_CACHE_DIR: "1"
@@ -90,14 +94,33 @@ jobs:
           source .venv/bin/activate
           python -m pip install --upgrade pip
           pip install --upgrade-strategy only-if-needed -r requirements.txt
-          echo "$VIRTUAL_ENV/bin" >> $GITHUB_PATH
-          echo "VIRTUAL_ENV=$VIRTUAL_ENV" >> $GITHUB_ENV
+          echo "$VIRTUAL_ENV/bin" >> "$GITHUB_PATH"
+          echo "VIRTUAL_ENV=$VIRTUAL_ENV" >> "$GITHUB_ENV"
+          python -c "import sys; print('Python:', sys.version)"
+          pip list
 
-      - if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
-        name: Build book
+      - name: Insert banner if archived
+        if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
+        shell: bash
+        run: |
+          if echo "$BRANCHES_ARCHIVED" | tr ' ' '\n' | grep -qx "${{ matrix.branch }}"; then
+            url=$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.html_url')
+            {
+              echo 'html:'
+              echo "  announcement: 'You are viewing an archived version of the book. Click <a href=\"$url$PRIMARY_BRANCH\">here</a> for the latest version.'"
+            } >> book/_config.yml
+          fi
+
+      - name: Build book
+        if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
+        shell: bash
         run: |
           set -o pipefail
-          teachbooks build book/ > >(tee stdout.log) 2> >(tee stderr.log >&2)
+          if [ "$BRANCHES_TO_PREPROCESS" = "*" ] || echo "$BRANCHES_TO_PREPROCESS" | tr ' ' '\n' | grep -qx "${{ matrix.branch }}"; then
+            teachbooks build --release book/ > >(tee stdout.log) 2> >(tee stderr.log >&2)
+          else
+            teachbooks build book/ > >(tee stdout.log) 2> >(tee stderr.log >&2)
+          fi
           set +o pipefail
 
       - name: Upload built book
@@ -116,18 +139,26 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-        with: { token: ${{ env.GH_TOKEN }} }
-      - run: mkdir final/
-      - uses: actions/download-artifact@v4
-        with: { path: final/ }
+        with:
+          token: ${{ env.GH_TOKEN }}
 
-      # Optional “move to root” behavior
-      - name: Move primary to root
-        if: ${{ env.BEHAVIOR_PRIMARY == 'move' && hashFiles(format('final/{0}', env.PRIMARY_BRANCH)) != '' }}
+      - name: Prepare final directory
+        run: mkdir -p final
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: final/
+
+      # If you want "move primary to root", do it unconditionally when present (no complex if)
+      - name: Move primary to root (optional)
+        if: ${{ env.BEHAVIOR_PRIMARY == 'move' }}
+        shell: bash
         run: |
-          if [ -d final/"$PRIMARY_BRANCH" ]; then
-            mv -v final/"$PRIMARY_BRANCH"/* final/
-            rm -rf final/"$PRIMARY_BRANCH"
+          if [ -d "final/${{ env.PRIMARY_BRANCH }}" ]; then
+            shopt -s dotglob
+            mv -v final/"${{ env.PRIMARY_BRANCH }}"/* final/
+            rm -rf final/"${{ env.PRIMARY_BRANCH }}"
           fi
 
       - name: Upload Pages artifact
