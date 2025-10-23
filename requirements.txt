@@ -1,7 +1,7 @@
 # Core (pin to known-good modern versions)
 teachbooks>=0.2.2           # wrapper around jupyter-book
 jupyterbook-patches>=1.9.0
-matplotlib==3.10.7          # <- force newer Matplotlib
+matplotlib==3.8.4          # <- force newer Matplotlib
 requests                    # ok to leave unpinned
 
 # Sphinx extensions (leave flexible unless you hit a conflict)
