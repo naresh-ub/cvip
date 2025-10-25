@@ -1,10 +1,6 @@
-# Core (pin to known-good modern versions)
-teachbooks>=0.2.2           # wrapper around jupyter-book
-jupyterbook-patches>=1.9.0
-matplotlib==3.8.4          # <- force newer Matplotlib
-requests                    # ok to leave unpinned
-
-# Sphinx extensions (leave flexible unless you hit a conflict)
+# first list the packages you wish to download from PyPI
+teachbooks # depends on jupyter-book
+jupyterbook-patches
 sphinx-image-inverter
 download_link_replacer
 sphinx-exercise
@@ -12,6 +8,7 @@ teachbooks-sphinx-tippy
 sphinx-iframes
 sphinx-named-colors
 sphinx-accessibility
+requests
 
-# Thebe (kept from GitHub as TeachBooks docs suggest)
+# Now list the packages you want to download directly from GitHub
 git+https://github.com/TeachBooks/Sphinx-Thebe
