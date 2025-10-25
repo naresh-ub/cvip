@@ -1,0 +1,50 @@
+div.video-container {
+	box-sizing: border-box;
+}
+
+div.video-container:not(.user) {
+	width: calc(100% - 2.8rem);
+	aspect-ratio: auto 16 / 9;
+}
+
+iframe.sphinx.video {
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+div.iframe-container {
+	box-sizing: border-box;
+}
+
+div.iframe-container:not(.user) {
+	width: calc(100% - 2.8rem);
+	aspect-ratio: auto 2 / 1;
+}
+
+div.iframe-container > iframe:not(.h5p) {
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+iframe.sphinx:not(.no-blend) {
+	background: transparent;
+	mix-blend-mode: darken;
+}
+
+html[data-theme=dark] iframe.sphinx:not(.no-blend) {
+	filter: invert(1) hue-rotate(180deg) saturate(1.5);
+	background: transparent;
+	mix-blend-mode: lighten;
+}
+
+iframe.sphinx.no-blend:not(.video) {
+	background: #ffffff;
+	border-radius: .25rem;
+}
+
+iframe.sphinx.no-blend.video {
+	background: transparent;
+	border-radius: .25rem;
+}

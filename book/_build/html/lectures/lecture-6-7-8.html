@@ -1,0 +1,1147 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Depth Estimation using Stereo Vision &#8212; CSE 4/573 - Computer Vision and Image Processing</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe.css?v=9bca0c2f" />
+    <link rel="stylesheet" type="text/css" href="../_static/code.css?v=1719a5f1" />
+    <link rel="stylesheet" type="text/css" href="../_static/image_dark_mode.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_iframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tippy.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tb_cc.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/HighContrast.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/OpenDyslexic.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/SVGstyling.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fix_admonition_style.css?v=8627ce31" />
+    <link rel="stylesheet" type="text/css" href="../_static/fix_dropdown_style.css?v=f3461767" />
+    <link rel="stylesheet" type="text/css" href="../_static/fix_code_header_style.css?v=7d542921" />
+    <link rel="stylesheet" type="text/css" href="../_static/color.css?v=ec3aa8b1" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/h5p-resizer.js"></script>
+    <script>let enableFont = 'Enable';</script>
+    <script>let disableFont = 'Disable';</script>
+    <script>let enableContrast = 'Enable high contrast';</script>
+    <script>let disableContrast = 'Disable high contrast';</script>
+    <script src="../_static/Accessibility.js"></script>
+    <script defer="defer" src="../_static/refresh.js?v=9bea9b76"></script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script defer="defer" src="../_static/sphinx-thebe-lite.js?v=94e8009d"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>let enableFont = 'Enable';</script>
+    <script>let disableFont = 'Disable';</script>
+    <script>let enableContrast = 'Enable high contrast';</script>
+    <script>let disableContrast = 'Disable high contrast';</script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script defer="defer" src="../_static/tippy/lectures/lecture-6-7-8.71387a73-9e2d-4d60-9581-b14245e6d4d9.js"></script>
+    <script>window.MathJax = {"chtml": {"mtextInheritFont": true}, "tex": {"macros": {"black": ["\\class{black}{#1}", 1], "silver": ["\\class{silver}{#1}", 1], "gray": ["\\class{gray}{#1}", 1], "white": ["\\class{white}{#1}", 1], "maroon": ["\\class{maroon}{#1}", 1], "red": ["\\class{red}{#1}", 1], "purple": ["\\class{purple}{#1}", 1], "fuchsia": ["\\class{fuchsia}{#1}", 1], "green": ["\\class{green}{#1}", 1], "lime": ["\\class{lime}{#1}", 1], "olive": ["\\class{olive}{#1}", 1], "yellow": ["\\class{yellow}{#1}", 1], "navy": ["\\class{navy}{#1}", 1], "blue": ["\\class{blue}{#1}", 1], "teal": ["\\class{teal}{#1}", 1], "aqua": ["\\class{aqua}{#1}", 1], "aliceblue": ["\\class{aliceblue}{#1}", 1], "antiquewhite": ["\\class{antiquewhite}{#1}", 1], "aquamarine": ["\\class{aquamarine}{#1}", 1], "azure": ["\\class{azure}{#1}", 1], "beige": ["\\class{beige}{#1}", 1], "bisque": ["\\class{bisque}{#1}", 1], "blanchedalmond": ["\\class{blanchedalmond}{#1}", 1], "blueviolet": ["\\class{blueviolet}{#1}", 1], "brown": ["\\class{brown}{#1}", 1], "burlywood": ["\\class{burlywood}{#1}", 1], "cadetblue": ["\\class{cadetblue}{#1}", 1], "chartreuse": ["\\class{chartreuse}{#1}", 1], "chocolate": ["\\class{chocolate}{#1}", 1], "coral": ["\\class{coral}{#1}", 1], "cornflowerblue": ["\\class{cornflowerblue}{#1}", 1], "cornsilk": ["\\class{cornsilk}{#1}", 1], "crimson": ["\\class{crimson}{#1}", 1], "cyan": ["\\class{cyan}{#1}", 1], "darkblue": ["\\class{darkblue}{#1}", 1], "darkcyan": ["\\class{darkcyan}{#1}", 1], "darkgoldenrod": ["\\class{darkgoldenrod}{#1}", 1], "darkgray": ["\\class{darkgray}{#1}", 1], "darkgreen": ["\\class{darkgreen}{#1}", 1], "darkgrey": ["\\class{darkgrey}{#1}", 1], "darkkhaki": ["\\class{darkkhaki}{#1}", 1], "darkmagenta": ["\\class{darkmagenta}{#1}", 1], "darkolivegreen": ["\\class{darkolivegreen}{#1}", 1], "darkorange": ["\\class{darkorange}{#1}", 1], "darkorchid": ["\\class{darkorchid}{#1}", 1], "darkred": ["\\class{darkred}{#1}", 1], "darksalmon": ["\\class{darksalmon}{#1}", 1], "darkseagreen": ["\\class{darkseagreen}{#1}", 1], "darkslateblue": ["\\class{darkslateblue}{#1}", 1], "darkslategray": ["\\class{darkslategray}{#1}", 1], "darkslategrey": ["\\class{darkslategrey}{#1}", 1], "darkturquoise": ["\\class{darkturquoise}{#1}", 1], "darkviolet": ["\\class{darkviolet}{#1}", 1], "deeppink": ["\\class{deeppink}{#1}", 1], "deepskyblue": ["\\class{deepskyblue}{#1}", 1], "dimgray": ["\\class{dimgray}{#1}", 1], "dimgrey": ["\\class{dimgrey}{#1}", 1], "dodgerblue": ["\\class{dodgerblue}{#1}", 1], "firebrick": ["\\class{firebrick}{#1}", 1], "floralwhite": ["\\class{floralwhite}{#1}", 1], "forestgreen": ["\\class{forestgreen}{#1}", 1], "gainsboro": ["\\class{gainsboro}{#1}", 1], "ghostwhite": ["\\class{ghostwhite}{#1}", 1], "gold": ["\\class{gold}{#1}", 1], "goldenrod": ["\\class{goldenrod}{#1}", 1], "greenyellow": ["\\class{greenyellow}{#1}", 1], "grey": ["\\class{grey}{#1}", 1], "honeydew": ["\\class{honeydew}{#1}", 1], "hotpink": ["\\class{hotpink}{#1}", 1], "indianred": ["\\class{indianred}{#1}", 1], "indigo": ["\\class{indigo}{#1}", 1], "ivory": ["\\class{ivory}{#1}", 1], "khaki": ["\\class{khaki}{#1}", 1], "lavender": ["\\class{lavender}{#1}", 1], "lavenderblush": ["\\class{lavenderblush}{#1}", 1], "lawngreen": ["\\class{lawngreen}{#1}", 1], "lemonchiffon": ["\\class{lemonchiffon}{#1}", 1], "lightblue": ["\\class{lightblue}{#1}", 1], "lightcoral": ["\\class{lightcoral}{#1}", 1], "lightcyan": ["\\class{lightcyan}{#1}", 1], "lightgoldenrodyellow": ["\\class{lightgoldenrodyellow}{#1}", 1], "lightgray": ["\\class{lightgray}{#1}", 1], "lightgreen": ["\\class{lightgreen}{#1}", 1], "lightgrey": ["\\class{lightgrey}{#1}", 1], "lightpink": ["\\class{lightpink}{#1}", 1], "lightsalmon": ["\\class{lightsalmon}{#1}", 1], "lightseagreen": ["\\class{lightseagreen}{#1}", 1], "lightskyblue": ["\\class{lightskyblue}{#1}", 1], "lightslategray": ["\\class{lightslategray}{#1}", 1], "lightslategrey": ["\\class{lightslategrey}{#1}", 1], "lightsteelblue": ["\\class{lightsteelblue}{#1}", 1], "lightyellow": ["\\class{lightyellow}{#1}", 1], "limegreen": ["\\class{limegreen}{#1}", 1], "linen": ["\\class{linen}{#1}", 1], "magenta": ["\\class{magenta}{#1}", 1], "mediumaquamarine": ["\\class{mediumaquamarine}{#1}", 1], "mediumblue": ["\\class{mediumblue}{#1}", 1], "mediumorchid": ["\\class{mediumorchid}{#1}", 1], "mediumpurple": ["\\class{mediumpurple}{#1}", 1], "mediumseagreen": ["\\class{mediumseagreen}{#1}", 1], "mediumslateblue": ["\\class{mediumslateblue}{#1}", 1], "mediumspringgreen": ["\\class{mediumspringgreen}{#1}", 1], "mediumturquoise": ["\\class{mediumturquoise}{#1}", 1], "mediumvioletred": ["\\class{mediumvioletred}{#1}", 1], "midnightblue": ["\\class{midnightblue}{#1}", 1], "mintcream": ["\\class{mintcream}{#1}", 1], "mistyrose": ["\\class{mistyrose}{#1}", 1], "moccasin": ["\\class{moccasin}{#1}", 1], "navajowhite": ["\\class{navajowhite}{#1}", 1], "oldlace": ["\\class{oldlace}{#1}", 1], "olivedrab": ["\\class{olivedrab}{#1}", 1], "orange": ["\\class{orange}{#1}", 1], "orangered": ["\\class{orangered}{#1}", 1], "orchid": ["\\class{orchid}{#1}", 1], "palegoldenrod": ["\\class{palegoldenrod}{#1}", 1], "palegreen": ["\\class{palegreen}{#1}", 1], "paleturquoise": ["\\class{paleturquoise}{#1}", 1], "palevioletred": ["\\class{palevioletred}{#1}", 1], "papayawhip": ["\\class{papayawhip}{#1}", 1], "peachpuff": ["\\class{peachpuff}{#1}", 1], "peru": ["\\class{peru}{#1}", 1], "pink": ["\\class{pink}{#1}", 1], "plum": ["\\class{plum}{#1}", 1], "powderblue": ["\\class{powderblue}{#1}", 1], "rebeccapurple": ["\\class{rebeccapurple}{#1}", 1], "rosybrown": ["\\class{rosybrown}{#1}", 1], "royalblue": ["\\class{royalblue}{#1}", 1], "saddlebrown": ["\\class{saddlebrown}{#1}", 1], "salmon": ["\\class{salmon}{#1}", 1], "sandybrown": ["\\class{sandybrown}{#1}", 1], "seagreen": ["\\class{seagreen}{#1}", 1], "seashell": ["\\class{seashell}{#1}", 1], "sienna": ["\\class{sienna}{#1}", 1], "skyblue": ["\\class{skyblue}{#1}", 1], "slateblue": ["\\class{slateblue}{#1}", 1], "slategray": ["\\class{slategray}{#1}", 1], "slategrey": ["\\class{slategrey}{#1}", 1], "snow": ["\\class{snow}{#1}", 1], "springgreen": ["\\class{springgreen}{#1}", 1], "steelblue": ["\\class{steelblue}{#1}", 1], "tan": ["\\class{tan}{#1}", 1], "thistle": ["\\class{thistle}{#1}", 1], "tomato": ["\\class{tomato}{#1}", 1], "turquoise": ["\\class{turquoise}{#1}", 1], "violet": ["\\class{violet}{#1}", 1], "wheat": ["\\class{wheat}{#1}", 1], "whitesmoke": ["\\class{whitesmoke}{#1}", 1], "yellowgreen": ["\\class{yellowgreen}{#1}", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/lecture-6-7-8';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/analytics.js?v=b6170321"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Feature Detection and Extraction" href="lecture-9.html" />
+    <link rel="prev" title="Image Processing (Part 2) Fourier Domain" href="lecture-5.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="October 23, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../_static/logo_dark.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">CSE 4/573 - CVIP</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">About the Instructor</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://naresh-ub.github.io">👨🏻‍🏫 Naresh Kumar Devulapally</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Logistics and Weekly Schedule</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://buffalo.app.box.com/embed/s/agqkobz1pl5dynjiohwchybpnq5ke9py?sortColumn=date">🎥 Lecture Recordings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../course-schedule.html">⏰ Course Schedule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../website-features.html">Website Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../capstone-project.html">Capstone Project Details and Deliverables</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Content</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lecture-1.html">What is a Pixel and what is an Image?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-2-3.html">How is an image formed?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-4.html">Image Processing (Part 1) Spatial Domain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-5.html">Image Processing (Part 2) Fourier Domain</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Depth Estimation using Stereo Vision</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lecture-9.html">Feature Detection and Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-10-11.html">Computer Vision applications with Neural Networks</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lecture-12.html">Intro to GenAI: What is a Data Distribution?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-13.html">Feature Extractors for Generative Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-14.html">Conditional VAEs, GANs and Conditional GANs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-15.html">Diffusion Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture-16.html">Diffusion Model on Swiss Roll (DDPM) - PyTorch Code</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="lecture-17.html">Conditional Diffusion Models</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/naresh-ub/cvip/blob/main/book/lectures/lecture-6-7-8.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/naresh-ub/cvip" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/lecture-6-7-8.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Depth Estimation using Stereo Vision</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Depth Estimation using Stereo Vision</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-stereo-vision">What is Stereo Vision?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-do-we-need-depth-estimation">Why Do We Need Depth Estimation?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-does-stereo-vision-work">How Does Stereo Vision Work?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-basic-depth-formula">The Basic Depth Formula</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#epipolar-geometry">Epipolar Geometry</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-human-vision">Example: Human Vision</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-of-classical-stereo-vision">Advantages of Classical Stereo Vision</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges-in-stereo-vision">Challenges in Stereo Vision</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-stereo-vision">When to Use Stereo Vision</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fetch-stereo-images">1. Fetch Stereo Images</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#detect-corners">2. Detect Corners</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#extract-image-patches">3. Extract Image Patches</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#match-patches">4. Match Patches</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#estimate-fundamental-matrix-using-ransac">5. Estimate Fundamental Matrix using RANSAC</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-epipolar-lines">6. Visualize Epipolar Lines</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-dense-disparity-map">7. Compute Dense Disparity Map</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="depth-estimation-using-stereo-vision">
+<h1>Depth Estimation using Stereo Vision<a class="headerlink" href="#depth-estimation-using-stereo-vision" title="Link to this heading">#</a></h1>
+<div class="tip admonition">
+<p class="admonition-title">Use the Live Code feature on this page using the <i class="fas fa-rocket"></i> icon on top.</p>
+<p>Live Code feature works on this page.</p>
+</div>
+<div>
+<iframe src="https://slides.com/naresh-ub/cvip-lec-6-7-8/embed" width="100%" height="500" title="Test Title" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div><section id="what-is-stereo-vision">
+<h2>What is Stereo Vision?<a class="headerlink" href="#what-is-stereo-vision" title="Link to this heading">#</a></h2>
+<p>Stereo vision is a <strong>classical computer vision technique</strong> that mimics human binocular vision to perceive depth. Just like your left and right eyes capture slightly different views of the world, two cameras placed at slightly different positions observe the same scene from different angles.</p>
+<blockquote>
+<div><p><strong>Key Idea:</strong> The difference in the position of the same point in two images is called <strong>disparity</strong>, and it is the foundation for estimating depth.</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="why-do-we-need-depth-estimation">
+<h2>Why Do We Need Depth Estimation?<a class="headerlink" href="#why-do-we-need-depth-estimation" title="Link to this heading">#</a></h2>
+<p>Depth estimation answers a fundamental question in computer vision:</p>
+<blockquote>
+<div><p><em>“How far is each point in the scene from the camera?”</em></p>
+</div></blockquote>
+<p>This is critical for:</p>
+<ul class="simple">
+<li><p><strong>Autonomous vehicles:</strong> Understanding the 3D layout of the road.</p></li>
+<li><p><strong>Robotics:</strong> Navigating and interacting with objects.</p></li>
+<li><p><strong>Augmented Reality (AR):</strong> Anchoring virtual objects realistically.</p></li>
+<li><p><strong>3D Reconstruction:</strong> Building point clouds or 3D meshes from images.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="how-does-stereo-vision-work">
+<h2>How Does Stereo Vision Work?<a class="headerlink" href="#how-does-stereo-vision-work" title="Link to this heading">#</a></h2>
+<p>Stereo vision works through these main steps:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Step</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p><strong>Capture Images:</strong> Use two cameras with a known baseline (distance between them).</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p><strong>Rectify Images:</strong> Align the images so that corresponding points lie on the same horizontal line (epipolar constraint).</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p><strong>Find Correspondences:</strong> Match each pixel in the left image to its counterpart in the right image.</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p><strong>Compute Disparity:</strong> Measure how much a point shifts between the two images.</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p><strong>Estimate Depth:</strong> Use the disparity and camera parameters to calculate depth.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="the-basic-depth-formula">
+<h2>The Basic Depth Formula<a class="headerlink" href="#the-basic-depth-formula" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Depth (<span class="math notranslate nohighlight">\(Z\)</span>)</strong> is inversely proportional to <strong>Disparity (<span class="math notranslate nohighlight">\(d\)</span>)</strong>.</p>
+</div></blockquote>
+<p><img alt="" src="../_images/stereo-vision-simple.png" /></p>
+<p>The core relationship is:</p>
+<div class="math notranslate nohighlight">
+\[
+Z = \frac{f \cdot T}{d}
+\]</div>
+<p><strong>Where:</strong></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(Z = \)</span> Depth of the point.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f = \)</span> Focal length of the camera.</p></li>
+<li><p><span class="math notranslate nohighlight">\(T = \)</span> Baseline distance between the two cameras.</p></li>
+<li><p><span class="math notranslate nohighlight">\(d = x_l - x_r\)</span> Disparity (pixel difference).</p></li>
+</ul>
+<blockquote>
+<div><p><strong>Note:</strong> The greater the disparity, the closer the object is.</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="epipolar-geometry">
+<h2>Epipolar Geometry<a class="headerlink" href="#epipolar-geometry" title="Link to this heading">#</a></h2>
+<p><img alt="" src="../_images/epipolar-geometry.png" /></p>
+</section>
+<section id="example-human-vision">
+<h2>Example: Human Vision<a class="headerlink" href="#example-human-vision" title="Link to this heading">#</a></h2>
+<p>Humans naturally perform stereo depth estimation:</p>
+<ul class="simple">
+<li><p>Our eyes are about 6–7 cm apart.</p></li>
+<li><p>The brain matches points from each eye’s image.</p></li>
+<li><p>It computes disparity and infers depth almost instantly.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="advantages-of-classical-stereo-vision">
+<h2>Advantages of Classical Stereo Vision<a class="headerlink" href="#advantages-of-classical-stereo-vision" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Passive:</strong> No need for active sensors like LiDAR.</p></li>
+<li><p><strong>Low Cost:</strong> Uses simple cameras.</p></li>
+<li><p><strong>Dense Depth:</strong> Provides pixel-wise depth map.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="challenges-in-stereo-vision">
+<h2>Challenges in Stereo Vision<a class="headerlink" href="#challenges-in-stereo-vision" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Challenges</strong></p>
+<ul class="simple">
+<li><p><strong>Textureless Regions:</strong> Hard to find matches.</p></li>
+<li><p><strong>Occlusions:</strong> Some points visible in one image may be hidden in the other.</p></li>
+<li><p><strong>Lighting Changes:</strong> Shadows and reflections can confuse matching.</p></li>
+<li><p><strong>Calibration:</strong> Requires precise knowledge of camera parameters.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="when-to-use-stereo-vision">
+<h2>When to Use Stereo Vision<a class="headerlink" href="#when-to-use-stereo-vision" title="Link to this heading">#</a></h2>
+<p>Stereo vision is ideal when:</p>
+<ul class="simple">
+<li><p>You have good textured scenes.</p></li>
+<li><p>You need dense depth information.</p></li>
+<li><p>You can ensure well-calibrated, synchronized cameras.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
+<p>In the upcoming sections, we will cover:</p>
+<ul class="simple">
+<li><p><strong>Epipolar Geometry</strong></p></li>
+<li><p><strong>Fundamental &amp; Essential Matrices</strong></p></li>
+<li><p><strong>Rectification</strong></p></li>
+<li><p><strong>Block Matching Algorithms</strong></p></li>
+<li><p><strong>Depth Map Visualization</strong></p></li>
+<li><p><strong>Practical Python Implementations</strong></p></li>
+</ul>
+<p>Let’s dive deeper into the geometry that makes all this possible.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="fetch-stereo-images">
+<h1>1. Fetch Stereo Images<a class="headerlink" href="#fetch-stereo-images" title="Link to this heading">#</a></h1>
+<p>We use two stereo images (<code class="docutils literal notranslate"><span class="pre">Left</span></code> and <code class="docutils literal notranslate"><span class="pre">Right</span></code>) from the Tsukuba stereo dataset.
+In <strong>offline mode</strong>, we use <code class="docutils literal notranslate"><span class="pre">imageio</span></code> to fetch them directly from a URL.</p>
+<p>The same images are used for both online and offline modes to ensure consistent results.</p>
+<div class="cell tag_hide-input tag_thebe-init docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cv</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">imageio.v3</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">iio</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BytesIO</span>
+
+<span class="c1"># Async Pyodide fetch function</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">read_image_online</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pyodide.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyfetch</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="k">await</span> <span class="n">pyfetch</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">(</span><span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">bytes</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">iio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="c1"># Offline standard fetch function</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_image_offline</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">iio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="c1"># Async load &amp; show for online</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">load_and_show_online</span><span class="p">(</span><span class="n">left_url</span><span class="p">,</span> <span class="n">right_url</span><span class="p">):</span>
+    <span class="n">imgL</span> <span class="o">=</span> <span class="k">await</span> <span class="n">read_image_online</span><span class="p">(</span><span class="n">left_url</span><span class="p">)</span>
+    <span class="n">imgR</span> <span class="o">=</span> <span class="k">await</span> <span class="n">read_image_online</span><span class="p">(</span><span class="n">right_url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">imgL</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">imgL</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">imgL</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">imgR</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">imgR</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">imgR</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imgL</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Left Image&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imgR</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Right Image&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">imgL</span><span class="p">,</span> <span class="n">imgR</span>
+
+<span class="c1"># Load &amp; show for offline</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_and_show_offline</span><span class="p">(</span><span class="n">left_url</span><span class="p">,</span> <span class="n">right_url</span><span class="p">):</span>
+    <span class="n">imgL</span> <span class="o">=</span> <span class="n">read_image_offline</span><span class="p">(</span><span class="n">left_url</span><span class="p">)</span>
+    <span class="n">imgR</span> <span class="o">=</span> <span class="n">read_image_offline</span><span class="p">(</span><span class="n">right_url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">imgL</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">imgL</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">imgL</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">imgR</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">imgR</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">imgR</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imgL</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Left Image&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imgR</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Right Image&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">imgL</span><span class="p">,</span> <span class="n">imgR</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set flag and stereo pair URLs</span>
+<span class="n">online</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Toggle True/False</span>
+
+<span class="n">LEFT</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/canberkgurel/DisparityMapfromStereoPair/master/tsukuba_l.png&quot;</span>
+<span class="n">RIGHT</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/canberkgurel/DisparityMapfromStereoPair/master/tsukuba_r.png&quot;</span>
+
+<span class="k">if</span> <span class="n">online</span><span class="p">:</span>
+    <span class="n">imgL</span><span class="p">,</span> <span class="n">imgR</span> <span class="o">=</span> <span class="k">await</span> <span class="n">load_and_show_online</span><span class="p">(</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">RIGHT</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">imgL</span><span class="p">,</span> <span class="n">imgR</span> <span class="o">=</span> <span class="n">load_and_show_offline</span><span class="p">(</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">RIGHT</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/663e72a6c0ab5aa67c558ec43155d247cb392087cd1657a5ec23a805aeedc25c.png" src="../_images/663e72a6c0ab5aa67c558ec43155d247cb392087cd1657a5ec23a805aeedc25c.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="detect-corners">
+<h1>2. Detect Corners<a class="headerlink" href="#detect-corners" title="Link to this heading">#</a></h1>
+<p>We use the <code class="docutils literal notranslate"><span class="pre">detect_corners</span></code> function to find good feature points (corners) in both images.
+These corners will be used to estimate correspondences and the Fundamental Matrix.</p>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">detect_corners</span><span class="p">(</span><span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                   <span class="n">max_corners</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+                   <span class="n">quality</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+                   <span class="n">min_dist</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="n">corners</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">goodFeaturesToTrack</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">max_corners</span><span class="p">,</span> <span class="n">quality</span><span class="p">,</span> <span class="n">min_dist</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">corners</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Detect corners in both images</span>
+<span class="n">cL</span> <span class="o">=</span> <span class="n">detect_corners</span><span class="p">(</span><span class="n">imgL</span><span class="p">)</span>
+<span class="n">cR</span> <span class="o">=</span> <span class="n">detect_corners</span><span class="p">(</span><span class="n">imgR</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cL</span><span class="p">)</span><span class="si">}</span><span class="s2"> corners in Left image.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cR</span><span class="p">)</span><span class="si">}</span><span class="s2"> corners in Right image.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Detected 336 corners in Left image.
+Detected 342 corners in Right image.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="extract-image-patches">
+<h1>3. Extract Image Patches<a class="headerlink" href="#extract-image-patches" title="Link to this heading">#</a></h1>
+<p>Around each detected corner, we extract a small square patch.
+These patches help us compare local regions and match points between the two images.</p>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">extract_patches</span><span class="p">(</span><span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                    <span class="n">pts</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                    <span class="n">patch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">21</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+    <span class="n">half</span> <span class="o">=</span> <span class="n">patch_size</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">patches</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">pts</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">y</span> <span class="o">-</span> <span class="n">half</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">y</span> <span class="o">+</span> <span class="n">half</span> <span class="o">&gt;=</span> <span class="n">h</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">-</span> <span class="n">half</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">+</span> <span class="n">half</span> <span class="o">&gt;=</span> <span class="n">w</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">patches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="n">y</span> <span class="o">-</span> <span class="n">half</span><span class="p">:</span><span class="n">y</span> <span class="o">+</span> <span class="n">half</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="n">half</span><span class="p">:</span><span class="n">x</span> <span class="o">+</span> <span class="n">half</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+        <span class="n">valid</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">patches</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">valid</span><span class="p">)</span>
+
+<span class="c1"># Extract patches</span>
+<span class="n">pL</span><span class="p">,</span> <span class="n">ptsL</span> <span class="o">=</span> <span class="n">extract_patches</span><span class="p">(</span><span class="n">imgL</span><span class="p">,</span> <span class="n">cL</span><span class="p">)</span>
+<span class="n">pR</span><span class="p">,</span> <span class="n">ptsR</span> <span class="o">=</span> <span class="n">extract_patches</span><span class="p">(</span><span class="n">imgR</span><span class="p">,</span> <span class="n">cR</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Extracted </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pL</span><span class="p">)</span><span class="si">}</span><span class="s2"> valid patches from Left image.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Extracted </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pR</span><span class="p">)</span><span class="si">}</span><span class="s2"> valid patches from Right image.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Extracted 286 valid patches from Left image.
+Extracted 287 valid patches from Right image.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="match-patches">
+<h1>4. Match Patches<a class="headerlink" href="#match-patches" title="Link to this heading">#</a></h1>
+<p>For each patch in the Left image, find the most similar patch in the Right image.
+We use the Sum of Squared Differences (SSD) to measure similarity.</p>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">match_patches</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">pts1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">pts2</span><span class="p">,</span> <span class="n">max_ssd</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e6</span><span class="p">):</span>
+    <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">d1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">p1</span><span class="p">):</span>
+        <span class="n">errs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">p2</span> <span class="o">-</span> <span class="n">d1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">errs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">errs</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">max_ssd</span><span class="p">:</span>
+            <span class="n">m1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pts1</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">m2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pts2</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">m1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">m2</span><span class="p">)</span>
+
+<span class="c1"># Match features</span>
+<span class="n">pts1</span><span class="p">,</span> <span class="n">pts2</span> <span class="o">=</span> <span class="n">match_patches</span><span class="p">(</span><span class="n">pL</span><span class="p">,</span> <span class="n">ptsL</span><span class="p">,</span> <span class="n">pR</span><span class="p">,</span> <span class="n">ptsR</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Matched </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pts1</span><span class="p">)</span><span class="si">}</span><span class="s2"> feature pairs.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Matched 286 feature pairs.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="estimate-fundamental-matrix-using-ransac">
+<h1>5. Estimate Fundamental Matrix using RANSAC<a class="headerlink" href="#estimate-fundamental-matrix-using-ransac" title="Link to this heading">#</a></h1>
+<p>Use the Eight-Point Algorithm with RANSAC to robustly estimate the Fundamental Matrix (F).
+This matrix describes the epipolar geometry between the two views.</p>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">normalize_points</span><span class="p">(</span><span class="n">pts</span><span class="p">):</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">pts</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">pts</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">s</span> <span class="o">*</span> <span class="n">mean</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="o">-</span><span class="n">s</span> <span class="o">*</span> <span class="n">mean</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+    <span class="n">ph</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">pts</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">),</span> <span class="mi">1</span><span class="p">))])</span>
+    <span class="n">pn</span> <span class="o">=</span> <span class="p">(</span><span class="n">T</span> <span class="o">@</span> <span class="n">ph</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">return</span> <span class="n">pn</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">T</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">eight_point_algorithm</span><span class="p">(</span><span class="n">pts1</span><span class="p">,</span> <span class="n">pts2</span><span class="p">):</span>
+    <span class="n">p1n</span><span class="p">,</span> <span class="n">T1</span> <span class="o">=</span> <span class="n">normalize_points</span><span class="p">(</span><span class="n">pts1</span><span class="p">)</span>
+    <span class="n">p2n</span><span class="p">,</span> <span class="n">T2</span> <span class="o">=</span> <span class="n">normalize_points</span><span class="p">(</span><span class="n">pts2</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">pts1</span><span class="p">),</span> <span class="mi">9</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">p1n</span><span class="p">):</span>
+        <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">p2n</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x1</span> <span class="o">*</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">y2</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span>
+                <span class="n">y1</span> <span class="o">*</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y1</span> <span class="o">*</span> <span class="n">y2</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span>
+                <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">Vt</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vt2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+    <span class="n">S</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">S</span><span class="p">)</span> <span class="o">@</span> <span class="n">Vt2</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">T2</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">F</span> <span class="o">@</span> <span class="n">T1</span>
+    <span class="k">return</span> <span class="n">F</span> <span class="o">/</span> <span class="n">F</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_fundamental_ransac</span><span class="p">(</span><span class="n">pts1</span><span class="p">,</span> <span class="n">pts2</span><span class="p">,</span> <span class="n">iters</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">):</span>
+    <span class="n">best_in</span><span class="p">,</span> <span class="n">bestF</span> <span class="o">=</span> <span class="p">[],</span> <span class="kc">None</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pts1</span><span class="p">)</span>
+    <span class="n">h1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">pts1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">))])</span>
+    <span class="n">h2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">pts2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">))])</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iters</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">Fc</span> <span class="o">=</span> <span class="n">eight_point_algorithm</span><span class="p">(</span><span class="n">pts1</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">pts2</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+        <span class="n">l2</span> <span class="o">=</span> <span class="p">(</span><span class="n">Fc</span> <span class="o">@</span> <span class="n">h1</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">l1</span> <span class="o">=</span> <span class="p">(</span><span class="n">Fc</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">h2</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">h2</span> <span class="o">*</span> <span class="p">(</span><span class="n">Fc</span> <span class="o">@</span> <span class="n">h1</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="n">l2</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">l2</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">l1</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">l1</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">errs</span> <span class="o">=</span> <span class="n">num</span> <span class="o">/</span> <span class="n">denom</span>
+        <span class="n">inliers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">errs</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inliers</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">best_in</span><span class="p">):</span>
+            <span class="n">best_in</span><span class="p">,</span> <span class="n">bestF</span> <span class="o">=</span> <span class="n">inliers</span><span class="p">,</span> <span class="n">Fc</span>
+    <span class="k">if</span> <span class="n">bestF</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;RANSAC failed&quot;</span><span class="p">)</span>
+    <span class="n">Fref</span> <span class="o">=</span> <span class="n">eight_point_algorithm</span><span class="p">(</span><span class="n">pts1</span><span class="p">[</span><span class="n">best_in</span><span class="p">],</span> <span class="n">pts2</span><span class="p">[</span><span class="n">best_in</span><span class="p">])</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">mask</span><span class="p">[</span><span class="n">best_in</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">Fref</span> <span class="o">/</span> <span class="n">Fref</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">mask</span>
+
+<span class="c1"># Estimate Fundamental Matrix</span>
+<span class="n">F</span><span class="p">,</span> <span class="n">mask</span> <span class="o">=</span> <span class="n">compute_fundamental_ransac</span><span class="p">(</span><span class="n">pts1</span><span class="p">,</span> <span class="n">pts2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated Fundamental Matrix (F):</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">F</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated Fundamental Matrix (F):
+ [[ 1.91885542e-34 -8.52778334e-19  1.08945687e-16]
+ [ 4.71454216e-19  3.24828766e-18 -1.80739425e-01]
+ [-9.95691761e-17  1.73685384e-01  1.00000000e+00]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="visualize-epipolar-lines">
+<h1>6. Visualize Epipolar Lines<a class="headerlink" href="#visualize-epipolar-lines" title="Link to this heading">#</a></h1>
+<p>For matched points, draw the corresponding epipolar lines on both images.
+Correct matches should lie close to their corresponding epipolar lines.</p>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">draw_epipolar_lines</span><span class="p">(</span><span class="n">img1</span><span class="p">,</span> <span class="n">img2</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">pts1</span><span class="p">,</span> <span class="n">pts2</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">max_lines</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">in1</span> <span class="o">=</span> <span class="n">pts1</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">in2</span> <span class="o">=</span> <span class="n">pts2</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">in1</span><span class="p">),</span> <span class="n">max_lines</span><span class="p">)</span>
+    <span class="n">in1</span><span class="p">,</span> <span class="n">in2</span> <span class="o">=</span> <span class="n">in1</span><span class="p">[:</span><span class="n">k</span><span class="p">],</span> <span class="n">in2</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">l1</span> <span class="o">=</span> <span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">in2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="mi">1</span><span class="p">))])</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">l2</span> <span class="o">=</span> <span class="p">(</span><span class="n">F</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">in1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="mi">1</span><span class="p">))])</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">pts</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+        <span class="n">axes</span><span class="p">,</span> <span class="p">[</span><span class="n">img1</span><span class="p">,</span> <span class="n">img2</span><span class="p">],</span> <span class="p">[</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">],</span> <span class="p">[</span><span class="n">in1</span><span class="p">,</span> <span class="n">in2</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+        <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">pts</span><span class="p">):</span>
+            <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">w</span>
+            <span class="n">y0</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">x0</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span>
+            <span class="n">y1</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">x1</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">],</span> <span class="p">[</span><span class="n">y0</span><span class="p">,</span> <span class="n">y1</span><span class="p">],</span> <span class="n">col</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Epipolar Lines&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Draw epipolar lines</span>
+<span class="n">draw_epipolar_lines</span><span class="p">(</span><span class="n">imgL</span><span class="p">,</span> <span class="n">imgR</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">pts1</span><span class="p">,</span> <span class="n">pts2</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/31512fb699ac0fe01bc28f1cc0c04b9ad5ca7c6ced4a81e8a4d4acfcdfdf325c.png" src="../_images/31512fb699ac0fe01bc28f1cc0c04b9ad5ca7c6ced4a81e8a4d4acfcdfdf325c.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="compute-dense-disparity-map">
+<h1>7. Compute Dense Disparity Map<a class="headerlink" href="#compute-dense-disparity-map" title="Link to this heading">#</a></h1>
+<p>Finally, compute the dense disparity map using:</p>
+<ul class="simple">
+<li><p>A <strong>custom block matching implementation</strong>, and</p></li>
+<li><p>OpenCV’s <code class="docutils literal notranslate"><span class="pre">StereoBM</span></code> algorithm for comparison.</p></li>
+</ul>
+<div class="cell tag_thebe-init docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">compute_dense_disparity_fast</span><span class="p">(</span><span class="n">imgL</span><span class="p">,</span> <span class="n">imgR</span><span class="p">,</span> <span class="n">max_disp</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">9</span><span class="p">):</span>
+    <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">imgL</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">best</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_disp</span><span class="p">):</span>
+        <span class="n">shifted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">imgR</span><span class="p">)</span>
+        <span class="n">shifted</span><span class="p">[:,</span> <span class="n">d</span><span class="p">:]</span> <span class="o">=</span> <span class="n">imgR</span><span class="p">[:,</span> <span class="p">:</span><span class="n">w</span> <span class="o">-</span> <span class="n">d</span><span class="p">]</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="p">(</span><span class="n">imgL</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">-</span> <span class="n">shifted</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">boxFilter</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">block_size</span><span class="p">,</span> <span class="n">block_size</span><span class="p">),</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">cost</span> <span class="o">&lt;</span> <span class="n">best</span>
+        <span class="n">disp</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span>
+        <span class="n">best</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">cost</span><span class="p">[</span><span class="n">m</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">disp</span>
+
+<span class="c1"># Compute custom and OpenCV disparity maps</span>
+<span class="n">disp_custom</span> <span class="o">=</span> <span class="n">compute_dense_disparity_fast</span><span class="p">(</span><span class="n">imgL</span><span class="p">,</span> <span class="n">imgR</span><span class="p">,</span> <span class="n">max_disp</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">stereo</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">StereoBM_create</span><span class="p">(</span><span class="n">numDisparities</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">blockSize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">disp_cv</span> <span class="o">=</span> <span class="n">stereo</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">imgL</span><span class="p">,</span> <span class="n">imgR</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">16.0</span>
+
+<span class="c1"># Compare</span>
+<span class="n">diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">disp_cv</span> <span class="o">-</span> <span class="n">disp_custom</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">mat</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axs</span><span class="p">,</span> <span class="p">[</span><span class="n">disp_cv</span><span class="p">,</span> <span class="n">disp_custom</span><span class="p">,</span> <span class="n">diff</span><span class="p">],</span>
+                          <span class="p">[</span><span class="s2">&quot;OpenCV StereoBM&quot;</span><span class="p">,</span> <span class="s2">&quot;Custom Block Matching&quot;</span><span class="p">,</span> <span class="s2">&quot;Absolute Difference&quot;</span><span class="p">]):</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">fraction</span><span class="o">=</span><span class="mf">0.046</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Disparity Map Comparison&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MAE:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">diff</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RMSE:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">diff</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cb0587f746527578fcc1a54f90f0418f4fe33b85a5fcb2526d1b6d58adfbbdee.png" src="../_images/cb0587f746527578fcc1a54f90f0418f4fe33b85a5fcb2526d1b6d58adfbbdee.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MAE: 2.7334013
+RMSE: 5.9511433
+</pre></div>
+</div>
+</div>
+</div>
+<p>This wraps up the <strong>classical stereo vision pipeline</strong>:</p>
+<ol class="arabic simple">
+<li><p>Capture stereo images</p></li>
+<li><p>Detect features</p></li>
+<li><p>Match features</p></li>
+<li><p>Compute the Fundamental Matrix and epipolar geometry</p></li>
+<li><p>Compute a dense disparity map</p></li>
+<li><p>Estimate depth</p></li>
+</ol>
+<p>These core principles form the foundation for modern stereo depth estimation systems.</p>
+</section>
+
+        <script type="text/x-thebe-config">
+        {
+            "rootPath": "..",
+            "requestKernel": true,
+            "useJupyterLite": true,
+            "useBinder": false,
+            "kernelOptions": {
+                "path": "/"
+            },
+            "codeMirrorConfig": {
+                "theme": "default",
+                "mode": "python"
+            },
+            "mountRestartButton": false,
+            "mountRestartallButton": false
+        }
+        </script>
+        <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lecture-5.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Image Processing (Part 2) Fourier Domain</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="lecture-9.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Feature Detection and Extraction</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Depth Estimation using Stereo Vision</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-stereo-vision">What is Stereo Vision?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-do-we-need-depth-estimation">Why Do We Need Depth Estimation?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-does-stereo-vision-work">How Does Stereo Vision Work?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-basic-depth-formula">The Basic Depth Formula</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#epipolar-geometry">Epipolar Geometry</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-human-vision">Example: Human Vision</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-of-classical-stereo-vision">Advantages of Classical Stereo Vision</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges-in-stereo-vision">Challenges in Stereo Vision</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-stereo-vision">When to Use Stereo Vision</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fetch-stereo-images">1. Fetch Stereo Images</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#detect-corners">2. Detect Corners</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#extract-image-patches">3. Extract Image Patches</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#match-patches">4. Match Patches</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#estimate-fundamental-matrix-using-ransac">5. Estimate Fundamental Matrix using RANSAC</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-epipolar-lines">6. Visualize Epipolar Lines</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-dense-disparity-map">7. Compute Dense Disparity Map</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Naresh Devulapally, Summer 2025, UB. Built with Teachbooks.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on October 23, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

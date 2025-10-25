@@ -1,0 +1,57 @@
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('OpenDyslexic-Regular.woff2') format('woff2'),
+    url('OpenDyslexic-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Italic */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('OpenDyslexic-Italic.woff2') format('woff2'),
+    url('OpenDyslexic-Italic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Bold */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('OpenDyslexic-Bold.woff2') format('woff2'),
+    url('OpenDyslexic-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bold Italic */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('OpenDyslexic-Bold-Italic.woff2') format('woff2'),
+    url('OpenDyslexic-Bold-Italic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+body.dyslexic {
+  font-family: OpenDyslexic !important;
+  --pst-font-family-heading: 'OpenDyslexic' !important;
+  --pst-font-family-base: 'OpenDyslexic' !important;
+}
+
+body.dyslexic .logo__title {
+  font-family: OpenDyslexic !important;
+}
+
+body.dyslexic h1,
+body.dyslexic h2,
+body.dyslexic h3,
+body.dyslexic h4,
+body.dyslexic h5,
+body.dyslexic h6 {
+  font-family: OpenDyslexic !important;
+}
