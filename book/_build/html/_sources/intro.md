@@ -53,10 +53,6 @@ This was the first UB course to feature a full diffusion-model module, with all 
   - Ensured **early exposure** to a rapidly evolving research frontier
   - Enabled students to leave with **portfolio-ready projects** demonstrating rigor and creativity
 
-## Course Mentors
-- [Dr. Vishnu Lokhande](https://vlokhande-ub.github.io/): Course Design, Course Content (Generative AI), Syllabus.
-- [Dr. Ifeoma Nwogu](https://engineering.buffalo.edu/home/research/faculty/diverse-faculty.host.html/content/shared/engineering/computer-science-engineering/profiles/faculty/ladder/nwogu-ifeoma.html): Course Design, Course Structure, Syllabus and Assignments.
-
 
 ## Teaching Philosophy and Approach
 
@@ -86,14 +82,18 @@ My teaching centers on intuition, curiosity, and frictionless experimentation th
   - Blended **rigorous theory** with **immediate experimentation**
   - Equipped students to **understand, prototype, and innovate** in modern Computer Vision and Generative AI
 
-## Instructor
+## Instructor and Course Mentors
 
 <table style="width:100%; border-collapse: collapse; border: 1px solid; text-align:center;">
   <tr>
-    <th style="width:33%; border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px;">Instructor</th>
-    <th style="width:33%; border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px;">Website & Email</th>
-    <th style="width:33%; border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px;">Office Hours</th>
+    <th style="width:33%; border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px;">
+      Instructor
+    </th>
+    <th style="width:67%; border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px;">
+      Website &amp; Email / Office Hours
+    </th>
   </tr>
+  <!-- Second row: 2 columns only -->
   <tr>
     <td style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px;">
       <img src="naresh-ub.png" width="80" style="margin-bottom:10px;"/><br>
@@ -101,13 +101,41 @@ My teaching centers on intuition, curiosity, and frictionless experimentation th
     </td>
     <td style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px; line-height:1.6;">
       <a href="https://naresh-ub.github.io">naresh-ub.github.io</a><br>
-      devulapa@buffalo.edu
+      devulapa@buffalo.edu<br>
+      <span style="display:inline-block; margin-top:6px;">
+        <strong>Office Hours:</strong> Tue, Thu: 3:00 PM – 4:00 PM
+      </span>
+    </td>
+  </tr>
+
+  <!-- Course Mentors header row -->
+  <tr>
+    <th colspan="2" style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px;">
+      Course Mentors
+    </th>
+  </tr>
+  <!-- Mentor 1 -->
+  <tr>
+    <td style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px; line-height:1.6;">
+      <a href="https://vlokhande-ub.github.io/">Dr. Vishnu Lokhande</a>
     </td>
     <td style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px; line-height:1.6;">
-      Tue, Thu: 3:00 PM – 4:00 PM
+      Course Design, Course Content (Generative AI), Syllabus
+    </td>
+  </tr>
+  <!-- Mentor 2 -->
+  <tr>
+    <td style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px; line-height:1.6;">
+      <a href="https://engineering.buffalo.edu/home/research/faculty/diverse-faculty.host.html/content/shared/engineering/computer-science-engineering/profiles/faculty/ladder/nwogu-ifeoma.html">
+        Dr. Ifeoma Nwogu
+      </a>
+    </td>
+    <td style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px; line-height:1.6;">
+      Course Design, Course Structure, Syllabus and Assignments
     </td>
   </tr>
 </table>
+
 
 
 ## Important Links
