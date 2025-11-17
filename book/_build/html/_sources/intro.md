@@ -13,15 +13,78 @@
 
 ## About the Course
 
-CSE 4/573: Computer Vision & Generative AI (Summer 2025) at the University at Buffalo offered students a comprehensive journey from **classical computer vision foundations to cutting-edge generative AI**. The curriculum began with the mathematical and physical principles of image formation, camera calibration, and pixel- and frequency-domain image processing, before progressing to geometric methods such as stereo vision, depth estimation, and epipolar geometry. Building on this foundation, students explored modern learning-based approaches, including convolutional neural networks for classification, segmentation, and object detection. **A hallmark of the course was a dedicated generative vision module, covering variational autoencoders, GANs, and diffusion models**, which placed students at the forefront of contemporary computer vision. By the end of the semester, students had achieved both theoretical mastery and practical skills, developing intelligent vision systems using frameworks like OpenCV, TensorFlow, and PyTorch for real-world applications.
+**Overview:**  
+A summer course that takes students from classical computer vision foundations all the way to modern generative models and practical systems.
+
+- Covered the full pipeline from **image formation** to **intelligent vision systems**:
+  - Mathematical and physical principles of **image formation** and **camera calibration**
+  - **Pixel-domain** and **frequency-domain** image processing
+- Introduced **geometric methods** central to 3D understanding:
+  - **Stereo vision** and **depth estimation**
+  - **Epipolar geometry** and related geometric reasoning
+- Transitioned into **learning-based approaches**:
+  - **Convolutional neural networks (CNNs)** for classification, segmentation, and object detection
+- Featured a dedicated **generative vision module**:
+  - **Variational Autoencoders (VAEs)**
+  - **Generative Adversarial Networks (GANs)**
+  - **Diffusion models** and their role in contemporary generative vision
+- Emphasized both **theoretical mastery** and **practical skills**:
+  - Hands-on development of intelligent vision systems
+  - Use of **OpenCV**, **TensorFlow**, and **PyTorch** for real-world applications
+
 
 ## Course Design Experience
 
-As the `first course at the University at Buffalo to incorporate diffusion models in a semester-long module`, CSE 4/573 distinguished itself through its emphasis on generative AI. The course materials for VAEs, GANs, and diffusion models were **created entirely from the ground up, blending intuitive mathematical derivations with from-scratch Python implementations**. Assignments were structured to guide students from foundational generative modeling exercises to advanced explorations, culminating in a [capstone project](capstone-project.ipynb) that challenged them to integrate generative methods into practical applications such as controllable image synthesis and multimodal vision-language systems. This focus on generative AI ensured that students not only gained early exposure to a rapidly evolving research frontier but also left the course with concrete, portfolio-ready projects demonstrating both technical rigor and creativity.
+**Overview:**  
+This was the first UB course to feature a full diffusion-model module, with all generative AI content built from scratch.
+
+- Pioneering focus on **diffusion models** at UB:
+  - First course at the University at Buffalo to include a **semester-long module** on diffusion models
+- Custom-designed **generative modeling curriculum**:
+  - Materials for **VAEs**, **GANs**, and **diffusion models** created entirely from the ground up
+  - Combined **intuitive mathematical derivations** with **from-scratch Python implementations**
+- Scaffolded **assignment design**:
+  - Early assignments on foundational generative modeling concepts
+  - Progression to more advanced explorations of generative techniques
+- Capstone project integrating **generative methods into applications**:
+  - Example themes: controllable image synthesis, multimodal vision-language systems
+  - Linked capstone notebook: [capstone project](capstone-project.ipynb)
+- Outcome-oriented structure:
+  - Ensured **early exposure** to a rapidly evolving research frontier
+  - Enabled students to leave with **portfolio-ready projects** demonstrating rigor and creativity
+
+## Course Mentors
+- [Dr. Vishnu Lokhande](https://vlokhande-ub.github.io/): Course Design, Course Content (Generative AI), Syllabus.
+- [Dr. Ifeoma Nwogu](https://engineering.buffalo.edu/home/research/faculty/diverse-faculty.host.html/content/shared/engineering/computer-science-engineering/profiles/faculty/ladder/nwogu-ifeoma.html): Course Design, Course Structure, Syllabus and Assignments.
+
 
 ## Teaching Philosophy and Approach
 
-My ([Naresh Devulapally](https://naresh-ub.github.io)) teaching approach is rooted in **intuition and curiosity**. To make abstract concepts tangible, I crafted every slide from scratch with rich **visuals, animations, and interactive plots**, reinforcing learning through quizzes and flashcards that promote long-term retention. Curiosity was cultivated through **interactive live coding on any browser** directly , where each algorithm was implemented interactively from first principles in Python, **without requiring students to set up local environments**. To support this, I developed a comprehensive course website powered by [Jupyter Book](https://jupyterbook.org/) and TeachBooks, hosting animated slides via [Reveal.JS](https://revealjs.com/), executable code blocks with [Thebe](https://github.com/executablebooks/thebe), 3D visualizations using [Plotly](https://plotly.com/python/), spaced-repetition flashcards through [JupyterCards](https://github.com/jmshea/jupytercards), and auto-graded practice quizzes. This ecosystem transformed the course into an engaging, hands-on experience that blended rigorous theory with immediate experimentation, equipping students to both understand and innovate in Computer Vision.
+**Overview:**  
+My teaching centers on intuition, curiosity, and frictionless experimentation through a fully interactive, browser-based ecosystem.
+
+- Instructor: **[Naresh Devulapally](https://naresh-ub.github.io)**
+- Core teaching principles:
+  - Rooted in **intuition** and **curiosity** rather than rote memorization
+  - Emphasis on making abstract concepts **tangible and visual**
+- Slide and content design:
+  - Every slide crafted **from scratch**
+  - Rich **visuals**, **animations**, and **interactive plots** to aid understanding
+  - Reinforced learning with **quizzes** and **flashcards** for long-term retention
+- Live coding and interactivity:
+  - **Interactive live coding** in the browser for all major algorithms
+  - Implemented methods **from first principles in Python**
+  - No local setup required: students could experiment **without configuring environments**
+- Course technology stack and website:
+  - Course website built with **[Jupyter Book](https://jupyterbook.org/)** and **TeachBooks**
+  - Slides delivered via **[Reveal.JS](https://revealjs.com/)** for animated, web-native presentations
+  - Executable code blocks powered by **[Thebe](https://github.com/executablebooks/thebe)**
+  - 3D visualizations created with **[Plotly](https://plotly.com/python/)**
+  - Spaced-repetition flashcards via **[JupyterCards](https://github.com/jmshea/jupytercards)**
+  - Auto-graded practice quizzes integrated into the same ecosystem
+- Overall learning experience:
+  - Blended **rigorous theory** with **immediate experimentation**
+  - Equipped students to **understand, prototype, and innovate** in modern Computer Vision and Generative AI
 
 ## Instructor
 
