@@ -30,7 +30,7 @@ name: deploy-book
 # https://jupyterbook.org/v1/publish/gh-pages.html
 
 on:
-  workflow_call:
+  push:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
