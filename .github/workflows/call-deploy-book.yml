@@ -1,24 +1,500 @@
-name: call-deploy-book
+# name: call-deploy-book
+
+# on:
+#   push:
+#     branches:
+#     - '**'
+#     # If your git repository has the Jupyter Book within some-subfolder next to
+#     # unrelated files, you can make this run only if a file within that specific
+#     # folder (or the workflow file itself) has been modified.
+#     #
+#     paths:
+#     - book/**
+#     - requirements.txt
+#     - .github/workflows/call-deploy-book.yml
+#   workflow_dispatch:
+
+# jobs: 
+#   call-workflow:
+#     uses: TeachBooks/deploy-book-workflow/.github/workflows/deploy-book.yml@main
+#     secrets: inherit
+#     permissions:
+#       contents: read
+#       pages: write
+#       id-token: write
+
+
+name: deploy-book
+
+# Based on:
+# https://jupyterbook.org/v1/publish/gh-pages.html
 
 on:
-  push:
-    branches:
-    - '**'
-    # If your git repository has the Jupyter Book within some-subfolder next to
-    # unrelated files, you can make this run only if a file within that specific
-    # folder (or the workflow file itself) has been modified.
-    #
-    paths:
-    - book/**
-    - requirements.txt
-    - .github/workflows/call-deploy-book.yml
-  workflow_dispatch:
+  workflow_call:
 
-jobs: 
-  call-workflow:
-    uses: TeachBooks/deploy-book-workflow/.github/workflows/deploy-book.yml@main
-    secrets: inherit
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GH_TOKEN: ${{ secrets.GH_PAT != '' && secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+  PRIMARY_BRANCH: ${{ vars.PRIMARY_BRANCH != '' && vars.PRIMARY_BRANCH || 'main' }}
+  BEHAVIOR_PRIMARY: ${{ vars.BEHAVIOR_PRIMARY != '' && vars.BEHAVIOR_PRIMARY || 'redirect' }}
+  BRANCH_ALIASES: ${{ vars.BRANCH_ALIASES }}
+  BRANCHES_TO_DEPLOY: ${{ vars.BRANCHES_TO_DEPLOY != '' && vars.BRANCHES_TO_DEPLOY || '*' }}
+  BRANCHES_TO_PREPROCESS: ${{ vars.BRANCHES_TO_PREPROCESS }}
+  BRANCHES_ARCHIVED: ${{ vars.BRANCHES_ARCHIVED }}
+
+jobs:
+  get-branches:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      branches: ${{ steps.set-branches.outputs.branches }}
     permissions:
       contents: read
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - id: set-branches
+      name: Set branches
+      run: |
+        # If all (*), query all remote branches
+        # If not, read from env var
+        if [ "$BRANCHES_TO_DEPLOY" == '*' ]; then
+          branches=$(git branch -r | sed 's,\s*origin/,,g' | grep -v '\->')
+        else
+          branches=$(echo "$BRANCHES_TO_DEPLOY" | tr ' ' '\n' | grep -E '\S')
+        fi
+
+        # Record branch names (one per line) for alias validation
+        echo "$branches" | tr ' ' '\n' > branches.txt
+
+        # Convert to a JSON list
+        branches=$(echo "$branches" | jq -Rn '[inputs]')
+        echo "branches=$(echo $branches)" >> "$GITHUB_OUTPUT"
+
+    - name: Validate aliases
+      run: |
+        # Prepare data
+        echo "$BRANCH_ALIASES" | tr ' ' '\n' > rules.txt
+        cut -d: -f1 rules.txt > aliases.txt
+        cut -d: -f2 rules.txt > targets.txt
+
+        # Alias named as existing branch
+        if grep -E '\S' aliases.txt; then
+          while IFS= read -r alias; do
+            if grep "^$alias$" branches.txt ; then
+              echo "::error ::Alias \"$alias\" given in \$BRANCH_ALIASES conflicts with existing branch."
+              exit 1
+            fi
+          done < aliases.txt
+        fi
+
+        # Non-existent targets
+        if grep -E '\S' targets.txt; then
+          while IFS= read -r target; do
+            if ! grep "^$target$" branches.txt ; then
+              echo "::error ::Branch \"$target\" given in \$BRANCH_ALIASES does not exist."
+              exit 1
+            fi
+          done < targets.txt
+        fi
+
+        # Duplicate aliases
+        if { sort | uniq -d | grep . -qc; } < aliases.txt; then
+          echo "::error ::Duplicate aliases in \$BRANCH_ALIASES: \"$BRANCH_ALIASES\""
+          exit 1
+        fi
+
+  build-books:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: get-branches
+    if: ${{ needs.get-branches.outputs.branches != '[]' }}
+    permissions:
       pages: write
       id-token: write
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        branch: ${{ fromJson(needs.get-branches.outputs.branches) }}
+    steps:
+    - name: Checkout to branch
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ matrix.branch }}
+        token: ${{ env.GH_TOKEN }}
+        submodules: 'true'
+
+    - name: Record extra cache info
+      run: |
+        find book/ -type f >> EXTRA_CACHE_VARS.txt
+        if [ "$BRANCHES_TO_PREPROCESS" == "*" ] || echo "$BRANCHES_TO_PREPROCESS" | tr ' ' '\n' | grep "^${{ matrix.branch }}$"; then
+          echo true >> EXTRA_CACHE_VARS.txt
+        else
+          echo false >> EXTRA_CACHE_VARS.txt
+        fi
+        if echo "$BRANCHES_ARCHIVED" | tr ' ' '\n' | grep "^${{ matrix.branch }}$"; then
+          echo true >> EXTRA_CACHE_VARS.txt
+        else
+          echo false >> EXTRA_CACHE_VARS.txt
+        fi
+        cat EXTRA_CACHE_VARS.txt
+
+    - name: Cache page build
+      id: cache-html
+      uses: actions/cache@v4
+      with:
+        path: "book/_build/html"
+        key: html-build-${{ matrix.branch }}-${{ hashFiles('book/**', 'requirements.txt', 'EXTRA_CACHE_VARS.txt') }}
+
+    - if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
+      name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      id: setup-python
+      with:
+        python-version: 3.11
+
+    - if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
+      name: Record current date for cache
+      run: |
+        echo "WEEK=$(date +%V)" >> $GITHUB_ENV
+
+    - if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
+      name: Cache virtualenv
+      uses: actions/cache@v4
+      with:
+        key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('requirements.txt') }}-week${{ env.WEEK }}-${{ github.repository }}
+        path: .venv
+
+    # 🔴 NEW STEP: install system dependencies for manim/manimpango (pangocairo / pango)
+    - if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
+      name: Install system dependencies for manim (Pango / pangocairo)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libpango1.0-dev
+
+    - if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
+      name: Install dependencies
+      run: |
+        python -m venv .venv
+        source .venv/bin/activate
+        python -m pip install -r requirements.txt
+        echo "$VIRTUAL_ENV/bin" >> $GITHUB_PATH
+        echo "VIRTUAL_ENV=$VIRTUAL_ENV" >> $GITHUB_ENV
+
+    - if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
+      name: Insert banner if archived
+      run: |
+        if echo "$BRANCHES_ARCHIVED" | tr ' ' '\n' | grep "^${{ matrix.branch }}$"; then
+          {
+            url=$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.html_url')
+            echo 'html:'
+            echo "  announcement: 'You are viewing an archived version of the book. Click <a href=\"$url$PRIMARY_BRANCH\">here</a> for the latest version.'"
+          } >> book/_config.yml
+          cat book/_config.yml
+        fi
+
+    - if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
+      name: Preprocess & build the book from branch
+      run: |
+        if [ "$BRANCHES_TO_PREPROCESS" == "*" ] || echo "$BRANCHES_TO_PREPROCESS" | tr ' ' '\n' | grep "^${{ matrix.branch }}$"; then
+          option_release='--release'
+        else
+          option_release=''
+        fi
+        set -o pipefail
+        teachbooks build $option_release book/ > >(tee stdout.log) 2> >(tee stderr.log >&2)
+        set +o pipefail
+
+    - name: If failed, restore a book for this branch from cache
+      if: failure()
+      id: attempt-restore
+      uses: actions/cache/restore@v4
+      with:
+        key: none
+        path: "book/_build/html"
+        restore-keys: html-build-${{ matrix.branch }}
+
+    - name: Debug cache attempt output
+      if: failure()
+      run: |
+        echo cache-hit: ${{ steps.attempt-restore.outputs.cache-hit }}
+        echo cache-primary-key: ${{ steps.attempt-restore.outputs.cache-primary-key }}
+        echo cache-matched-key: ${{ steps.attempt-restore.outputs.cache-matched-key }}
+
+    - name: Record build failure
+      if: failure()
+      run: |
+        if [ -z "${{ steps.attempt-restore.outputs.cache-matched-key }}" ]; then
+          echo ":o: \\\`Build failed [2]\\\`" | tee buildstatus.txt
+        else
+          echo ":red_circle: \\\`Build failed [1]\\\`" | tee buildstatus.txt
+        fi
+
+    - name: Record build success
+      if: success()
+      run: |
+        echo ":white_check_mark: \\\`Released\\\`" >> buildstatus.txt
+
+    - name: Make summary of errors, if any
+      if: always()
+      run: |
+        touch summary.md
+        if [ -s stderr.log ]; then
+          {
+            echo "On branch \\\`${{ matrix.branch }}\\\`:"
+            echo '```'
+            cat stderr.log
+            echo '```'
+          } >> summary.md
+        fi
+
+    - name: Clean branch name of disallowed characters
+      if: always()
+      run: |
+        echo "MATRIX_BRANCH_NAME_CLEAN=$(echo ${{ matrix.branch }} | tr '/\":<>|*?/\\' '-')" >> $GITHUB_ENV
+
+    - name: Upload summary as an artifact
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: _summary-${{ env.MATRIX_BRANCH_NAME_CLEAN }}
+        path: "summary.md"
+
+    - name: Upload build status as an artifact
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: _buildstatus-${{ env.MATRIX_BRANCH_NAME_CLEAN }}
+        path: "buildstatus.txt"
+
+    - name: Upload the built book HTML as an artifact
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.MATRIX_BRANCH_NAME_CLEAN }}
+        path: "book/_build/html"
+
+  deploy-books:
+    if: always()
+    needs:
+    - get-branches
+    - build-books
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+      contents: read
+    env:
+      BRANCHES: ${{ needs.get-branches.outputs.branches }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ env.GH_TOKEN }}
+
+    - run: |
+        mkdir final/
+
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: "final/"
+
+    - name: Extract extras from the downloaded artifacts
+      run: |
+        mkdir _summaries/
+        mkdir _buildstatus/
+        mv final/_summary-* _summaries
+        mv final/_buildstatus-* _buildstatus
+
+    - name: Clean artifacts (1)
+      uses: GeekyEggo/delete-artifact@v5.0.0
+      with:
+        name: "_summary-*"
+
+    - name: Clean artifacts (2)
+      uses: GeekyEggo/delete-artifact@v5.0.0
+      with:
+        name: "_buildstatus-*"
+
+    - name: Copy primary book to root, fail if names conflict
+      timeout-minutes: 1
+      if: ${{ env.BEHAVIOR_PRIMARY == 'copy' }}
+      run: |
+        GLOBIGNORE=".:.."
+        if [ -d final/"$PRIMARY_BRANCH" ]; then
+          cp -irv final/"$PRIMARY_BRANCH"/* final/
+        fi
+
+    - name: Move primary book to root
+      timeout-minutes: 1
+      if: ${{ env.BEHAVIOR_PRIMARY == 'move' }}
+      run: |
+        GLOBIGNORE=".:.."
+        if [ -d final/"$PRIMARY_BRANCH" ]; then
+          mv -v final/"$PRIMARY_BRANCH"/* final/
+          rm -rf final/"$PRIMARY_BRANCH"
+        fi
+
+    - name: Include overview summary
+      run: |
+        echo '${{ needs.get-branches.outputs.branches }}' | jq -r '.[]' > raw.txt
+        {
+          echo "### Branches deployed"
+          echo "| Branch :tanabata_tree: | Link :link: | Build status :ballot_box_with_check:"
+          echo "| :--- | :--- | :--- |"
+        } >> summary.md
+        url=$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.html_url')
+        cat raw.txt | tr '/\":<>|*?/\\' '-' > clean.txt
+        cat clean.txt | xargs -I{} cat _buildstatus/_buildstatus-{}/buildstatus.txt > status.txt
+        paste -d ';' raw.txt clean.txt status.txt > pasted.txt
+        cat pasted.txt |
+        while IFS=';' read -r raw clean status; do
+          if [ "$raw" == "$PRIMARY_BRANCH" ] && [ ${{ env.BEHAVIOR_PRIMARY }} == 'move' ]; then
+            echo "| $raw | <$url> | $status |" >> summary.md
+          else
+            echo "| $raw | <$url$clean> | $status |" >> summary.md
+          fi
+        done
+        primary_status=$(grep "^$PRIMARY_BRANCH;" pasted.txt | cut -d ';' -f3)
+        {
+          echo
+          echo "#### Legend for build status"
+          echo ":white_check_mark: \\\`Released\\\` - build success, new version released."
+          echo ":red_circle: \\\`Build failed [1]\\\` - build failure, previous version of the book reused."
+          echo ":o: \\\`Build failed [2]\\\` - build failure, no previous version reused."
+          echo
+          echo '#### Primary book at root'
+          if [ ${{ env.BEHAVIOR_PRIMARY  }} == 'copy' ]; then
+            echo "The book at the website root <$url> is from the primary branch \\\`$PRIMARY_BRANCH\\\`."
+          elif [ ${{ env.BEHAVIOR_PRIMARY  }} == 'redirect' ]; then
+            echo "The book at the website root <$url> redirects to the primary branch \\\`$PRIMARY_BRANCH\\\`."
+          elif [ ${{ env.BEHAVIOR_PRIMARY }} == 'move' ]; then
+            echo "The book at the website root <$url> is from the primary branch \\\`$PRIMARY_BRANCH\\\`. It's deleted from the branch URL."
+          fi
+          echo "Status: $primary_status"
+        } >> summary.md
+
+    - name: Symlink and summarise branch aliases
+      id: symlink-aliases
+      run: |
+        echo "### Aliases" >> summary.md
+        if echo "$BRANCH_ALIASES" | grep -E '\S'; then
+            {
+              echo "| Alias :arrow_right: | Target :dart: | Link :link: | Build status :ballot_box_with_check: |"
+              echo "| :--- | :--- | :--- | :--- |"
+            } >> summary.md
+        else
+            echo "No aliases defined." >> summary.md
+        fi
+        url=$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.html_url')
+        paste -d ' ' clean.txt status.txt > lookup_status.txt
+        echo "$BRANCH_ALIASES" | tr ' ' '\n' | grep -E '\S' |
+        while IFS=':' read -r key value; do
+          if [ "$BRANCHES_TO_DEPLOY" == "*" ] || echo "$BRANCHES_TO_DEPLOY" | tr ' ' '\n' | grep "^$value$"; then
+            clean_key=$(echo "$key" | tr '/\":<>|*?/\\' '-')
+            clean_value=$(echo "$value" | tr '/\":<>|*?/\\' '-')
+            status=$(grep "^$clean_value " lookup_status.txt | cut -d\  -f2,3)
+            echo "| $clean_key | $clean_value | <$url$clean_key> | $status |" >> summary.md
+            ln -s "$clean_value" final/"$key"
+          fi
+        done
+
+    - name: Include summary of errors
+      run: |
+        {
+          echo "### Preview of build errors & warnings"
+          echo "For more details please see the corresponding \\\`build-books\\\` jobs in the left pane."
+        } >> summary.md
+        for fname in _summaries/*; do
+          echo $fname
+          if [ "$fname" == 'summary.md' ]; then
+            continue
+          fi
+          cat "$fname/summary.md" >> tmp.md
+        done
+        if [ -s tmp.md ]; then
+          cat tmp.md >> summary.md
+        else
+          echo "No build errors or warnings encountered." >> summary.md
+        fi
+
+    - name: Add a custom 404 to redirect
+      env:
+        HTML_TEMPLATE_404_REDIRECT: |
+          <!DOCTYPE html>
+          <html lang="en">
+          <head> ... (unchanged) ... </head>
+          <body> ... (unchanged) ... </body>
+          </html>
+      run: |
+        echo "$HTML_TEMPLATE_404_REDIRECT" | envsubst | tee final/404.html
+
+    - name: Upload final Pages artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: "final/"
+
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
+
+    - name: Upload summary as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: _final-summary
+        path: summary.md
+
+  summarize:
+    if: always()
+    needs:
+      - get-branches
+      - deploy-books
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+    - name: Download final summary artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: _final-summary
+        path: ./
+    - name: Summarize
+      run: |
+        if [ -f summary.md ]; then
+          cat summary.md >> "$GITHUB_STEP_SUMMARY"
+        else
+          {
+            echo "An unknown error has occurred, cannot display summary."
+            echo
+            echo "- You can try building the books locally, or inspecting the workflow run logs to troubleshoot the issue."
+          } >> "$GITHUB_STEP_SUMMARY"
+        fi
+
+        isdefault() {
+          if [ "$1" == '' ]; then
+            echo '(default value used)'
+          else
+            echo ''
+          fi
+        }
+
+        {
+          echo "### Repository configuration variables"
+          echo "Variables can be set at ${{ format('{0}/{1}/settings/variables/actions', github.server_url, github.repository) }}"
+          echo '```'
+          echo "PRIMARY_BRANCH=$PRIMARY_BRANCH $(isdefault ${{ vars.PRIMARY_BRANCH }})"
+          echo "BEHAVIOR_PRIMARY=$BEHAVIOR_PRIMARY $(isdefault ${{vars.BEHAVIOR_PRIMARY}})"
+          echo "BRANCH_ALIASES=$BRANCH_ALIASES $(isdefault ${{ vars.BRANCH_ALIASES }})"
+          echo "BRANCHES_TO_DEPLOY=$BRANCHES_TO_DEPLOY $(isdefault ${{ vars.BRANCHES_TO_DEPLOY }})"
+          echo "BRANCHES_TO_PREPROCESS=$BRANCHES_TO_PREPROCESS $(isdefault ${{ vars.BRANCHES_TO_PREPROCESS }})"
+          echo "BRANCHES_ARCHIVED=$BRANCHES_ARCHIVED $(isdefault ${{ vars.BRANCHES_ARCHIVED }})"
+          echo '```'
+        } >> $GITHUB_STEP_SUMMARY
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write

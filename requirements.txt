@@ -11,7 +11,6 @@ sphinx-accessibility
 requests
 manim_slides
 manim
-pango
 
 # Now list the packages you want to download directly from GitHub
 git+https://github.com/TeachBooks/Sphinx-Thebe
