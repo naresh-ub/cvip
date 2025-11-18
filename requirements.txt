@@ -9,6 +9,7 @@ sphinx-iframes
 sphinx-named-colors
 sphinx-accessibility
 requests
+manim_slides
 
 # Now list the packages you want to download directly from GitHub
 git+https://github.com/TeachBooks/Sphinx-Thebe
