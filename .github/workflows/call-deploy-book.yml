@@ -1,29 +1,3 @@
-# name: call-deploy-book
-
-# on:
-#   push:
-#     branches:
-#     - '**'
-#     # If your git repository has the Jupyter Book within some-subfolder next to
-#     # unrelated files, you can make this run only if a file within that specific
-#     # folder (or the workflow file itself) has been modified.
-#     #
-#     paths:
-#     - book/**
-#     - requirements.txt
-#     - .github/workflows/call-deploy-book.yml
-#   workflow_dispatch:
-
-# jobs: 
-#   call-workflow:
-#     uses: TeachBooks/deploy-book-workflow/.github/workflows/deploy-book.yml@main
-#     secrets: inherit
-#     permissions:
-#       contents: read
-#       pages: write
-#       id-token: write
-
-
 name: deploy-book
 
 # Based on:
@@ -192,9 +166,6 @@ jobs:
         cat EXTRA_CACHE_VARS.txt
 
     - name: Cache page build
-      # An id is created here to check if build is required for later steps with: if steps.cache-html.outputs.cache-hit != 'true'
-      # A build is required if a change is made to the book contents, requirements file or the status of
-      #  a branch as archive or preprocess has changed (`BRANCHES_TO_PREPROCESS` of `BRANCHES_ARCHIVED`).
       id: cache-html
       uses: actions/cache@v4
       with:
@@ -214,19 +185,20 @@ jobs:
         echo "WEEK=$(date +%V)" >> $GITHUB_ENV
 
     - if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
-      name: Install system dependencies (Pango / Cairo for manim)
+      name: Install system dependencies (Pango / Cairo / LaTeX for manim)
       run: |
         sudo apt-get update
         sudo apt-get install -y \
           libpango1.0-dev \
           libcairo2-dev \
-          pkg-config
+          pkg-config \
+          texlive-latex-base \
+          texlive-latex-extra \
+          texlive-fonts-recommended \
+          texlive-fonts-extra \
+          latexmk \
+          dvipng
 
-    # If a build is required, load the cached venv, if available
-    # A cached environment is loaded if the requirements.txt file is unchanged, as this is checked by the file hash.
-    # A new cache is created if the old one is more than a week old, as the week number is included in the file hash.
-    # Note: an id is not required here because no check for the cached environment is needed; this is because a new environment
-    #  is only required if a build is required and this is already checked with id: cache-html, as described above.
     - if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
       name: Cache virtualenv
       uses: actions/cache@v4
@@ -234,18 +206,6 @@ jobs:
         key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('requirements.txt') }}-week${{ env.WEEK }}-${{ github.repository }}
         path: .venv
 
-    # Dependencies are always checked if a build is required, regardless of whether a cached environment is used
-    # Either cache situation addressed with: python -m venv .venv
-    #  - If a cached environment was loaded, .venv will be reused;
-    #  - If not loaded, a new venv is created
-    # Note that for an existing cached venv when using: pip install -r requirements.txt
-    #  - Packages will be checked for compatability and updated if a new package was added to requirements.txt
-    #  - If no new packages are added, or the new package is compatible with the other packages,
-    #      UPDATES TO EXISTING PACKAGES WILL NOT BE MADE AUTOMATICALLY, EVEN IF A NEW VERSION EXISTS
-    #  - The significance of the last point is that, when compared to the venv on a newer branch, a 
-    #      frequently used branch (where the cache has not expired) may retain old and out of date packages.
-    #      Since the week number is included in the cache hash, this will be 1 week max.
-    #  - Recommendation is to specifically pin version numbers and update automatically with Dependabot.
     - if: ${{ steps.cache-html.outputs.cache-hit != 'true' }}
       name: Install dependencies
       run: |
@@ -276,7 +236,6 @@ jobs:
           option_release=''
         fi
         set -o pipefail
-        # https://stackoverflow.com/a/692407
         teachbooks build $option_release book/ > >(tee stdout.log) 2> >(tee stderr.log >&2)
         set +o pipefail
 
@@ -300,10 +259,8 @@ jobs:
       if: failure()
       run: |
         if [ -z "${{ steps.attempt-restore.outputs.cache-matched-key }}" ]; then
-          # Cache miss
           echo ":o: \\\`Build failed [2]\\\`" | tee buildstatus.txt
         else
-          # (Partial) cache hit
           echo ":red_circle: \\\`Build failed [1]\\\`" | tee buildstatus.txt
         fi
 
@@ -313,10 +270,8 @@ jobs:
         echo ":white_check_mark: \\\`Released\\\`" >> buildstatus.txt
 
     - name: Make summary of errors, if any
-      # run even in case of failure
       if: always()
       run: |
-        # If there are warnings or errors, compose a summary (if not, don't)
         touch summary.md
         if [ -s stderr.log ]; then
           {
@@ -354,7 +309,6 @@ jobs:
         path: "book/_build/html"
 
   deploy-books:
-    # Run after build-books, even if it failed
     if: always()
     needs:
     - get-branches
@@ -402,7 +356,6 @@ jobs:
       if: ${{ env.BEHAVIOR_PRIMARY == 'copy' }}
       run: |
         GLOBIGNORE=".:.."
-        # -i leads to a prompt in case of conflict, => a timeout
         if [ -d final/"$PRIMARY_BRANCH" ]; then
           cp -irv final/"$PRIMARY_BRANCH"/* final/
         fi
@@ -419,28 +372,21 @@ jobs:
 
     - name: Include overview summary
       run: |
-        # Restore "raw" branch names
         echo '${{ needs.get-branches.outputs.branches }}' | jq -r '.[]' > raw.txt
         {
-          # Display raw/clean branch name versions in Actions Summary
           echo "### Branches deployed"
-          ## Table headers
           echo "| Branch :tanabata_tree: | Link :link: | Build status :ballot_box_with_check:"
           echo "| :--- | :--- | :--- |"
         } >> summary.md
 
-        ## Fetch the GH Pages URL
-        # https://stackoverflow.com/a/76354104
         url=$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.html_url')
 
-        # Clean branch names
         cat raw.txt | tr '/\":<>|*?\/\\' '-' > clean.txt
         cat clean.txt | xargs -I{} cat _buildstatus/_buildstatus-{}/buildstatus.txt > status.txt
         paste -d ';' raw.txt clean.txt status.txt > pasted.txt
         cat pasted.txt |
         while IFS=';' read -r raw clean status; do
           if [ "$raw" == "$PRIMARY_BRANCH" ] && [ ${{ env.BEHAVIOR_PRIMARY }} == 'move' ]; then
-            # Set the clean URL to the root URL for the primary branch if behavior is 'move'
             echo "| $raw | <$url> | $status |" >> summary.md
           else
             echo "| $raw | <$url$clean> | $status |" >> summary.md
@@ -455,7 +401,6 @@ jobs:
           echo ":white_check_mark: \\\`Released\\\` - build success, new version released."
           echo ":red_circle: \\\`Build failed [1]\\\` - build failure, previous version of the book reused."
           echo ":o: \\\`Build failed [2]\\\` - build failure, no previous version reused."
-
           echo
           echo '#### Primary book at root'
           if [ ${{ env.BEHAVIOR_PRIMARY  }} == 'copy' ]; then
@@ -473,7 +418,6 @@ jobs:
       run: |
         echo "### Aliases" >> summary.md
         if echo "$BRANCH_ALIASES" | grep -E '\S'; then
-            # Summary table headers
             {
               echo "| Alias :arrow_right: | Target :dart: | Link :link: | Build status :ballot_box_with_check: |"
               echo "| :--- | :--- | :--- | :--- |"
@@ -488,9 +432,7 @@ jobs:
 
         echo "$BRANCH_ALIASES" | tr ' ' '\n' | grep -E '\S' |
         while IFS=':' read -r key value; do
-          # If the target branch is to be deployed, make symlink to it.
           if [ "$BRANCHES_TO_DEPLOY" == "*" ] || echo "$BRANCHES_TO_DEPLOY" | tr ' ' '\n' | grep "^$value$"; then
-            # Clean branch names of special characters
             clean_key=$(echo "$key" | tr '/\":<>|*?\/\\' '-')
             clean_value=$(echo "$value" | tr '/\":<>|*?\/\\' '-')
             status=$(grep "^$clean_value " lookup_status.txt | cut -d\  -f2,3)
@@ -520,8 +462,6 @@ jobs:
 
     - name: Add a custom 404 to redirect
       env:
-        # https:(0)/(1)/uname.github.io(2)/rname(3)/bname(4) */
-        # if urlParts.len < 4, bname is undefined */
         HTML_TEMPLATE_404_REDIRECT: |
           <!DOCTYPE html>
           <html lang="en">
@@ -718,7 +658,6 @@ jobs:
               document.getElementById('root-link').href = rootUrl;
               document.getElementById('github-link').href = githubUrl;
               
-              // Only auto-redirect when behavior is 'redirect'
               if (behaviorPrimary === 'redirect' && !branches.includes(bname)) {
                   document.getElementById('page-title').textContent = 'Redirecting...';
                   document.getElementById('content').style.display = 'none';
@@ -734,11 +673,7 @@ jobs:
               </script>
           </body>
           </html>
-        # HTML_TEMPLATE_404_TRUE: |
-        #   <!DOCTYPE html><title>404 Not Found</title>
-        #   404 Not Found
       run: |
-        # echo "$HTML_TEMPLATE_404_TRUE" > final/404-not-found.html
         echo "$HTML_TEMPLATE_404_REDIRECT" | envsubst | tee final/404.html
 
     - name: Upload final Pages artifact
@@ -771,7 +706,6 @@ jobs:
         path: ./
     - name: Summarize
       run: |
-        # Append the aggregated summary to Actions summary
         if [ -f summary.md ]; then
           cat summary.md >> "$GITHUB_STEP_SUMMARY"
         else
@@ -790,7 +724,6 @@ jobs:
           fi
         }
 
-        # Display config var values
         {
           echo "### Repository configuration variables"
           echo "Variables can be set at ${{ format('{0}/{1}/settings/variables/actions', github.server_url, github.repository) }}"
