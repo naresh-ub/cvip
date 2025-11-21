@@ -118,20 +118,6 @@ My teaching centers on intuition, curiosity, and frictionless experimentation th
     </th>
   </tr>
 
-  <!-- Mentor 1 -->
-  <tr>
-    <td style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px; line-height:1.6;">
-      <img src="./figures/vishnu_lokhande.jpeg"
-           alt="Dr. Vishnu Lokhande"
-           style="width:80px; height:80px; object-fit:cover; display:block; margin:0 auto 10px auto;"/>
-      <a href="https://vlokhande-ub.github.io/">Dr. Vishnu Lokhande</a>
-    </td>
-    <td style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px; line-height:1.6;">
-      Course Design, Course Content (Generative AI), Syllabus
-    </td>
-  </tr>
-
-  <!-- Mentor 2 -->
   <tr>
     <td style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px; line-height:1.6;">
       <img src="./figures/ifeoma_nwogu.jpg"
@@ -143,6 +129,18 @@ My teaching centers on intuition, curiosity, and frictionless experimentation th
     </td>
     <td style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px; line-height:1.6;">
       Course Design, Course Structure, Syllabus and Assignments
+    </td>
+  </tr>
+
+  <tr>
+    <td style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px; line-height:1.6;">
+      <img src="./figures/vishnu_lokhande.jpeg"
+           alt="Dr. Vishnu Lokhande"
+           style="width:80px; height:80px; object-fit:cover; display:block; margin:0 auto 10px auto;"/>
+      <a href="https://vlokhande-ub.github.io/">Dr. Vishnu Lokhande</a>
+    </td>
+    <td style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px; line-height:1.6;">
+      Course Design, Course Content (Generative AI), Syllabus
     </td>
   </tr>
 </table>
