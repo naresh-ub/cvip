@@ -100,7 +100,9 @@ My teaching centers on intuition, curiosity, and frictionless experimentation th
       <img src="naresh-ub.png"
            alt="Naresh Devulapally"
            style="width:80px; height:80px; object-fit:cover; display:block; margin:0 auto 10px auto;"/>
+      <a href="https://naresh-ub.github.io" style="font-weight:600; text-decoration:none;">
       Naresh Devulapally
+    </a>
     </td>
     <td style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px; line-height:1.6;">
       <a href="https://naresh-ub.github.io">naresh-ub.github.io</a><br>
@@ -118,31 +120,42 @@ My teaching centers on intuition, curiosity, and frictionless experimentation th
     </th>
   </tr>
 
+  <!-- Both mentors in ONE row, two columns -->
   <tr>
-    <td style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px; line-height:1.6;">
-      <img src="./figures/ifeoma_nwogu.jpg"
-           alt="Dr. Ifeoma Nwogu"
-           style="width:80px; height:80px; object-fit:cover; display:block; margin:0 auto 10px auto;"/>
-      <a href="https://engineering.buffalo.edu/home/research/faculty/diverse-faculty.host.html/content/shared/engineering/computer-science-engineering/profiles/faculty/ladder/nwogu-ifeoma.html">
-        Dr. Ifeoma Nwogu
-      </a>
-    </td>
-    <td style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px; line-height:1.6;">
+  <!-- Mentor 1 -->
+  <td style="border: 1px solid gray; text-align:center; vertical-align:top; padding:14px; width:50%;">
+    <img src="./figures/ifeoma_nwogu.jpg"
+        alt="Dr. Ifeoma Nwogu"
+        style="width:80px; height:80px; object-fit:cover; display:block; margin:0 auto 10px auto; border-radius:6px;"/>
+    
+  <div style="line-height:1.6;">
+    <a href="https://engineering.buffalo.edu/home/research/faculty/diverse-faculty.host.html/content/shared/engineering/computer-science-engineering/profiles/faculty/ladder/nwogu-ifeoma.html" style="font-weight:600; text-decoration:none;">
+      Dr. Ifeoma Nwogu
+    </a>
+    <div style="margin-top:6px; font-size:0.95em;">
       Course Design, Course Structure, Syllabus and Assignments
-    </td>
+    </div>
+  </div>
+  </td>
+
+  <!-- Mentor 2 -->
+  <td style="border: 1px solid gray; text-align:center; vertical-align:top; padding:14px; width:50%;">
+    <img src="./figures/vishnu_lokhande.jpeg"
+        alt="Dr. Vishnu Lokhande"
+        style="width:80px; height:80px; object-fit:cover; display:block; margin:0 auto 10px auto; border-radius:6px;"/>
+    
+  <div style="line-height:1.6;">
+  <a href="https://vlokhande-ub.github.io/"
+      style="font-weight:600; text-decoration:none;">
+      Dr. Vishnu Lokhande
+    </a>
+    <div style="margin-top:6px; font-size:0.95em;">
+      Course Design, Course Content (Generative AI), Syllabus
+    </div>
+  </div>
+  </td>
   </tr>
 
-  <tr>
-    <td style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px; line-height:1.6;">
-      <img src="./figures/vishnu_lokhande.jpeg"
-           alt="Dr. Vishnu Lokhande"
-           style="width:80px; height:80px; object-fit:cover; display:block; margin:0 auto 10px auto;"/>
-      <a href="https://vlokhande-ub.github.io/">Dr. Vishnu Lokhande</a>
-    </td>
-    <td style="border: 1px solid gray; text-align:center; vertical-align:middle; padding:10px; line-height:1.6;">
-      Course Design, Course Content (Generative AI), Syllabus
-    </td>
-  </tr>
 </table>
 
 
